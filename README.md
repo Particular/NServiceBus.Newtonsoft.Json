@@ -1,0 +1,2 @@
+NServiceBus.Newtonsoft.Json
+===========================
