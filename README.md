@@ -3,7 +3,7 @@
 NServiceBus.Newtonsoft.Json
 ===========================
 
-Add support for [NServiceBus](http://particular.net/NServiceBus) message serialization via[Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
+Add support for [NServiceBus](http://particular.net/NServiceBus) message serialization via [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
 
 ## Nuget
 
