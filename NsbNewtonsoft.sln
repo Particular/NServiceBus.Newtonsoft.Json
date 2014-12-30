@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBus.Newtonsoft.Json", "NServiceBus.Newtonsoft.Json\NServiceBus.Newtonsoft.Json.csproj", "{8D87D482-BC30-49F6-946C-73DD62FC4EC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{49CBE4DA-DFE0-4320-A82A-8BC11FCBA14D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{8CB7E535-A40A-4557-BF0A-3302C12E7FC6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D87D482-BC30-49F6-946C-73DD62FC4EC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D87D482-BC30-49F6-946C-73DD62FC4EC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D87D482-BC30-49F6-946C-73DD62FC4EC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D87D482-BC30-49F6-946C-73DD62FC4EC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49CBE4DA-DFE0-4320-A82A-8BC11FCBA14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49CBE4DA-DFE0-4320-A82A-8BC11FCBA14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49CBE4DA-DFE0-4320-A82A-8BC11FCBA14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49CBE4DA-DFE0-4320-A82A-8BC11FCBA14D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CB7E535-A40A-4557-BF0A-3302C12E7FC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CB7E535-A40A-4557-BF0A-3302C12E7FC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CB7E535-A40A-4557-BF0A-3302C12E7FC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CB7E535-A40A-4557-BF0A-3302C12E7FC6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

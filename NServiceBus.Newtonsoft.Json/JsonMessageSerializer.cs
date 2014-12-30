@@ -1,0 +1,149 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using NServiceBus.MessageInterfaces;
+using NServiceBus.Serialization;
+using NewtonSerializer = Newtonsoft.Json.JsonSerializer;
+
+namespace NServiceBus.Newtonsoft.Json
+{
+    /// <summary>
+    /// JSON message serializer.
+    /// </summary>
+    public class JsonMessageSerializer : IMessageSerializer
+    {
+        IMessageMapper messageMapper;
+        MessageContractResolver messageContractResolver;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public JsonMessageSerializer(IMessageMapper messageMapper)
+        {
+            this.messageMapper = messageMapper;
+            messageContractResolver = new MessageContractResolver(messageMapper);
+            Settings = new JsonSerializerSettings
+                       {
+                           TypeNameHandling = TypeNameHandling.Auto,
+                           Converters =
+                           {
+                               new IsoDateTimeConverter
+                               {
+                                   DateTimeStyles = DateTimeStyles.RoundtripKind
+                               }
+                           }
+                       };
+            WriterCreator = stream =>
+            {
+                var streamWriter = new StreamWriter(stream, Encoding.UTF8);
+                return new JsonTextWriter(streamWriter)
+                       {
+                           Formatting = Formatting.None
+                       };
+            };
+            ReaderCreator = stream =>
+            {
+                var streamReader = new StreamReader(stream, Encoding.UTF8);
+                return new JsonTextReader(streamReader);
+            };
+        }
+
+        /// <summary>
+        /// Serializes the given set of messages into the given stream.
+        /// </summary>
+        /// <param name="message">Message to serialize.</param>
+        /// <param name="stream">Stream for <paramref name="message"/> to be serialized into.</param>
+        public void Serialize(object message, Stream stream)
+        {
+            var jsonSerializer = NewtonSerializer.Create(Settings);
+            jsonSerializer.Binder = new MessageSerializationBinder(messageMapper);
+            var jsonWriter = WriterCreator(stream);
+            jsonSerializer.Serialize(jsonWriter, message);
+            jsonWriter.Flush();
+        }
+
+        /// <summary>
+        /// Deserializes from the given stream a set of messages.
+        /// </summary>
+        /// <param name="stream">Stream that contains messages.</param>
+        /// <param name="messageTypes">The list of message types to deserialize. If null the types must be inferred from the serialized data.</param>
+        /// <returns>Deserialized messages.</returns>
+        public object[] Deserialize(Stream stream, IList<Type> messageTypes)
+        {
+            var jsonSerializer = NewtonSerializer.Create(Settings);
+            jsonSerializer.ContractResolver = messageContractResolver;
+            jsonSerializer.Binder = new MessageSerializationBinder(messageMapper, messageTypes);
+
+            if (IsArrayStream(stream))
+            {
+                var arrayReader = ReaderCreator(stream);
+                return jsonSerializer.Deserialize<object[]>(arrayReader);
+            }
+
+            if (messageTypes.Any())
+            {
+                return DeserializeMultipleMesageTypes(stream, messageTypes, jsonSerializer).ToArray();
+            }
+
+            var simpleReader = ReaderCreator(stream);
+            return new[]
+                   {
+                       jsonSerializer.Deserialize<object>(simpleReader)
+                   };
+        }
+
+        IEnumerable<object> DeserializeMultipleMesageTypes(Stream stream, IList<Type> messageTypes, NewtonSerializer jsonSerializer)
+        {
+            foreach (var messageType in FindRootTypes(messageTypes))
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                var reader = ReaderCreator(stream);
+                yield return jsonSerializer.Deserialize(reader, messageType);
+            }
+        }
+
+        bool IsArrayStream(Stream stream)
+        {
+            var reader = ReaderCreator(stream);
+            reader.Read();
+            stream.Seek(0, SeekOrigin.Begin);
+            return reader.TokenType == JsonToken.StartArray;
+        }
+
+        static IEnumerable<Type> FindRootTypes(IEnumerable<Type> messageTypesToDeserialize)
+        {
+            Type currentRoot = null;
+            foreach (var type in messageTypesToDeserialize)
+            {
+                if (currentRoot == null)
+                {
+                    currentRoot = type;
+                    yield return currentRoot;
+                    continue;
+                }
+                if (!type.IsAssignableFrom(currentRoot))
+                {
+                    currentRoot = type;
+                    yield return currentRoot;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the content type into which this serializer serializes the content to 
+        /// </summary>
+        public string ContentType
+        {
+            get { return ContentTypes.Json; }
+        }
+
+        public JsonSerializerSettings Settings { get; set; }
+        public Func<Stream, JsonReader> ReaderCreator { get; set; }
+        public Func<Stream, JsonWriter> WriterCreator { get; set; }
+    }
+}
