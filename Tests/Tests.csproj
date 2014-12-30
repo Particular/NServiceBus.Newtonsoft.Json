@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JsonMessageSerializerTest.cs" />
+    <Compile Include="Samples.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -18,7 +18,7 @@ namespace NServiceBus
         /// var streamReader = new StreamReader(stream, Encoding.UTF8);
         /// return new JsonTextReader(streamReader);
         /// </example>
-        public static void ReaderCreator(this SerializationExtentions<JsonSerializer> config, Func<Stream, JsonReader> readerCreator)
+        public static void ReaderCreator(this SerializationExtentions<NewtonsoftSerializer> config, Func<Stream, JsonReader> readerCreator)
         {
             if (readerCreator == null)
             {
@@ -40,7 +40,7 @@ namespace NServiceBus
         ///     Formatting = Formatting.None
         /// };
         /// </example>
-        public static void WriterCreator(this SerializationExtentions<JsonSerializer> config, Func<Stream, JsonWriter> writerCreator)
+        public static void WriterCreator(this SerializationExtentions<NewtonsoftSerializer> config, Func<Stream, JsonWriter> writerCreator)
         {
             if (writerCreator == null)
             {
@@ -68,7 +68,7 @@ namespace NServiceBus
         ///                   }
         ///               }
         /// </example>
-        public static void Settings(this SerializationExtentions<JsonSerializer> config, JsonSerializerSettings settings)
+        public static void Settings(this SerializationExtentions<NewtonsoftSerializer> config, JsonSerializerSettings settings)
         {
             if (settings == null)
             {

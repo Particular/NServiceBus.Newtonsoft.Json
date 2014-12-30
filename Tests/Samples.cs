@@ -31,13 +31,13 @@ class Samples
         var busConfig = new BusConfiguration();
         busConfig.UseSerialization<NewtonsoftSerializer>()
             .WriterCreator(stream =>
-        {
-            var streamWriter = new StreamWriter(stream, Encoding.UTF8);
-            return new JsonTextWriter(streamWriter)
             {
-                Formatting = Formatting.None
-            };
-        });
+                var streamWriter = new StreamWriter(stream, Encoding.UTF8);
+                return new JsonTextWriter(streamWriter)
+                       {
+                           Formatting = Formatting.None
+                       };
+            });
     }
 
     static void Reader()
@@ -45,9 +45,9 @@ class Samples
         var busConfig = new BusConfiguration();
         busConfig.UseSerialization<NewtonsoftSerializer>()
             .ReaderCreator(stream =>
-        {
-            var streamReader = new StreamReader(stream, Encoding.UTF8);
-            return new JsonTextReader(streamReader);
-        });
+            {
+                var streamReader = new StreamReader(stream, Encoding.UTF8);
+                return new JsonTextReader(streamReader);
+            });
     }
 }
