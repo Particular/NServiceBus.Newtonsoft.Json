@@ -1,4 +1,4 @@
-![Icon](https://raw.github.com/SimonCropp/NServiceBus.Newtonsoft.Json/master/Icons/package_icon.png)
+![Icon](https://raw.githubusercontent.com/SimonCropp/NServiceBus.Newtonsoft.Json/master/Icon/package_icon.png)
 
 NServiceBus.Newtonsoft.Json
 ===========================
