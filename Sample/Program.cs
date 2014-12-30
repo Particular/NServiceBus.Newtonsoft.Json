@@ -16,7 +16,7 @@ class Program
             bus.Start();
             bus.SendLocal(new MyMessage
                           {
-                              DateSend = DateTime.Now
+                              DateSend = DateTime.Now,
                           });
             Console.WriteLine("\r\nPress any key to stop program\r\n");
             Console.Read();
