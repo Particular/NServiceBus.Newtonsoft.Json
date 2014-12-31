@@ -11,6 +11,20 @@ Add support for [NServiceBus](http://particular.net/NServiceBus) message seriali
 
     PM> Install-Package NServiceBus.Newtonsoft.Json
 
+## Bus doesn't the NServiceBus core use Json.net
+
+Yes the core of NServiceBus uses Json.net. However it is ILMerged where this library has a standard dll and nuget dependency. While ILMerging reduces versioning issues in the core it does cause several restrictions
+
+ * Cant use a different version of Json.net
+ * Cant use Json.net attributes
+ * Cant customize the Json.net serialization behaviors.
+
+These restrictions do no apply to this library.
+
+## Comparability with the core json serializer 
+
+The only incompatibility with the core serializer is that this library does not support the serialization of `XContainer` and `XDocument` properties. If you want to have xml properties on your messages you should instead use strings.
+
 ## Usage
 
 ```
