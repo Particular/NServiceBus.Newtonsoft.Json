@@ -11,7 +11,7 @@ Add support for [NServiceBus](http://particular.net/NServiceBus) message seriali
 
     PM> Install-Package NServiceBus.Newtonsoft.Json
 
-## Bus doesn't the NServiceBus core use Json.net
+## But doesn't the NServiceBus core use Json.net
 
 Yes the core of NServiceBus uses Json.net. However it is ILMerged where this library has a standard dll and nuget dependency. While ILMerging reduces versioning issues in the core it does cause several restrictions
 
