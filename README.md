@@ -5,9 +5,10 @@ NServiceBus.Newtonsoft.Json
 
 Add support for [NServiceBus](http://particular.net/NServiceBus) message serialization via [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
 
-## Nuget
 
-### http://nuget.org/packages/NServiceBus.Newtonsoft.Json/
+## The nuget package  [![NuGet Status](http://img.shields.io/nuget/v/NServiceBus.Newtonsoft.Json.svg?style=flat)](https://www.nuget.org/packages/NServiceBus.Newtonsoft.Json/)
+
+https://nuget.org/packages/NServiceBus.Newtonsoft.Json/
 
     PM> Install-Package NServiceBus.Newtonsoft.Json
 
