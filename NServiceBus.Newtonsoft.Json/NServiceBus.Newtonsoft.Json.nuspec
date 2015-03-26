@@ -6,15 +6,15 @@
     <title>NServiceBus.Newtonsoft.Json</title>
     <authors>Simon Cropp</authors>
     <owners>Simon Cropp</owners>
-    <licenseUrl>http://www.opensource.org/licenses/mit-license.php</licenseUrl>
-    <projectUrl>http://github.com/SimonCropp/NServiceBus.Newtonsoft.Json</projectUrl>
+    <licenseUrl>http://particular.net/LicenseAgreement</licenseUrl>
+    <projectUrl>http://particular.net/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <iconUrl>https://raw.githubusercontent.com/SimonCropp/NServiceBus.Newtonsoft.Json/master/Icon/package_icon.png</iconUrl>
+    <iconUrl>http://s3.amazonaws.com/nuget.images/NServiceBus_32.png</iconUrl>
     <description>Newtonsoft.Json integration for NServiceBus.</description>
     <language>en-AU</language>
     <tags>NServiceBus, Newtonsoft, Json</tags>
 	  <dependencies>
-      <dependency id="NServiceBus" version="[5.1.0, 6.0.0)" />
+      <dependency id="NServiceBus" version="[5.0.0, 6.0.0)" />
       <dependency id="Newtonsoft.Json" version="[6.0.0, 7.0.0)" />
 	  </dependencies>
   </metadata>
