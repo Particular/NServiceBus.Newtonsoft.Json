@@ -20,6 +20,7 @@ namespace NServiceBus.Newtonsoft.Json
         /// </summary>
         protected override void Setup(FeatureConfigurationContext context)
         {
+            Guard.AgainstNull(context, "context");
             context.Container.ConfigureComponent<MessageMapper>(DependencyLifecycle.SingleInstance);
             var c = context.Container.ConfigureComponent<JsonMessageSerializer>(DependencyLifecycle.SingleInstance);
 

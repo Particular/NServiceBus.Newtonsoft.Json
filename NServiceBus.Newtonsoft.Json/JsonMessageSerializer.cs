@@ -12,19 +12,14 @@ using NewtonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace NServiceBus.Newtonsoft.Json
 {
-    /// <summary>
-    /// JSON message serializer.
-    /// </summary>
-    public class JsonMessageSerializer : IMessageSerializer
+    class JsonMessageSerializer : IMessageSerializer
     {
         IMessageMapper messageMapper;
         MessageContractResolver messageContractResolver;
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
         public JsonMessageSerializer(IMessageMapper messageMapper)
         {
+            Guard.AgainstNull(messageMapper, "messageMapper");
             this.messageMapper = messageMapper;
             messageContractResolver = new MessageContractResolver(messageMapper);
             Settings = new JsonSerializerSettings
@@ -53,13 +48,10 @@ namespace NServiceBus.Newtonsoft.Json
             };
         }
 
-        /// <summary>
-        /// Serializes the given set of messages into the given stream.
-        /// </summary>
-        /// <param name="message">Message to serialize.</param>
-        /// <param name="stream">Stream for <paramref name="message"/> to be serialized into.</param>
         public void Serialize(object message, Stream stream)
         {
+            Guard.AgainstNull(stream, "stream");
+            Guard.AgainstNull(message, "message");
             var jsonSerializer = NewtonSerializer.Create(Settings);
             jsonSerializer.Binder = new MessageSerializationBinder(messageMapper);
             var jsonWriter = WriterCreator(stream);
@@ -67,14 +59,10 @@ namespace NServiceBus.Newtonsoft.Json
             jsonWriter.Flush();
         }
 
-        /// <summary>
-        /// Deserializes from the given stream a set of messages.
-        /// </summary>
-        /// <param name="stream">Stream that contains messages.</param>
-        /// <param name="messageTypes">The list of message types to deserialize. If null the types must be inferred from the serialized data.</param>
-        /// <returns>Deserialized messages.</returns>
         public object[] Deserialize(Stream stream, IList<Type> messageTypes)
         {
+            Guard.AgainstNull(stream, "stream");
+            Guard.AgainstNull(messageTypes, "messageTypes");
             var jsonSerializer = NewtonSerializer.Create(Settings);
             jsonSerializer.ContractResolver = messageContractResolver;
             jsonSerializer.Binder = new MessageSerializationBinder(messageMapper, messageTypes);
@@ -134,16 +122,13 @@ namespace NServiceBus.Newtonsoft.Json
             }
         }
 
-        /// <summary>
-        /// Gets the content type into which this serializer serializes the content to 
-        /// </summary>
         public string ContentType
         {
             get { return ContentTypes.Json; }
         }
 
-        public JsonSerializerSettings Settings { get; set; }
-        public Func<Stream, JsonReader> ReaderCreator { get; set; }
-        public Func<Stream, JsonWriter> WriterCreator { get; set; }
+        public JsonSerializerSettings Settings;
+        public Func<Stream, JsonReader> ReaderCreator;
+        public Func<Stream, JsonWriter> WriterCreator;
     }
 }
