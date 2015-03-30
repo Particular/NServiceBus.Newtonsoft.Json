@@ -12,11 +12,20 @@ using NewtonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace NServiceBus.Newtonsoft.Json
 {
-    class JsonMessageSerializer : IMessageSerializer
+    /// <summary>
+    /// Newtonsoft JSON message serializer.
+    /// </summary>
+    public class JsonMessageSerializer : IMessageSerializer
     {
         IMessageMapper messageMapper;
         MessageContractResolver messageContractResolver;
+        Func<Stream, JsonReader> readerCreator;
+        JsonSerializerSettings settings;
+        Func<Stream, JsonWriter> writerCreator;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="JsonMessageSerializer"/>.
+        /// </summary>
         public JsonMessageSerializer(IMessageMapper messageMapper)
         {
             Guard.AgainstNull(messageMapper, "messageMapper");
@@ -127,8 +136,43 @@ namespace NServiceBus.Newtonsoft.Json
             get { return ContentTypes.Json; }
         }
 
-        public JsonSerializerSettings Settings;
-        public Func<Stream, JsonReader> ReaderCreator;
-        public Func<Stream, JsonWriter> WriterCreator;
+        /// <summary>
+        /// Configures the <see cref="JsonSerializerSettings"/> to use.
+        /// </summary>
+        public JsonSerializerSettings Settings
+        {
+            get { return settings; }
+            set
+            {
+                Guard.AgainstNull(value, "value"); 
+                settings = value;
+            }
+        }
+
+        /// <summary>
+        /// Configures the <see cref="JsonReader"/> creator of JSON stream.
+        /// </summary>
+        public Func<Stream, JsonReader> ReaderCreator
+        {
+            get { return readerCreator; }
+            set
+            {
+                Guard.AgainstNull(value, "value");
+                readerCreator = value;
+            }
+        }
+
+        /// <summary>
+        /// Configures the <see cref="JsonWriter"/> creator of JSON stream.
+        /// </summary>
+        public Func<Stream, JsonWriter> WriterCreator
+        {
+            get { return writerCreator; }
+            set
+            {
+                Guard.AgainstNull(value, "value"); 
+                writerCreator = value;
+            }
+        }
     }
 }
