@@ -19,7 +19,7 @@ public class JsonMessageSerializerTest
                                     });
     }
 
-    JsonMessageSerializer serializer;
+    NServiceBus.Newtonsoft.Json.JsonMessageSerializer serializer;
     MessageMapper messageMapper;
 
     [SetUp]

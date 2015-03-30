@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NServiceBus;
 using NServiceBus.Newtonsoft.Json;
+
 // ReSharper disable UnusedMember.Local
 
 class Samples
