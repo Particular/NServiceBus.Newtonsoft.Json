@@ -1,6 +1,7 @@
 ﻿using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
+using NServiceBus.Newtonsoft.Json;
 using NServiceBus.ObjectBuilder;
 
 class NewtonsoftSerialization : Feature

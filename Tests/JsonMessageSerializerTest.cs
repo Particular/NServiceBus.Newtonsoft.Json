@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using NServiceBus;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
+using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
 
 [TestFixture]
