@@ -11,7 +11,7 @@
     <AssemblyName>AcceptanceTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>3d54a8de</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>bcf93393</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -106,20 +106,6 @@
     <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\EndpointTemplates\ContextAppender.cs" />
     <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\EndpointTemplates\DefaultPublisher.cs" />
     <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\EndpointTemplates\DefaultServer.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\Cant_convert_to_TransportMessage\SerializerCorrupter.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\Cant_convert_to_TransportMessage\When_cant_convert_to_TransportMessage.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\Cant_convert_to_TransportMessage\When_cant_convert_to_TransportMessage_NoTransactions.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\Cant_convert_to_TransportMessage\When_cant_convert_to_TransportMessage_SuppressedDTC.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\Message_without_an_id.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\StackTraceAssert.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\When_handler_and_Uow_End_throws.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\When_handler_throws.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\When_handler_throws_AggregateException.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\When_handler_throws_serialization_exception.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\When_serialization_throws.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\When_Uow_Begin_and_different_End_throws.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\When_Uow_Begin_throws.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\Exceptions\When_Uow_End_throws.cs" />
     <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\HostInformation\When_a_message_is_received.cs" />
     <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\HostInformation\When_customising_hostinfo.cs" />
     <Compile Include="App_Packages\NSB.AcceptanceTests.5.2.0\HostInformation\When_feature_overrides_hostinfo.cs" />
@@ -220,11 +206,11 @@
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Fody.1.28.1\build\Fody.targets" Condition="Exists('..\packages\Fody.1.28.1\build\Fody.targets')" />
+  <Import Project="..\packages\Fody.1.29.3\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.1.29.3\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.1.28.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.28.1\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.1.29.3\build\portable-net+sl+win+wpa+wp\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.3\build\portable-net+sl+win+wpa+wp\Fody.targets'))" />
   </Target>
 </Project>

@@ -4,7 +4,6 @@ using System.IO;
 using System.Reflection;
 using NServiceBus;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
-using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
 
 [TestFixture]
@@ -19,7 +18,7 @@ public class JsonMessageSerializerTest
                                     });
     }
 
-    NServiceBus.Newtonsoft.Json.JsonMessageSerializer serializer;
+    JsonMessageSerializer serializer;
     MessageMapper messageMapper;
 
     [SetUp]

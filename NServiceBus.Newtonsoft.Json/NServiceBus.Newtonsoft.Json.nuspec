@@ -15,7 +15,7 @@
     <tags>NServiceBus, Newtonsoft, Json</tags>
 	  <dependencies>
       <dependency id="NServiceBus" version="[5.0.0, 6.0.0)" />
-      <dependency id="Newtonsoft.Json" version="[6.0.0, 7.0.0)" />
+      <dependency id="Newtonsoft.Json" version="[7.0.0, 8.0.0)" />
 	  </dependencies>
   </metadata>
 </package>
