@@ -8,7 +8,7 @@ using NServiceBus.Serialization;
 namespace NServiceBus
 {
     /// <summary>
-    /// Extensions for <see cref="Configure"/> to manipulate how messages are serialized via Json.net.
+    /// Extensions for <see cref="BusConfiguration"/> to manipulate how messages are serialized via Json.net.
     /// </summary>
     public static class NewtonsoftConfigurationExtensions
     {
@@ -17,12 +17,11 @@ namespace NServiceBus
         /// </summary>
         /// <param name="config">The configuration object</param>
         /// <param name="readerCreator">A delegate that creates a <see cref="JsonReader"/> for a <see cref="Stream"/>.</param>
-        public static void ReaderCreator(this SerializationExtentions<NewtonsoftSerializer> config, Func<Stream, JsonReader> readerCreator)
+        public static void ReaderCreator(this SerializationExtentions<NewtonsoftSerialization> config, Func<Stream, JsonReader> readerCreator)
         {
             Guard.AgainstNull(config, "config");
             Guard.AgainstNull(readerCreator, "readerCreator");
-            config.GetSettings()
-                .SetProperty<JsonMessageSerializer>(s => s.ReaderCreator, readerCreator);
+            config.GetSettings().Set("NServiceBus.Newtonsoft.Json.ReaderCreator", readerCreator);
         }
 
         /// <summary>
@@ -30,12 +29,11 @@ namespace NServiceBus
         /// </summary>
         /// <param name="config">The configuration object.</param>
         /// <param name="writerCreator">A delegate that creates a <see cref="JsonWriter"/> for a <see cref="Stream"/>.</param>
-        public static void WriterCreator(this SerializationExtentions<NewtonsoftSerializer> config, Func<Stream, JsonWriter> writerCreator)
+        public static void WriterCreator(this SerializationExtentions<NewtonsoftSerialization> config, Func<Stream, JsonWriter> writerCreator)
         {
             Guard.AgainstNull(config, "config");
             Guard.AgainstNull(writerCreator, "writerCreator");
-            config.GetSettings()
-                .SetProperty<JsonMessageSerializer>(s => s.WriterCreator, writerCreator);
+            config.GetSettings().Set("NServiceBus.Newtonsoft.Json.WriterCreator", writerCreator);
         }
 
         /// <summary>
@@ -43,12 +41,11 @@ namespace NServiceBus
         /// </summary>
         /// <param name="config">The configuration object.</param>
         /// <param name="settings">The <see cref="JsonSerializerSettings"/> to use.</param>
-        public static void Settings(this SerializationExtentions<NewtonsoftSerializer> config, JsonSerializerSettings settings)
+        public static void Settings(this SerializationExtentions<NewtonsoftSerialization> config, JsonSerializerSettings settings)
         {
             Guard.AgainstNull(config, "config");
             Guard.AgainstNull(settings, "settings");
-            config.GetSettings()
-                .SetProperty<JsonMessageSerializer>(s => s.Settings, settings);
+            config.GetSettings().Set("NServiceBus.Newtonsoft.Json.Settings", settings);
         }
     }
 }

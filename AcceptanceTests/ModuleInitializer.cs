@@ -6,7 +6,7 @@ public static class ModuleInitializer
 {
     public static void Initialize()
     {
-        var typeName = typeof(JsonMessageSerializer).AssemblyQualifiedName;
+        var typeName = typeof(NServiceBus.NewtonsoftSerialization).AssemblyQualifiedName;
         Transports.Default.Settings["Serializer"] = typeName;
     }
 }

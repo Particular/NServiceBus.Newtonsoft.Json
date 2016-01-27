@@ -1,26 +1,36 @@
-﻿using NServiceBus;
+﻿using System;
+using System.IO;
+using Newtonsoft.Json;
+using NServiceBus;
 using NServiceBus.Features;
+using NServiceBus.MessageInterfaces;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NServiceBus.ObjectBuilder;
+using NServiceBus.Serialization;
+using NServiceBus.Settings;
 
-class NewtonsoftSerialization : Feature
+namespace NServiceBus
 {
-    internal NewtonsoftSerialization()
-    {
-        EnableByDefault();
-        Prerequisite(this.ShouldSerializationFeatureBeEnabled, "NewtonsoftSerialization not enable since serialization definition not detected.");
-    }
-
     /// <summary>
-    /// See <see cref="Feature.Setup"/>
+    /// Enables Newtonsoft Json serialization.
     /// </summary>
-    protected override void Setup(FeatureConfigurationContext context)
+    public class NewtonsoftSerialization : SerializationDefinition
     {
-        Guard.AgainstNull(context, "context");
-        context.Container.ConfigureComponent<MessageMapper>(DependencyLifecycle.SingleInstance);
-        var c = context.Container.ConfigureComponent<JsonMessageSerializer>(DependencyLifecycle.SingleInstance);
+        /// <summary>
+        /// Provides a factory method for building a message serializer.
+        /// </summary>
+        public override Func<IMessageMapper, IMessageSerializer> Configure(ReadOnlySettings settings)
+        {
+            return mapper =>
+            {
+                var readerCreator = settings.GetOrDefault<Func<Stream, JsonReader>>("NServiceBus.Newtonsoft.Json.ReaderCreator");
+                var writerCreator = settings.GetOrDefault<Func<Stream, JsonWriter>>("NServiceBus.Newtonsoft.Json.WriterCreator");
+                var serializerSettings = settings.GetOrDefault<JsonSerializerSettings>("NServiceBus.Newtonsoft.Json.Settings");
 
-        context.Settings.ApplyTo<JsonMessageSerializer>((IComponentConfig) c);
+                var serializer = new JsonMessageSerializer(mapper, readerCreator, writerCreator, serializerSettings);
+                return serializer;
+            };
+        }
     }
 }

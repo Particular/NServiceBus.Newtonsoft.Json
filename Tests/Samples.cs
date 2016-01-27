@@ -24,14 +24,14 @@ class Samples
                            }
                        };
         var busConfig = new BusConfiguration();
-        busConfig.UseSerialization<NewtonsoftSerializer>()
+        busConfig.UseSerialization<NewtonsoftSerialization>()
             .Settings(settings);
     }
 
     static void Writer()
     {
         var busConfig = new BusConfiguration();
-        busConfig.UseSerialization<NewtonsoftSerializer>()
+        busConfig.UseSerialization<NewtonsoftSerialization>()
             .WriterCreator(stream =>
             {
                 var streamWriter = new StreamWriter(stream, Encoding.UTF8);
@@ -45,7 +45,7 @@ class Samples
     static void Reader()
     {
         var busConfig = new BusConfiguration();
-        busConfig.UseSerialization<NewtonsoftSerializer>()
+        busConfig.UseSerialization<NewtonsoftSerialization>()
             .ReaderCreator(stream =>
             {
                 var streamReader = new StreamReader(stream, Encoding.UTF8);

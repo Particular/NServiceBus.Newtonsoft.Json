@@ -25,7 +25,7 @@ public class JsonMessageSerializerTest
     [SetUp]
     public void Setup()
     {
-        serializer = new JsonMessageSerializer(messageMapper);
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
     }
 
     public class SimpleMessage1
@@ -91,7 +91,7 @@ PropertyOnMessage2: 'Message2'
     {
         messageMapper = new MessageMapper();
         messageMapper.Initialize(new[] { typeof(IMyEventA), typeof(IMyEventB) });
-        serializer = new JsonMessageSerializer(messageMapper);
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
 
         using (var stream = new MemoryStream())
         {
@@ -161,7 +161,7 @@ PropertyOnMessage2: 'Message2'
     {
         messageMapper = new MessageMapper();
         messageMapper.Initialize(new[] { typeof(ISuperMessageWithoutConcreteImpl) });
-        serializer = new JsonMessageSerializer(messageMapper);
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
 
         using (var stream = new MemoryStream())
         {
@@ -180,7 +180,7 @@ PropertyOnMessage2: 'Message2'
     {
         messageMapper = new MessageMapper();
         messageMapper.Initialize(new[] { typeof(ISuperMessageWithoutConcreteImpl) });
-        serializer = new JsonMessageSerializer(messageMapper);
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
 
         using (var stream = new MemoryStream())
         {
@@ -203,7 +203,7 @@ PropertyOnMessage2: 'Message2'
         var map = new[] { typeof(SuperMessageWithConcreteImpl), typeof(ISuperMessageWithConcreteImpl) };
         messageMapper = new MessageMapper();
         messageMapper.Initialize(map);
-        serializer = new JsonMessageSerializer(messageMapper);
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
 
         using (var stream = new MemoryStream())
         {
@@ -262,7 +262,7 @@ B: {
 
             messageMapper = new MessageMapper();
             messageMapper.Initialize(new[] { typeof(IAImpl), typeof(IA) });
-            serializer = new JsonMessageSerializer(messageMapper);
+            serializer = new JsonMessageSerializer(messageMapper, null, null, null);
 
             var result = serializer.Deserialize(stream, new[] { typeof(IAImpl) });
             Assert.IsNotEmpty(result);
@@ -331,7 +331,7 @@ B: {
                                     {
                                         typeof (IA), typeof (A)
                                     });
-        serializer = new JsonMessageSerializer(messageMapper);
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
 
         serializer.Serialize(obj, output);
 
@@ -391,7 +391,7 @@ B: {
                                     {
                                         typeof (IA), typeof (IAImpl)
                                     });
-        serializer = new JsonMessageSerializer(messageMapper);
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
 
         serializer.Serialize(obj, output);
 

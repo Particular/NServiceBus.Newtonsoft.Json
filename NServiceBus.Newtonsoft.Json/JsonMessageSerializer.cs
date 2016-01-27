@@ -12,11 +12,7 @@ using NewtonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace NServiceBus.Newtonsoft.Json
 {
-    /// <summary>
-    /// Newtonsoft JSON message serializer.
-    /// Initializes a new instance of <see cref="JsonMessageSerializer"/>.
-    /// </summary>
-    public class JsonMessageSerializer : IMessageSerializer
+    class JsonMessageSerializer : IMessageSerializer
     {
         IMessageMapper messageMapper;
         MessageContractResolver messageContractResolver;
@@ -24,15 +20,12 @@ namespace NServiceBus.Newtonsoft.Json
         JsonSerializerSettings settings;
         Func<Stream, JsonWriter> writerCreator;
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="JsonMessageSerializer"/>.
-        /// </summary>
-        public JsonMessageSerializer(IMessageMapper messageMapper)
+        public JsonMessageSerializer(IMessageMapper messageMapper, Func<Stream, JsonReader> readerCreator, Func<Stream, JsonWriter> writerCreator, JsonSerializerSettings settings)
         {
             Guard.AgainstNull(messageMapper, "messageMapper");
             this.messageMapper = messageMapper;
             messageContractResolver = new MessageContractResolver(messageMapper);
-            Settings = new JsonSerializerSettings
+            this.settings = settings ?? new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Auto,
                 Converters =
@@ -43,28 +36,28 @@ namespace NServiceBus.Newtonsoft.Json
                     }
                 }
             };
-            WriterCreator = stream =>
+            this.writerCreator = writerCreator ?? (stream =>
             {
                 var streamWriter = new StreamWriter(stream, Encoding.UTF8);
                 return new JsonTextWriter(streamWriter)
                 {
                     Formatting = Formatting.None
                 };
-            };
-            ReaderCreator = stream =>
+            });
+            this.readerCreator = readerCreator ?? (stream =>
             {
                 var streamReader = new StreamReader(stream, Encoding.UTF8);
                 return new JsonTextReader(streamReader);
-            };
+            });
         }
 
         public void Serialize(object message, Stream stream)
         {
             Guard.AgainstNull(stream, "stream");
             Guard.AgainstNull(message, "message");
-            var jsonSerializer = NewtonSerializer.Create(Settings);
+            var jsonSerializer = NewtonSerializer.Create(settings);
             jsonSerializer.Binder = new MessageSerializationBinder(messageMapper);
-            var jsonWriter = WriterCreator(stream);
+            var jsonWriter = writerCreator(stream);
             jsonSerializer.Serialize(jsonWriter, message);
             jsonWriter.Flush();
         }
@@ -73,13 +66,13 @@ namespace NServiceBus.Newtonsoft.Json
         {
             Guard.AgainstNull(stream, "stream");
             Guard.AgainstNull(messageTypes, "messageTypes");
-            var jsonSerializer = NewtonSerializer.Create(Settings);
+            var jsonSerializer = NewtonSerializer.Create(settings);
             jsonSerializer.ContractResolver = messageContractResolver;
             jsonSerializer.Binder = new MessageSerializationBinder(messageMapper, messageTypes);
 
             if (IsArrayStream(stream))
             {
-                var arrayReader = ReaderCreator(stream);
+                var arrayReader = readerCreator(stream);
                 return jsonSerializer.Deserialize<object[]>(arrayReader);
             }
 
@@ -88,7 +81,7 @@ namespace NServiceBus.Newtonsoft.Json
                 return DeserializeMultipleMesageTypes(stream, messageTypes, jsonSerializer).ToArray();
             }
 
-            var simpleReader = ReaderCreator(stream);
+            var simpleReader = readerCreator(stream);
             return new[]
             {
                 jsonSerializer.Deserialize<object>(simpleReader)
@@ -100,14 +93,14 @@ namespace NServiceBus.Newtonsoft.Json
             foreach (var messageType in FindRootTypes(messageTypes))
             {
                 stream.Seek(0, SeekOrigin.Begin);
-                var reader = ReaderCreator(stream);
+                var reader = readerCreator(stream);
                 yield return jsonSerializer.Deserialize(reader, messageType);
             }
         }
 
         bool IsArrayStream(Stream stream)
         {
-            var reader = ReaderCreator(stream);
+            var reader = readerCreator(stream);
             reader.Read();
             stream.Seek(0, SeekOrigin.Begin);
             return reader.TokenType == JsonToken.StartArray;
@@ -135,45 +128,6 @@ namespace NServiceBus.Newtonsoft.Json
         public string ContentType
         {
             get { return ContentTypes.Json; }
-        }
-
-        /// <summary>
-        /// Configures the <see cref="JsonSerializerSettings"/> to use.
-        /// </summary>
-        public JsonSerializerSettings Settings
-        {
-            get { return settings; }
-            set
-            {
-                Guard.AgainstNull(value, "value");
-                settings = value;
-            }
-        }
-
-        /// <summary>
-        /// Configures the <see cref="JsonReader"/> creator of JSON stream.
-        /// </summary>
-        public Func<Stream, JsonReader> ReaderCreator
-        {
-            get { return readerCreator; }
-            set
-            {
-                Guard.AgainstNull(value, "value");
-                readerCreator = value;
-            }
-        }
-
-        /// <summary>
-        /// Configures the <see cref="JsonWriter"/> creator of JSON stream.
-        /// </summary>
-        public Func<Stream, JsonWriter> WriterCreator
-        {
-            get { return writerCreator; }
-            set
-            {
-                Guard.AgainstNull(value, "value");
-                writerCreator = value;
-            }
         }
     }
 }
