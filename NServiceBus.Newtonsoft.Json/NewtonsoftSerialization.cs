@@ -20,7 +20,7 @@ namespace NServiceBus
         /// <summary>
         /// Provides a factory method for building a message serializer.
         /// </summary>
-        public override Func<IMessageMapper, IMessageSerializer> Configure(ReadOnlySettings settings)
+        protected override Func<IMessageMapper, IMessageSerializer> Configure(ReadOnlySettings settings)
         {
             return mapper =>
             {

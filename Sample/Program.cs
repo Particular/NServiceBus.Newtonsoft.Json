@@ -17,9 +17,8 @@ class Program
 
     private static async Task Run(BusConfiguration busConfig)
     {
-        var bus = await Endpoint.Start(busConfig);
-        var session = bus.CreateBusSession();
-        await session.SendLocal(new MyMessage
+        var endpoint = await Endpoint.Start(busConfig);
+        await endpoint.SendLocal(new MyMessage
         {
             DateSend = DateTime.Now,
         });
