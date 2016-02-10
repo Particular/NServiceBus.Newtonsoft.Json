@@ -6,17 +6,18 @@ class Program
 {
     static void Main()
     {
-        var busConfig = new BusConfiguration();
-        busConfig.EndpointName("NewtonsoftSerializerSample");
-        busConfig.UseSerialization<NewtonsoftSerialization>();
-        busConfig.EnableInstallers();
-        busConfig.UsePersistence<InMemoryPersistence>();
-        Run(busConfig).GetAwaiter().GetResult();
+        var endpointConfiguration = new EndpointConfiguration();
+        endpointConfiguration.EndpointName("NewtonsoftSerializerSample");
+        endpointConfiguration.UseSerialization<NewtonsoftSerialization>();
+        endpointConfiguration.EnableInstallers();
+        endpointConfiguration.SendFailedMessagesTo("error");
+        endpointConfiguration.UsePersistence<InMemoryPersistence>();
+        Run(endpointConfiguration).GetAwaiter().GetResult();
     }
 
-    static async Task Run(BusConfiguration busConfig)
+    static async Task Run(EndpointConfiguration endpointConfiguration)
     {
-        var endpoint = await Endpoint.Start(busConfig);
+        var endpoint = await Endpoint.Start(endpointConfiguration);
         await endpoint.SendLocal(new MyMessage
         {
             DateSend = DateTime.Now,

@@ -6,7 +6,7 @@
     <members>
         <member name="T:NServiceBus.NewtonsoftConfigurationExtensions">
             <summary>
-            Extensions for <see cref="T:NServiceBus.BusConfiguration"/> to manipulate how messages are serialized via Json.net.
+            Extensions for <see cref="T:NServiceBus.EndpointConfiguration"/> to manipulate how messages are serialized via Json.net.
             </summary>
         </member>
         <member name="M:NServiceBus.NewtonsoftConfigurationExtensions.ReaderCreator(NServiceBus.Serialization.SerializationExtentions{NServiceBus.NewtonsoftSerialization},System.Func{System.IO.Stream,Newtonsoft.Json.JsonReader})">
