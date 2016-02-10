@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NServiceBus.Newtonsoft.Json</name>
+    </assembly>
+    <members>
+        <member name="T:NServiceBus.NewtonsoftConfigurationExtensions">
+            <summary>
+            Extensions for <see cref="T:NServiceBus.BusConfiguration"/> to manipulate how messages are serialized via Json.net.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.NewtonsoftConfigurationExtensions.ReaderCreator(NServiceBus.Serialization.SerializationExtentions{NServiceBus.NewtonsoftSerialization},System.Func{System.IO.Stream,Newtonsoft.Json.JsonReader})">
+            <summary>
+            Configures the <see cref="T:Newtonsoft.Json.JsonReader"/> creator of JSON stream.
+            </summary>
+            <param name="config">The configuration object</param>
+            <param name="readerCreator">A delegate that creates a <see cref="T:Newtonsoft.Json.JsonReader"/> for a <see cref="T:System.IO.Stream"/>.</param>
+        </member>
+        <member name="M:NServiceBus.NewtonsoftConfigurationExtensions.WriterCreator(NServiceBus.Serialization.SerializationExtentions{NServiceBus.NewtonsoftSerialization},System.Func{System.IO.Stream,Newtonsoft.Json.JsonWriter})">
+            <summary>
+            Configures the <see cref="T:Newtonsoft.Json.JsonWriter"/> creator of JSON stream.
+            </summary>
+            <param name="config">The configuration object.</param>
+            <param name="writerCreator">A delegate that creates a <see cref="T:Newtonsoft.Json.JsonWriter"/> for a <see cref="T:System.IO.Stream"/>.</param>
+        </member>
+        <member name="M:NServiceBus.NewtonsoftConfigurationExtensions.Settings(NServiceBus.Serialization.SerializationExtentions{NServiceBus.NewtonsoftSerialization},Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Configures the <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/> to use.
+            </summary>
+            <param name="config">The configuration object.</param>
+            <param name="settings">The <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/> to use.</param>
+        </member>
+        <member name="T:NServiceBus.NewtonsoftSerialization">
+            <summary>
+            Enables Newtonsoft Json serialization.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.NewtonsoftSerialization.Configure(NServiceBus.Settings.ReadOnlySettings)">
+            <summary>
+            Provides a factory method for building a message serializer.
+            </summary>
+        </member>
+    </members>
+</doc>
