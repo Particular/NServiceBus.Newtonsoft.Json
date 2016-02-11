@@ -61,23 +61,11 @@
     <Compile Include="NewtonsoftSerialization.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="NServiceBus.Newtonsoft.Json.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild">
-    <ItemGroup>
-      <FilesToDelete Include="$(SolutionDir)NuGetBuild\**\*.*" />
-      <FilesToDelete Include="$(SolutionDir)NuGetBuildCodeOnly\**\*.*" />
-    </ItemGroup>
-    <Delete Files="@(FilesToDelete)" />
-    <Copy SourceFiles="$(OutputPath)NServiceBus.Newtonsoft.Json.dll" DestinationFolder="$(SolutionDir)NuGetBuild\Lib\NET45" />
-    <Copy SourceFiles="$(OutputPath)NServiceBus.Newtonsoft.Json.pdb" DestinationFolder="$(SolutionDir)NuGetBuild\Lib\NET45" />
-    <Copy SourceFiles="$(OutputPath)NServiceBus.Newtonsoft.Json.xml" DestinationFolder="$(SolutionDir)NuGetBuild\Lib\NET45" />
-    <Copy SourceFiles="$(ProjectDir)NServiceBus.Newtonsoft.Json.nuspec" DestinationFolder="$(SolutionDir)NuGetBuild" />
-  </Target>
   <Import Project="..\packages\GitVersionTask.2.0.1\Build\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.2.0.1\Build\GitVersionTask.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
