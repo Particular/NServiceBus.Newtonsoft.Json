@@ -16,7 +16,7 @@ namespace NServiceBus
         /// <summary>
         /// Provides a factory method for building a message serializer.
         /// </summary>
-        protected override Func<IMessageMapper, IMessageSerializer> Configure(ReadOnlySettings settings)
+        public override Func<IMessageMapper, IMessageSerializer> Configure(ReadOnlySettings settings)
         {
             return mapper =>
             {
@@ -24,8 +24,7 @@ namespace NServiceBus
                 var writerCreator = settings.GetOrDefault<Func<Stream, JsonWriter>>("NServiceBus.Newtonsoft.Json.WriterCreator");
                 var serializerSettings = settings.GetOrDefault<JsonSerializerSettings>("NServiceBus.Newtonsoft.Json.Settings");
 
-                var serializer = new JsonMessageSerializer(mapper, readerCreator, writerCreator, serializerSettings);
-                return serializer;
+                return new JsonMessageSerializer(mapper, readerCreator, writerCreator, serializerSettings);
             };
         }
     }
