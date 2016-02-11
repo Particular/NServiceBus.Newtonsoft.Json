@@ -16,7 +16,7 @@ namespace NServiceBus
         /// </summary>
         /// <param name="config">The configuration object</param>
         /// <param name="readerCreator">A delegate that creates a <see cref="JsonReader"/> for a <see cref="Stream"/>.</param>
-        public static void ReaderCreator(this SerializationExtentions<NewtonsoftSerialization> config, Func<Stream, JsonReader> readerCreator)
+        public static void ReaderCreator(this SerializationExtentions<NewtonsoftSerializer> config, Func<Stream, JsonReader> readerCreator)
         {
             Guard.AgainstNull(config, "config");
             Guard.AgainstNull(readerCreator, "readerCreator");
@@ -28,7 +28,7 @@ namespace NServiceBus
         /// </summary>
         /// <param name="config">The configuration object.</param>
         /// <param name="writerCreator">A delegate that creates a <see cref="JsonWriter"/> for a <see cref="Stream"/>.</param>
-        public static void WriterCreator(this SerializationExtentions<NewtonsoftSerialization> config, Func<Stream, JsonWriter> writerCreator)
+        public static void WriterCreator(this SerializationExtentions<NewtonsoftSerializer> config, Func<Stream, JsonWriter> writerCreator)
         {
             Guard.AgainstNull(config, "config");
             Guard.AgainstNull(writerCreator, "writerCreator");
@@ -40,7 +40,7 @@ namespace NServiceBus
         /// </summary>
         /// <param name="config">The configuration object.</param>
         /// <param name="settings">The <see cref="JsonSerializerSettings"/> to use.</param>
-        public static void Settings(this SerializationExtentions<NewtonsoftSerialization> config, JsonSerializerSettings settings)
+        public static void Settings(this SerializationExtentions<NewtonsoftSerializer> config, JsonSerializerSettings settings)
         {
             Guard.AgainstNull(config, "config");
             Guard.AgainstNull(settings, "settings");

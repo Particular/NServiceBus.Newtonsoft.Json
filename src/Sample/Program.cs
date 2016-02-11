@@ -8,7 +8,7 @@ class Program
     {
         var endpointConfiguration = new EndpointConfiguration();
         endpointConfiguration.EndpointName("NewtonsoftSerializerSample");
-        endpointConfiguration.UseSerialization<NewtonsoftSerialization>();
+        endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
         endpointConfiguration.EnableInstallers();
         endpointConfiguration.SendFailedMessagesTo("error");
         endpointConfiguration.UsePersistence<InMemoryPersistence>();

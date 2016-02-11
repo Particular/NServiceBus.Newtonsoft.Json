@@ -11,7 +11,7 @@ namespace NServiceBus
     /// <summary>
     /// Enables Newtonsoft Json serialization.
     /// </summary>
-    public class NewtonsoftSerialization : SerializationDefinition
+    public class NewtonsoftSerializer : SerializationDefinition
     {
         /// <summary>
         /// Provides a factory method for building a message serializer.

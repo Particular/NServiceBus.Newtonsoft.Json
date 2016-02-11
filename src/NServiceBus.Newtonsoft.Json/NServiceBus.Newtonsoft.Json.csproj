@@ -58,7 +58,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="JsonMessageSerializer.cs" />
     <Compile Include="NewtonsoftConfigurationExtensions.cs" />
-    <Compile Include="NewtonsoftSerialization.cs" />
+    <Compile Include="NewtonsoftSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

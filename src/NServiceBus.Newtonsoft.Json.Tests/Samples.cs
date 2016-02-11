@@ -23,14 +23,14 @@ class Samples
                            }
                        };
         var endpointConfiguration = new EndpointConfiguration();
-        endpointConfiguration.UseSerialization<NewtonsoftSerialization>()
+        endpointConfiguration.UseSerialization<NewtonsoftSerializer>()
             .Settings(settings);
     }
 
     static void Writer()
     {
         var endpointConfiguration = new EndpointConfiguration();
-        endpointConfiguration.UseSerialization<NewtonsoftSerialization>()
+        endpointConfiguration.UseSerialization<NewtonsoftSerializer>()
             .WriterCreator(stream =>
             {
                 var streamWriter = new StreamWriter(stream, Encoding.UTF8);
@@ -44,7 +44,7 @@ class Samples
     static void Reader()
     {
         var endpointConfiguration = new EndpointConfiguration();
-        endpointConfiguration.UseSerialization<NewtonsoftSerialization>()
+        endpointConfiguration.UseSerialization<NewtonsoftSerializer>()
             .ReaderCreator(stream =>
             {
                 var streamReader = new StreamReader(stream, Encoding.UTF8);
