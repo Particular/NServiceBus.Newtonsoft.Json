@@ -8,7 +8,7 @@ using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
 
 [TestFixture]
-public class JsonMessageSerializerTest 
+public class JsonMessageSerializerTest
 {
     public JsonMessageSerializerTest()
     {
