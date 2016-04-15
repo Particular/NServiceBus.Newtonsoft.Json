@@ -4,12 +4,10 @@ using NServiceBus.MessageInterfaces;
 
 namespace NServiceBus.Newtonsoft.Json
 {
-    using System.Collections.Concurrent;
 
     class MessageContractResolver : DefaultContractResolver
     {
         IMessageMapper messageMapper;
-        ConcurrentDictionary<RuntimeTypeHandle, JsonObjectContract> cache = new ConcurrentDictionary<RuntimeTypeHandle, JsonObjectContract>();
 
         public MessageContractResolver(IMessageMapper messageMapper)
         {
@@ -17,11 +15,6 @@ namespace NServiceBus.Newtonsoft.Json
         }
 
         protected override JsonObjectContract CreateObjectContract(Type objectType)
-        {
-            return cache.GetOrAdd(objectType.TypeHandle, handle => BuildJsonObjectContract(objectType));
-        }
-
-        JsonObjectContract BuildJsonObjectContract(Type objectType)
         {
             var mappedTypeFor = messageMapper.GetMappedTypeFor(objectType);
 
