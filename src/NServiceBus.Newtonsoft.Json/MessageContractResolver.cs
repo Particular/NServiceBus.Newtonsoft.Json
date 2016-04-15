@@ -2,26 +2,38 @@ using System;
 using Newtonsoft.Json.Serialization;
 using NServiceBus.MessageInterfaces;
 
-class MessageContractResolver : DefaultContractResolver
+namespace NServiceBus.Newtonsoft.Json
 {
-    IMessageMapper messageMapper;
+    using System.Collections.Concurrent;
 
-    public MessageContractResolver(IMessageMapper messageMapper)
-        : base(true)
+    class MessageContractResolver : DefaultContractResolver
     {
-        this.messageMapper = messageMapper;
-    }
+        IMessageMapper messageMapper;
+        ConcurrentDictionary<RuntimeTypeHandle, JsonObjectContract> cache = new ConcurrentDictionary<RuntimeTypeHandle, JsonObjectContract>();
 
-    protected override JsonObjectContract CreateObjectContract(Type objectType)
-    {
-        var mappedTypeFor = messageMapper.GetMappedTypeFor(objectType);
+        public MessageContractResolver(IMessageMapper messageMapper)
+        {
+            this.messageMapper = messageMapper;
+        }
 
-        if (mappedTypeFor == null)
-            return base.CreateObjectContract(objectType);
+        protected override JsonObjectContract CreateObjectContract(Type objectType)
+        {
+            return cache.GetOrAdd(objectType.TypeHandle, handle => BuildJsonObjectContract(objectType));
+        }
 
-        var jsonContract = base.CreateObjectContract(mappedTypeFor);
-        jsonContract.DefaultCreator = () => messageMapper.CreateInstance(mappedTypeFor);
+        JsonObjectContract BuildJsonObjectContract(Type objectType)
+        {
+            var mappedTypeFor = messageMapper.GetMappedTypeFor(objectType);
 
-        return jsonContract;
+            if (mappedTypeFor == null)
+            {
+                return base.CreateObjectContract(objectType);
+            }
+
+            var jsonContract = base.CreateObjectContract(mappedTypeFor);
+            jsonContract.DefaultCreator = () => messageMapper.CreateInstance(mappedTypeFor);
+
+            return jsonContract;
+        }
     }
 }

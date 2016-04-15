@@ -8,13 +8,13 @@
     <licenseUrl>$licenseUrl$</licenseUrl>
     <projectUrl>$projectUrl$</projectUrl>
     <iconUrl>$iconUrl$</iconUrl>
-    <requireLicenseAcceptance>$requireLicenseAcceptance$</requireLicenseAcceptance>    
+    <requireLicenseAcceptance>$requireLicenseAcceptance$</requireLicenseAcceptance>
     <description>Newtonsoft.Json integration for NServiceBus.</description>
     <language>en-AU</language>
     <copyright>$copyright$</copyright>
     <tags>NServiceBus, Newtonsoft, Json</tags>
 	  <dependencies>
-      <dependency id="NServiceBus" version="[6.0.0-unstable, 7.0.0)" />
+      <dependency id="NServiceBus" version="[6.0.0-beta, 7.0.0)" />
       <dependency id="Newtonsoft.Json" version="[8.0.0, 9.0.0)" />
 	  </dependencies>
   </metadata>

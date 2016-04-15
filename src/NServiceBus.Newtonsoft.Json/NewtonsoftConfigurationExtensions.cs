@@ -1,11 +1,14 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json;
+using Newton = Newtonsoft.Json;
 using NServiceBus.Configuration.AdvanceExtensibility;
 using NServiceBus.Serialization;
+using NServiceBus.Newtonsoft.Json;
 
 namespace NServiceBus
 {
+
     /// <summary>
     /// Extensions for <see cref="EndpointConfiguration"/> to manipulate how messages are serialized via Json.net.
     /// </summary>

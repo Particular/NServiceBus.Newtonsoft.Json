@@ -1,14 +1,17 @@
 ﻿using System;
 
-static class Guard
+namespace NServiceBus.Newtonsoft.Json
 {
-
-    // ReSharper disable UnusedParameter.Global
-    public static void AgainstNull(object value, string argumentName)
+    static class Guard
     {
-        if (value == null)
+
+        // ReSharper disable UnusedParameter.Global
+        public static void AgainstNull(object value, string argumentName)
         {
-            throw new ArgumentNullException(argumentName);
+            if (value == null)
+            {
+                throw new ArgumentNullException(argumentName);
+            }
         }
     }
 }
