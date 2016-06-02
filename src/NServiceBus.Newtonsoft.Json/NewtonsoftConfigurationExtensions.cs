@@ -1,14 +1,12 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json;
-using Newton = Newtonsoft.Json;
 using NServiceBus.Configuration.AdvanceExtensibility;
 using NServiceBus.Serialization;
 using NServiceBus.Newtonsoft.Json;
 
 namespace NServiceBus
 {
-
     /// <summary>
     /// Extensions for <see cref="EndpointConfiguration"/> to manipulate how messages are serialized via Json.net.
     /// </summary>
@@ -19,7 +17,7 @@ namespace NServiceBus
         /// </summary>
         /// <param name="config">The configuration object</param>
         /// <param name="readerCreator">A delegate that creates a <see cref="JsonReader"/> for a <see cref="Stream"/>.</param>
-        public static void ReaderCreator(this SerializationExtentions<NewtonsoftSerializer> config, Func<Stream, JsonReader> readerCreator)
+        public static void ReaderCreator(this SerializationExtensions<NewtonsoftSerializer> config, Func<Stream, JsonReader> readerCreator)
         {
             Guard.AgainstNull(config, "config");
             Guard.AgainstNull(readerCreator, "readerCreator");
@@ -31,7 +29,7 @@ namespace NServiceBus
         /// </summary>
         /// <param name="config">The configuration object.</param>
         /// <param name="writerCreator">A delegate that creates a <see cref="JsonWriter"/> for a <see cref="Stream"/>.</param>
-        public static void WriterCreator(this SerializationExtentions<NewtonsoftSerializer> config, Func<Stream, JsonWriter> writerCreator)
+        public static void WriterCreator(this SerializationExtensions<NewtonsoftSerializer> config, Func<Stream, JsonWriter> writerCreator)
         {
             Guard.AgainstNull(config, "config");
             Guard.AgainstNull(writerCreator, "writerCreator");
@@ -43,7 +41,7 @@ namespace NServiceBus
         /// </summary>
         /// <param name="config">The configuration object.</param>
         /// <param name="settings">The <see cref="JsonSerializerSettings"/> to use.</param>
-        public static void Settings(this SerializationExtentions<NewtonsoftSerializer> config, JsonSerializerSettings settings)
+        public static void Settings(this SerializationExtensions<NewtonsoftSerializer> config, JsonSerializerSettings settings)
         {
             Guard.AgainstNull(config, "config");
             Guard.AgainstNull(settings, "settings");
