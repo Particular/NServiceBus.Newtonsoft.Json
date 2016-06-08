@@ -7,7 +7,6 @@ using NServiceBus.Newtonsoft.Json;
 
 namespace NServiceBus
 {
-
     /// <summary>
     /// Extensions for <see cref="EndpointConfiguration"/> to manipulate how messages are serialized via Json.net.
     /// </summary>
