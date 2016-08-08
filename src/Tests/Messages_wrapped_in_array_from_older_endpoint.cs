@@ -25,11 +25,11 @@ public class Messages_wrapped_in_array_from_older_endpoint
         var jsonWithMultipleMessages = $@"
 [
 {{
-$type: '{nameof(Messages_wrapped_in_array_from_older_endpoint)}+SimpleMessage1, NServiceBus.Core.Tests',
+$type: '{nameof(SimpleMessage1)}, NServiceBus.Core.Tests',
 PropertyOnMessage1: 'Message1'
 }},
 {{
-$type: '{nameof(Messages_wrapped_in_array_from_older_endpoint)}+SimpleMessage2, NServiceBus.Core.Tests',
+$type: '{nameof(SimpleMessage2)}, NServiceBus.Core.Tests',
 PropertyOnMessage2: 'Message2'
 }}
 ]";
