@@ -87,6 +87,7 @@
     <Compile Include="App_Packages\ApiApprover.3.0.1\PublicApiApprover.cs" />
     <Compile Include="App_Packages\ApiApprover.3.0.1\PublicApiGenerator.cs" />
     <Compile Include="CreatePersonMessage.cs" />
+    <Compile Include="Messages_wrapped_in_array_from_older_endpoint.cs" />
     <Compile Include="Message_with_concrete_implementation_and_interface.cs" />
     <Compile Include="Message_without_concrete_implementation_and_interface.cs" />
     <Compile Include="JsonMessageSerializerTest.cs">

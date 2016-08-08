@@ -48,7 +48,7 @@ public class Message_without_concrete_implementation_and_interface
         }
     }
 
-    interface IWithoutConcrete
+    public interface IWithoutConcrete
     {
         string SomeProperty { get; set; }
     }

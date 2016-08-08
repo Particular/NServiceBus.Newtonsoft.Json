@@ -8,7 +8,7 @@ public class Message_with_concrete_implementation_and_interface
 {
 
     [Test]
-    public void Deserialize_message_with_concrete_implementation_and_interface()
+    public void Deserialize()
     {
         var map = new[]
         {
