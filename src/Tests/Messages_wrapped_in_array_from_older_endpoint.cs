@@ -18,7 +18,7 @@ public class Messages_wrapped_in_array_from_older_endpoint
 
 
     [Test]
-    public void Deserialize()
+    public void Run()
     {
         var messageMapper = new MessageMapper();
         var serializer = new JsonMessageSerializer(messageMapper, null, null, null);

@@ -15,7 +15,7 @@ public class JsonMessageSerializerTest
         messageMapper = new MessageMapper();
         messageMapper.Initialize(new[]
                                     {
-                                        typeof (IA), typeof (A), typeof (SimpleMessage)
+                                        typeof (IA), typeof (A)
                                     });
     }
 
@@ -27,65 +27,6 @@ public class JsonMessageSerializerTest
     {
         serializer = new JsonMessageSerializer(messageMapper, null, null, null);
     }
-
-    [Test]
-    public void Deserialize_message_with_interface_without_wrapping()
-    {
-        using (var stream = new MemoryStream())
-        {
-            serializer.Serialize(new SuperMessage { SomeProperty = "John" }, stream);
-
-            stream.Position = 0;
-
-            var result = (SuperMessage)serializer.Deserialize(stream, new[] { typeof(SuperMessage), typeof(IMyEvent) })[0];
-
-            Assert.AreEqual("John", result.SomeProperty);
-        }
-    }
-
-    [Test]
-    public void Serialize_message_without_wrapping()
-    {
-        using (var stream = new MemoryStream())
-        {
-            serializer.Serialize(new SimpleMessage(), stream);
-
-            stream.Position = 0;
-            var result = new StreamReader(stream).ReadToEnd();
-
-            Assert.That(!result.StartsWith("["), result);
-        }
-    }
-
-    [Test]
-    public void Deserialize_message_without_wrapping()
-    {
-        using (var stream = new MemoryStream())
-        {
-            serializer.Serialize(new SimpleMessage { SomeProperty = "test" }, stream);
-
-            stream.Position = 0;
-            var result = (SimpleMessage)serializer.Deserialize(stream, new[] { typeof(SimpleMessage) })[0];
-
-            Assert.AreEqual("test", result.SomeProperty);
-        }
-
-    }
-
-    [Test]
-    public void Serialize_message_without_typeInfo()
-    {
-        using (var stream = new MemoryStream())
-        {
-            serializer.Serialize(new SimpleMessage(), stream);
-
-            stream.Position = 0;
-            var result = new StreamReader(stream).ReadToEnd();
-
-            Assert.That(!result.Contains("$type"), result);
-        }
-    }
-
 
     [Test]
     public void TestMany()
@@ -288,14 +229,6 @@ B: {
 
 }
 
-public class SimpleMessage
-{
-    public string SomeProperty { get; set; }
-}
-public class SuperMessage : IMyEvent
-{
-    public string SomeProperty { get; set; }
-}
 
 public interface IMyEvent
 {

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using NServiceBus;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
@@ -8,7 +9,7 @@ public class Message_with_concrete_implementation_and_interface
 {
 
     [Test]
-    public void Deserialize()
+    public void Run()
     {
         var map = new[]
         {
@@ -40,6 +41,9 @@ public class Message_with_concrete_implementation_and_interface
     public interface ISuperMessageWithConcreteImpl : IMyEvent
     {
         string SomeProperty { get; set; }
+    }
+    public interface IMyEvent : IEvent
+    {
     }
 
     public class SuperMessageWithConcreteImpl : ISuperMessageWithConcreteImpl

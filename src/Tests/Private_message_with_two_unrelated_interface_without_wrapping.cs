@@ -8,7 +8,7 @@ public class Private_message_with_two_unrelated_interface_without_wrapping
 {
 
     [Test]
-    public void Deserialize()
+    public void Run()
     {
         var messageMapper = new MessageMapper();
         messageMapper.Initialize(new[]
