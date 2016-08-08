@@ -79,10 +79,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIApprovals.cs" />
@@ -90,6 +87,7 @@
     <Compile Include="App_Packages\ApiApprover.3.0.1\PublicApiApprover.cs" />
     <Compile Include="App_Packages\ApiApprover.3.0.1\PublicApiGenerator.cs" />
     <Compile Include="CreatePersonMessage.cs" />
+    <Compile Include="Message_without_concrete_implementation_and_interface.cs" />
     <Compile Include="JsonMessageSerializerTest.cs">
       <SubType>Code</SubType>
     </Compile>

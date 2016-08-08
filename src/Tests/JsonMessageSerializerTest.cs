@@ -156,74 +156,6 @@ PropertyOnMessage2: 'Message2'
         }
     }
 
-    [Test]
-    public void Serialize_message_without_concrete_implementation()
-    {
-        messageMapper = new MessageMapper();
-        messageMapper.Initialize(new[] { typeof(ISuperMessageWithoutConcreteImpl) });
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
-
-        using (var stream = new MemoryStream())
-        {
-            serializer.Serialize(messageMapper.CreateInstance<ISuperMessageWithoutConcreteImpl>(), stream);
-
-            stream.Position = 0;
-            var result = new StreamReader(stream).ReadToEnd();
-
-            Assert.That(!result.Contains("$type"), result);
-            Assert.That(result.Contains("SomeProperty"), result);
-        }
-    }
-
-    [Test]
-    public void Deserialize_message_without_concrete_implementation()
-    {
-        messageMapper = new MessageMapper();
-        messageMapper.Initialize(new[] { typeof(ISuperMessageWithoutConcreteImpl) });
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
-
-        using (var stream = new MemoryStream())
-        {
-            var msg = messageMapper.CreateInstance<ISuperMessageWithoutConcreteImpl>();
-            msg.SomeProperty = "test";
-
-            serializer.Serialize(msg, stream);
-
-            stream.Position = 0;
-
-            var result = (ISuperMessageWithoutConcreteImpl)serializer.Deserialize(stream, new[] { typeof(ISuperMessageWithoutConcreteImpl) })[0];
-
-            Assert.AreEqual("test", result.SomeProperty);
-        }
-    }
-
-    [Test]
-    public void Deserialize_message_with_concrete_implementation_and_interface()
-    {
-        var map = new[] { typeof(SuperMessageWithConcreteImpl), typeof(ISuperMessageWithConcreteImpl) };
-        messageMapper = new MessageMapper();
-        messageMapper.Initialize(map);
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
-
-        using (var stream = new MemoryStream())
-        {
-            var msg = new SuperMessageWithConcreteImpl
-            {
-                SomeProperty = "test"
-            };
-
-            serializer.Serialize(msg, stream);
-
-            stream.Position = 0;
-
-            var result = (ISuperMessageWithConcreteImpl)serializer.Deserialize(stream, map)[0];
-
-            Assert.IsInstanceOf<SuperMessageWithConcreteImpl>(result);
-            Assert.AreEqual("test", result.SomeProperty);
-        }
-    }
-
-
 
     [Test]
     public void TestMany()
@@ -464,10 +396,6 @@ public class MyEventB_impl : IMyEventB
     public int IntValue { get; set; }
 }
 
-public interface ISuperMessageWithoutConcreteImpl : IMyEvent
-{
-    string SomeProperty { get; set; }
-}
 
 public interface ISuperMessageWithConcreteImpl : IMyEvent
 {
@@ -525,6 +453,3 @@ public class C
 {
     public string Cstr { get; set; }
 }
-
-
-
