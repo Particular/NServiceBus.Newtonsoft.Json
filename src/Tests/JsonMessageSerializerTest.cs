@@ -355,6 +355,7 @@ B: {
         Assert.AreEqual("BOO", a.B.BString);
         Assert.AreEqual("COO", ((C) a.B.C).Cstr);
     }
+
 }
 
 public class SimpleMessage
@@ -394,17 +395,6 @@ public interface IMyEventB
 public class MyEventB_impl : IMyEventB
 {
     public int IntValue { get; set; }
-}
-
-
-public interface ISuperMessageWithConcreteImpl : IMyEvent
-{
-    string SomeProperty { get; set; }
-}
-
-public class SuperMessageWithConcreteImpl : ISuperMessageWithConcreteImpl
-{
-    public string SomeProperty { get; set; }
 }
 
 public class A : IMessage
