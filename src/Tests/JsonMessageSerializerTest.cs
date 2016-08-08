@@ -44,33 +44,6 @@ public class JsonMessageSerializerTest
     }
 
     [Test]
-    public void Deserialize_private_message_with_two_unrelated_interface_without_wrapping()
-    {
-        messageMapper = new MessageMapper();
-        messageMapper.Initialize(new[] { typeof(IMyEventA), typeof(IMyEventB) });
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
-
-        using (var stream = new MemoryStream())
-        {
-            var msg = new CompositeMessage
-                        {
-                IntValue = 42,
-                StringValue = "Answer"
-            };
-
-            serializer.Serialize(msg, stream);
-
-            stream.Position = 0;
-
-            var result = serializer.Deserialize(stream, new[] { typeof(IMyEventA), typeof(IMyEventB) });
-            var a = (IMyEventA)result[0];
-            var b = (IMyEventB)result[1];
-            Assert.AreEqual(42, b.IntValue);
-            Assert.AreEqual("Answer", a.StringValue);
-        }
-    }
-
-    [Test]
     public void Serialize_message_without_wrapping()
     {
         using (var stream = new MemoryStream())
@@ -326,32 +299,6 @@ public class SuperMessage : IMyEvent
 
 public interface IMyEvent
 {
-}
-
-public class CompositeMessage : IMyEventA, IMyEventB
-{
-    public string StringValue { get; set; }
-    public int IntValue { get; set; }
-}
-
-public interface IMyEventA
-{
-    string StringValue { get; set; }
-}
-
-public class MyEventA_impl : IMyEventA
-{
-    public string StringValue { get; set; }
-}
-
-public interface IMyEventB
-{
-    int IntValue { get; set; }
-}
-
-public class MyEventB_impl : IMyEventB
-{
-    public int IntValue { get; set; }
 }
 
 public class A : IMessage
