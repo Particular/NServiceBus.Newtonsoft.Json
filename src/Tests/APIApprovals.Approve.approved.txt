@@ -4,6 +4,7 @@ namespace NServiceBus
 {
     public class static NewtonsoftConfigurationExtensions
     {
+        public static void ContentTypeKey(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, string contentTypeKey) { }
         public static void ReaderCreator(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, System.Func<System.IO.Stream, Newtonsoft.Json.JsonReader> readerCreator) { }
         public static void Settings(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, Newtonsoft.Json.JsonSerializerSettings settings) { }
         public static void WriterCreator(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, System.Func<System.IO.Stream, Newtonsoft.Json.JsonWriter> writerCreator) { }
