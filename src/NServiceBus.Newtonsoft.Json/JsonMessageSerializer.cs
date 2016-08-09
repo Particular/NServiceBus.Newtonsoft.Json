@@ -20,11 +20,15 @@ namespace NServiceBus.Newtonsoft.Json
         JsonSerializerSettings settings;
         Func<Stream, JsonWriter> writerCreator;
 
-        public JsonMessageSerializer(IMessageMapper messageMapper, Func<Stream, JsonReader> readerCreator, Func<Stream, JsonWriter> writerCreator, JsonSerializerSettings settings)
+        public JsonMessageSerializer(
+            IMessageMapper messageMapper,
+            Func<Stream, JsonReader> readerCreator,
+            Func<Stream, JsonWriter> writerCreator,
+            JsonSerializerSettings settings, string contentType)
         {
-            Guard.AgainstNull(messageMapper, "messageMapper");
             this.messageMapper = messageMapper;
             messageContractResolver = new MessageContractResolver(messageMapper);
+
             this.settings = settings ?? new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Auto,
@@ -36,6 +40,7 @@ namespace NServiceBus.Newtonsoft.Json
                     }
                 }
             };
+
             this.writerCreator = writerCreator ?? (stream =>
             {
                 var streamWriter = new StreamWriter(stream, Encoding.UTF8);
@@ -44,11 +49,21 @@ namespace NServiceBus.Newtonsoft.Json
                     Formatting = Formatting.None
                 };
             });
+
             this.readerCreator = readerCreator ?? (stream =>
             {
                 var streamReader = new StreamReader(stream, Encoding.UTF8);
                 return new JsonTextReader(streamReader);
             });
+
+            if (contentType == null)
+            {
+                ContentType = ContentTypes.Json;
+            }
+            else
+            {
+                ContentType = contentType;
+            }
         }
 
         public void Serialize(object message, Stream stream)
@@ -88,6 +103,8 @@ namespace NServiceBus.Newtonsoft.Json
             };
         }
 
+        public string ContentType { get; }
+
         IEnumerable<object> DeserializeMultipleMesageTypes(Stream stream, IList<Type> messageTypes, NewtonSerializer jsonSerializer)
         {
             foreach (var messageType in FindRootTypes(messageTypes))
@@ -125,6 +142,5 @@ namespace NServiceBus.Newtonsoft.Json
             }
         }
 
-        public string ContentType => ContentTypes.Json;
     }
 }

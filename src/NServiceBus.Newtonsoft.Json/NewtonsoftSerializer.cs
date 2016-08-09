@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using Newtonsoft.Json;
 using NServiceBus.MessageInterfaces;
 using NServiceBus.Newtonsoft.Json;
 using NServiceBus.Serialization;
@@ -20,12 +18,13 @@ namespace NServiceBus
         {
             return mapper =>
             {
-                var readerCreator = settings.GetOrDefault<Func<Stream, JsonReader>>("NServiceBus.Newtonsoft.Json.ReaderCreator");
-                var writerCreator = settings.GetOrDefault<Func<Stream, JsonWriter>>("NServiceBus.Newtonsoft.Json.WriterCreator");
-                var serializerSettings = settings.GetOrDefault<JsonSerializerSettings>("NServiceBus.Newtonsoft.Json.Settings");
-
-                return new JsonMessageSerializer(mapper, readerCreator, writerCreator, serializerSettings);
+                var readerCreator = settings.GetReaderCreator();
+                var writerCreator = settings.GetWriterCreator();
+                var serializerSettings = settings.GetSettings();
+                var contentTypeKey = settings.GetContentTypeKey();
+                return new JsonMessageSerializer(mapper, readerCreator, writerCreator, serializerSettings, contentTypeKey);
             };
         }
+
     }
 }

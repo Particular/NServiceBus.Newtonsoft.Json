@@ -18,7 +18,7 @@ public class Message_with_concrete_implementation_and_interface
         };
         var messageMapper = new MessageMapper();
         messageMapper.Initialize(map);
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
         using (var stream = new MemoryStream())
         {

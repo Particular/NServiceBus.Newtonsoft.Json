@@ -16,7 +16,7 @@ public class Private_message_with_two_unrelated_interface_without_wrapping
             typeof(IMyEventA),
             typeof(IMyEventB)
         });
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
         using (var stream = new MemoryStream())
         {

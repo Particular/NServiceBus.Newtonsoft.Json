@@ -7,6 +7,8 @@ using NServiceBus.Newtonsoft.Json;
 
 namespace NServiceBus
 {
+    using Settings;
+
     /// <summary>
     /// Extensions for <see cref="EndpointConfiguration"/> to manipulate how messages are serialized via Json.net.
     /// </summary>
@@ -24,6 +26,11 @@ namespace NServiceBus
             config.GetSettings().Set("NServiceBus.Newtonsoft.Json.ReaderCreator", readerCreator);
         }
 
+        internal static Func<Stream, JsonReader> GetReaderCreator(this ReadOnlySettings settings)
+        {
+            return settings.GetOrDefault<Func<Stream, JsonReader>>("NServiceBus.Newtonsoft.Json.ReaderCreator");
+        }
+
         /// <summary>
         /// Configures the <see cref="JsonWriter"/> creator of JSON stream.
         /// </summary>
@@ -36,6 +43,11 @@ namespace NServiceBus
             config.GetSettings().Set("NServiceBus.Newtonsoft.Json.WriterCreator", writerCreator);
         }
 
+        internal static Func<Stream, JsonWriter> GetWriterCreator(this ReadOnlySettings settings)
+        {
+            return settings.GetOrDefault<Func<Stream, JsonWriter>>("NServiceBus.Newtonsoft.Json.WriterCreator");
+        }
+
         /// <summary>
         /// Configures the <see cref="JsonSerializerSettings"/> to use.
         /// </summary>
@@ -46,6 +58,32 @@ namespace NServiceBus
             Guard.AgainstNull(config, "config");
             Guard.AgainstNull(settings, "settings");
             config.GetSettings().Set("NServiceBus.Newtonsoft.Json.Settings", settings);
+        }
+
+        internal static JsonSerializerSettings GetSettings(this ReadOnlySettings settings)
+        {
+            return settings.GetOrDefault<JsonSerializerSettings>("NServiceBus.Newtonsoft.Json.Settings");
+        }
+
+        /// <summary>
+        /// Configures string to use for <see cref="Headers.ContentType"/> headers.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <see cref="ContentTypes.Json"/>.
+        /// This setting is required when this serializer needs to co-exist with other json serializers.
+        /// </remarks>
+        /// <param name="config">The configuration object.</param>
+        /// <param name="contentTypeKey">The content type key to use.</param>
+        public static void ContentTypeKey(this SerializationExtensions<NewtonsoftSerializer> config, string contentTypeKey)
+        {
+            Guard.AgainstNull(config, "config");
+            Guard.AgainstNullOrEnpty(contentTypeKey, "contentTypeKey");
+            config.GetSettings().Set("NServiceBus.Newtonsoft.Json.ContentTypeKey", contentTypeKey);
+        }
+
+        internal static string GetContentTypeKey(this ReadOnlySettings settings)
+        {
+            return settings.GetOrDefault<string>("NServiceBus.Newtonsoft.Json.ContentTypeKey");
         }
     }
 }

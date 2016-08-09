@@ -25,7 +25,7 @@ public class JsonMessageSerializerTest
     [SetUp]
     public void Setup()
     {
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
     }
 
     [Test]
@@ -65,7 +65,7 @@ B: {
 
             messageMapper = new MessageMapper();
             messageMapper.Initialize(new[] { typeof(IAImpl), typeof(IA) });
-            serializer = new JsonMessageSerializer(messageMapper, null, null, null);
+            serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
             var result = serializer.Deserialize(stream, new[] { typeof(IAImpl) });
             Assert.IsNotEmpty(result);
@@ -134,7 +134,7 @@ B: {
                                     {
                                         typeof (IA), typeof (A)
                                     });
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
         serializer.Serialize(obj, output);
 
@@ -194,7 +194,7 @@ B: {
                                     {
                                         typeof (IA), typeof (IAImpl)
                                     });
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null);
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
         serializer.Serialize(obj, output);
 

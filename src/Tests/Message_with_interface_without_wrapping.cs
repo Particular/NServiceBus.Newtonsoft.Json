@@ -10,7 +10,7 @@ public class Message_with_interface_without_wrapping
     public void Run()
     {
         var messageMapper = new MessageMapper();
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
         using (var stream = new MemoryStream())
         {
             serializer.Serialize(new SuperMessage { SomeProperty = "John" }, stream);

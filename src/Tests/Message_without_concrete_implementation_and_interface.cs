@@ -12,7 +12,7 @@ public class Message_without_concrete_implementation_and_interface
     {
         var messageMapper = new MessageMapper();
         messageMapper.Initialize(new[] { typeof(IWithoutConcrete) });
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
         using (var stream = new MemoryStream())
         {
@@ -31,7 +31,7 @@ public class Message_without_concrete_implementation_and_interface
     {
         var messageMapper = new MessageMapper();
         messageMapper.Initialize(new[] { typeof(IWithoutConcrete) });
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
         using (var stream = new MemoryStream())
         {

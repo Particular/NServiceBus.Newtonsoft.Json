@@ -11,7 +11,7 @@ public class Message_without_typeInfo
     public void Run()
     {
         var messageMapper = new MessageMapper();
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
         using (var stream = new MemoryStream())
         {
             serializer.Serialize(new SimpleMessage(), stream);
