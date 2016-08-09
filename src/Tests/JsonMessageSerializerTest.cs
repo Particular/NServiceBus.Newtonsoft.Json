@@ -29,62 +29,6 @@ public class JsonMessageSerializerTest
     }
 
     [Test]
-    public void TestMany()
-    {
-        var xml = @"[{
-$type: ""IA, NServiceBus.Core.Tests"",
-Data: ""rhNAGU4dr/Qjz6ocAsOs3wk3ZmxHMOg="",
-S: ""kalle"",
-I: 42,
-B: {
-    BString: ""BOO"",
-    C: {
-        $type: ""C, NServiceBus.Core.Tests"",
-        Cstr: ""COO""
-    }
-}
-}, {
-$type: ""IA, NServiceBus.Core.Tests"",
-Data: ""AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="",
-S: ""kalle"",
-I: 42,
-B: {
-    BString: ""BOO"",
-    C: {
-        $type: ""C, NServiceBus.Core.Tests"",
-        Cstr: ""COO""
-    }
-}
-}]";
-        using (var stream = new MemoryStream())
-        {
-            var streamWriter = new StreamWriter(stream);
-            streamWriter.Write(xml);
-            streamWriter.Flush();
-            stream.Position = 0;
-
-            messageMapper = new MessageMapper();
-            messageMapper.Initialize(new[] { typeof(IAImpl), typeof(IA) });
-            serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-
-            var result = serializer.Deserialize(stream, new[] { typeof(IAImpl) });
-            Assert.IsNotEmpty(result);
-            Assert.That(result, Has.Length.EqualTo(2));
-
-            Assert.That(result[0], Is.AssignableTo(typeof(IA)));
-            var a = (IA)result[0];
-
-            Assert.AreEqual(23, a.Data.Length);
-            Assert.AreEqual(42, a.I);
-            Assert.AreEqual("kalle", a.S);
-            Assert.IsNotNull(a.B);
-            Assert.AreEqual("BOO", a.B.BString);
-            Assert.AreEqual("COO", ((C)a.B.C).Cstr);
-        }
-
-    }
-
-    [Test]
     public void Test()
     {
         var expectedDate = new DateTime(2010, 10, 13, 12, 32, 42, DateTimeKind.Unspecified);

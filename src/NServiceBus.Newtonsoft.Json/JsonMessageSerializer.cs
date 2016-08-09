@@ -88,8 +88,7 @@ namespace NServiceBus.Newtonsoft.Json
 
             if (IsArrayStream(stream))
             {
-                var arrayReader = readerCreator(stream);
-                return jsonSerializer.Deserialize<object[]>(arrayReader);
+                throw new Exception("Multiple messages in the same stream are not supported.");
             }
 
             if (messageTypes.Any())
