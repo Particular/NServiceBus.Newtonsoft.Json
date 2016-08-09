@@ -17,7 +17,7 @@ namespace NServiceBus
         /// <summary>
         /// Configures the <see cref="JsonReader"/> creator of JSON stream.
         /// </summary>
-        /// <param name="config">The configuration object</param>
+        /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="readerCreator">A delegate that creates a <see cref="JsonReader"/> for a <see cref="Stream"/>.</param>
         public static void ReaderCreator(this SerializationExtensions<NewtonsoftSerializer> config, Func<Stream, JsonReader> readerCreator)
         {
@@ -34,7 +34,7 @@ namespace NServiceBus
         /// <summary>
         /// Configures the <see cref="JsonWriter"/> creator of JSON stream.
         /// </summary>
-        /// <param name="config">The configuration object.</param>
+        /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="writerCreator">A delegate that creates a <see cref="JsonWriter"/> for a <see cref="Stream"/>.</param>
         public static void WriterCreator(this SerializationExtensions<NewtonsoftSerializer> config, Func<Stream, JsonWriter> writerCreator)
         {
@@ -51,7 +51,7 @@ namespace NServiceBus
         /// <summary>
         /// Configures the <see cref="JsonSerializerSettings"/> to use.
         /// </summary>
-        /// <param name="config">The configuration object.</param>
+        /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="settings">The <see cref="JsonSerializerSettings"/> to use.</param>
         public static void Settings(this SerializationExtensions<NewtonsoftSerializer> config, JsonSerializerSettings settings)
         {
@@ -72,7 +72,7 @@ namespace NServiceBus
         /// Defaults to <see cref="ContentTypes.Json"/>.
         /// This setting is required when this serializer needs to co-exist with other json serializers.
         /// </remarks>
-        /// <param name="config">The configuration object.</param>
+        /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="contentTypeKey">The content type key to use.</param>
         public static void ContentTypeKey(this SerializationExtensions<NewtonsoftSerializer> config, string contentTypeKey)
         {
