@@ -24,7 +24,8 @@ namespace NServiceBus.Newtonsoft.Json
             IMessageMapper messageMapper,
             Func<Stream, JsonReader> readerCreator,
             Func<Stream, JsonWriter> writerCreator,
-            JsonSerializerSettings settings, string contentType)
+            JsonSerializerSettings settings,
+            string contentType)
         {
             this.messageMapper = messageMapper;
             messageContractResolver = new MessageContractResolver(messageMapper);
