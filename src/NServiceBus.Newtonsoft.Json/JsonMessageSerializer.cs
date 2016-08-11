@@ -72,8 +72,14 @@ namespace NServiceBus.Newtonsoft.Json
             Guard.AgainstNull(stream, "stream");
             Guard.AgainstNull(message, "message");
             var jsonSerializer = NewtonSerializer.Create(settings);
-            jsonSerializer.Binder = new MessageSerializationBinder(messageMapper);
             var jsonWriter = writerCreator(stream);
+            var inputMessageType = message.GetType();
+            var mappedType = messageMapper.GetMappedTypeFor(inputMessageType);
+            if (mappedType != null)
+            {
+                //TODO: push back into core to pass the interface and not the impl so we can avoid the cast
+                message = message.Cast(mappedType);
+            }
             jsonSerializer.Serialize(jsonWriter, message);
             jsonWriter.Flush();
         }
@@ -84,7 +90,6 @@ namespace NServiceBus.Newtonsoft.Json
             Guard.AgainstNull(messageTypes, "messageTypes");
             var jsonSerializer = NewtonSerializer.Create(settings);
             jsonSerializer.ContractResolver = messageContractResolver;
-            jsonSerializer.Binder = new MessageSerializationBinder(messageMapper, messageTypes);
 
             if (IsArrayStream(stream))
             {
@@ -93,7 +98,7 @@ namespace NServiceBus.Newtonsoft.Json
 
             if (messageTypes.Any())
             {
-                return DeserializeMultipleMesageTypes(stream, messageTypes, jsonSerializer).ToArray();
+                return DeserializeMultipleMesageTypes(stream, messageTypes, jsonSerializer);
             }
 
             var simpleReader = readerCreator(stream);
@@ -105,14 +110,18 @@ namespace NServiceBus.Newtonsoft.Json
 
         public string ContentType { get; }
 
-        IEnumerable<object> DeserializeMultipleMesageTypes(Stream stream, IList<Type> messageTypes, NewtonSerializer jsonSerializer)
+        object[] DeserializeMultipleMesageTypes(Stream stream, IList<Type> messageTypes, NewtonSerializer jsonSerializer)
         {
-            foreach (var messageType in FindRootTypes(messageTypes))
+            var rootTypes = FindRootTypes(messageTypes).ToList();
+            var messages = new object[rootTypes.Count];
+            for (var index = 0; index < rootTypes.Count; index++)
             {
+                var messageType = rootTypes[index];
                 stream.Seek(0, SeekOrigin.Begin);
                 var reader = readerCreator(stream);
-                yield return jsonSerializer.Deserialize(reader, messageType);
+                messages[index] = jsonSerializer.Deserialize(reader, messageType);
             }
+            return messages;
         }
 
         bool IsArrayStream(Stream stream)
@@ -141,6 +150,5 @@ namespace NServiceBus.Newtonsoft.Json
                 }
             }
         }
-
     }
 }
