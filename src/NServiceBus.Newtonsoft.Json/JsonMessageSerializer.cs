@@ -15,10 +15,9 @@ namespace NServiceBus.Newtonsoft.Json
     class JsonMessageSerializer : IMessageSerializer
     {
         IMessageMapper messageMapper;
-        MessageContractResolver messageContractResolver;
         Func<Stream, JsonReader> readerCreator;
-        JsonSerializerSettings settings;
         Func<Stream, JsonWriter> writerCreator;
+        NewtonSerializer jsonSerializer;
 
         public JsonMessageSerializer(
             IMessageMapper messageMapper,
@@ -28,9 +27,8 @@ namespace NServiceBus.Newtonsoft.Json
             string contentType)
         {
             this.messageMapper = messageMapper;
-            messageContractResolver = new MessageContractResolver(messageMapper);
 
-            this.settings = settings ?? new JsonSerializerSettings
+            settings = settings ?? new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Auto,
                 Converters =
@@ -65,31 +63,42 @@ namespace NServiceBus.Newtonsoft.Json
             {
                 ContentType = contentType;
             }
+            jsonSerializer = NewtonSerializer.Create(settings);
         }
 
         public void Serialize(object message, Stream stream)
         {
-            Guard.AgainstNull(stream, "stream");
-            Guard.AgainstNull(message, "message");
-            var jsonSerializer = NewtonSerializer.Create(settings);
-            var jsonWriter = writerCreator(stream);
-            var inputMessageType = message.GetType();
-            var mappedType = messageMapper.GetMappedTypeFor(inputMessageType);
-            if (mappedType != null)
+            Guard.AgainstNull(stream, nameof(stream));
+            Guard.AgainstNull(message, nameof(message));
+
+            message = CastToCorrectType(message);
+            using (var writer = writerCreator(stream))
             {
-                //TODO: push back into core to pass the interface and not the impl so we can avoid the cast
-                message = message.Cast(mappedType);
+                writer.CloseOutput = false;
+                jsonSerializer.Serialize(writer, message);
+                writer.Flush();
             }
-            jsonSerializer.Serialize(jsonWriter, message);
-            jsonWriter.Flush();
+        }
+
+        object CastToCorrectType(object message)
+        {
+            var inputMessageType = message.GetType();
+            //TODO: push back into core to pass the interface and not the impl so we can avoid the cast
+            if (!inputMessageType.IsInterface)
+            {
+                var mappedType = messageMapper.GetMappedTypeFor(inputMessageType);
+                if (mappedType != null)
+                {
+                    message = message.Cast(mappedType);
+                }
+            }
+            return message;
         }
 
         public object[] Deserialize(Stream stream, IList<Type> messageTypes)
         {
-            Guard.AgainstNull(stream, "stream");
-            Guard.AgainstNull(messageTypes, "messageTypes");
-            var jsonSerializer = NewtonSerializer.Create(settings);
-            jsonSerializer.ContractResolver = messageContractResolver;
+            Guard.AgainstNull(stream, nameof(stream));
+            Guard.AgainstNull(messageTypes, nameof(messageTypes));
 
             if (IsArrayStream(stream))
             {
@@ -98,19 +107,22 @@ namespace NServiceBus.Newtonsoft.Json
 
             if (messageTypes.Any())
             {
-                return DeserializeMultipleMesageTypes(stream, messageTypes, jsonSerializer);
+                return DeserializeMultipleMesageTypes(stream, messageTypes);
             }
 
-            var simpleReader = readerCreator(stream);
-            return new[]
+            using (var reader = readerCreator(stream))
             {
-                jsonSerializer.Deserialize<object>(simpleReader)
-            };
+                reader.CloseInput = false;
+                return new[]
+                {
+                    jsonSerializer.Deserialize<object>(reader)
+                };
+            }
         }
 
         public string ContentType { get; }
 
-        object[] DeserializeMultipleMesageTypes(Stream stream, IList<Type> messageTypes, NewtonSerializer jsonSerializer)
+        object[] DeserializeMultipleMesageTypes(Stream stream, IList<Type> messageTypes)
         {
             var rootTypes = FindRootTypes(messageTypes).ToList();
             var messages = new object[rootTypes.Count];
@@ -118,18 +130,39 @@ namespace NServiceBus.Newtonsoft.Json
             {
                 var messageType = rootTypes[index];
                 stream.Seek(0, SeekOrigin.Begin);
-                var reader = readerCreator(stream);
-                messages[index] = jsonSerializer.Deserialize(reader, messageType);
+
+                messageType = GetMappedType(messageType);
+                using (var reader = readerCreator(stream))
+                {
+                    reader.CloseInput = false;
+                    messages[index] = jsonSerializer.Deserialize(reader, messageType);
+                }
             }
             return messages;
         }
 
+        Type GetMappedType(Type messageType)
+        {
+            if (messageType.IsInterface)
+            {
+                var mappedTypeFor = messageMapper.GetMappedTypeFor(messageType);
+                if (mappedTypeFor != null)
+                {
+                    return mappedTypeFor;
+                }
+            }
+            return messageType;
+        }
+
         bool IsArrayStream(Stream stream)
         {
-            var reader = readerCreator(stream);
-            reader.Read();
-            stream.Seek(0, SeekOrigin.Begin);
-            return reader.TokenType == JsonToken.StartArray;
+            using (var reader = readerCreator(stream))
+            {
+                reader.CloseInput = false;
+                reader.Read();
+                stream.Seek(0, SeekOrigin.Begin);
+                return reader.TokenType == JsonToken.StartArray;
+            }
         }
 
         static IEnumerable<Type> FindRootTypes(IEnumerable<Type> messageTypesToDeserialize)
@@ -151,4 +184,5 @@ namespace NServiceBus.Newtonsoft.Json
             }
         }
     }
+
 }

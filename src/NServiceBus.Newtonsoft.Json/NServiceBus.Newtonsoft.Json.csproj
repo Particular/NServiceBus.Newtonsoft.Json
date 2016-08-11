@@ -56,7 +56,6 @@
   <ItemGroup>
     <Compile Include="Caster.cs" />
     <Compile Include="Guard.cs" />
-    <Compile Include="MessageContractResolver.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="JsonMessageSerializer.cs" />
     <Compile Include="NewtonsoftConfigurationExtensions.cs" />
