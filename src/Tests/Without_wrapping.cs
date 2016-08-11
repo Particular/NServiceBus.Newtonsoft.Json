@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using ApprovalTests;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
@@ -19,8 +20,7 @@ public class Without_wrapping
 
             stream.Position = 0;
             var result = new StreamReader(stream).ReadToEnd();
-
-            Assert.That(!result.StartsWith("["), result);
+            Approvals.Verify(result);
         }
     }
 
@@ -29,23 +29,26 @@ public class Without_wrapping
     {
         var messageMapper = new MessageMapper();
         var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+        var messageTypes = new[]
+        {
+            typeof(SimpleMessage)
+        };
+        var message = new SimpleMessage
+        {
+            SomeProperty = "test"
+        };
         using (var stream = new MemoryStream())
         {
-            serializer.Serialize(new SimpleMessage
-            {
-                SomeProperty = "test"
-            }, stream);
+            serializer.Serialize(message, stream);
 
             stream.Position = 0;
-            var result = (SimpleMessage) serializer.Deserialize(stream, new[]
-            {
-                typeof(SimpleMessage)
-            })[0];
+            var result = (SimpleMessage) serializer.Deserialize(stream, messageTypes)[0];
 
             Assert.AreEqual("test", result.SomeProperty);
         }
 
     }
+
     public class SimpleMessage
     {
         public string SomeProperty { get; set; }

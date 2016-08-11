@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using ApprovalTests;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
@@ -11,7 +12,10 @@ public class Without_concrete_implementation_and_interface
     public void Serialize()
     {
         var messageMapper = new MessageMapper();
-        var types = new[] { typeof(IWithoutConcrete) };
+        var types = new[]
+        {
+            typeof(IWithoutConcrete)
+        };
         messageMapper.Initialize(types);
         var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
@@ -22,9 +26,7 @@ public class Without_concrete_implementation_and_interface
 
             stream.Position = 0;
             var result = new StreamReader(stream).ReadToEnd();
-
-            Assert.That(!result.Contains("$type"), result);
-            Assert.That(result.Contains("SomeProperty"), result);
+            Approvals.Verify(result);
         }
     }
 
@@ -32,7 +34,10 @@ public class Without_concrete_implementation_and_interface
     public void Deserialize()
     {
         var messageMapper = new MessageMapper();
-        var messageTypes = new[] { typeof(IWithoutConcrete) };
+        var messageTypes = new[]
+        {
+            typeof(IWithoutConcrete)
+        };
         messageMapper.Initialize(messageTypes);
         var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
@@ -44,7 +49,7 @@ public class Without_concrete_implementation_and_interface
 
             stream.Position = 0;
 
-            var result = (IWithoutConcrete)serializer.Deserialize(stream, messageTypes)[0];
+            var result = (IWithoutConcrete) serializer.Deserialize(stream, messageTypes)[0];
 
             Assert.AreEqual("test", result.SomeProperty);
         }
