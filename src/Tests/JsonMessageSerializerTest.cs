@@ -191,7 +191,6 @@ public class A : IMessage
 
     public List<int> Ints { get; set; }
     public List<B> Bs { get; set; }
-
 }
 
 public interface IA : IMessage

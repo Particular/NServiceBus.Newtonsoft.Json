@@ -4,30 +4,28 @@ using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
 
 [TestFixture]
-public class Message_with_interface_without_wrapping
+public class Without_typeInfo
 {
+
     [Test]
     public void Run()
     {
         var messageMapper = new MessageMapper();
         var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+        var message = new SimpleMessage();
         using (var stream = new MemoryStream())
         {
-            serializer.Serialize(new SuperMessage { SomeProperty = "John" }, stream);
+            serializer.Serialize(message, stream);
 
             stream.Position = 0;
+            var result = new StreamReader(stream).ReadToEnd();
 
-            var result = (SuperMessage)serializer.Deserialize(stream, new[] { typeof(SuperMessage), typeof(IMyEvent) })[0];
-
-            Assert.AreEqual("John", result.SomeProperty);
+            Assert.That(!result.Contains("$type"), result);
         }
     }
-
-    public class SuperMessage : IMyEvent
+    public class SimpleMessage
     {
         public string SomeProperty { get; set; }
     }
-    public interface IMyEvent
-    {
-    }
+
 }

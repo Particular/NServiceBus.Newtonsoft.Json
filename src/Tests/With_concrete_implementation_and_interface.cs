@@ -5,7 +5,7 @@ using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
 
 [TestFixture]
-public class Message_with_concrete_implementation_and_interface
+public class With_concrete_implementation_and_interface
 {
 
     [Test]
@@ -20,14 +20,14 @@ public class Message_with_concrete_implementation_and_interface
         messageMapper.Initialize(map);
         var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
+        var message = new SuperMessageWithConcreteImpl
+        {
+            SomeProperty = "test"
+        };
+
         using (var stream = new MemoryStream())
         {
-            var msg = new SuperMessageWithConcreteImpl
-            {
-                SomeProperty = "test"
-            };
-
-            serializer.Serialize(msg, stream);
+            serializer.Serialize(message, stream);
 
             stream.Position = 0;
 
@@ -42,6 +42,7 @@ public class Message_with_concrete_implementation_and_interface
     {
         string SomeProperty { get; set; }
     }
+
     public interface IMyEvent : IEvent
     {
     }

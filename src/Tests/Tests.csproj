@@ -88,12 +88,12 @@
     <Compile Include="App_Packages\ApiApprover.3.0.1\PublicApiGenerator.cs" />
     <Compile Include="CreatePersonMessage.cs" />
     <Compile Include="ArrayTests.cs" />
-    <Compile Include="Message_without_typeInfo.cs" />
-    <Compile Include="Message_without_wrapping.cs" />
-    <Compile Include="Message_with_interface_without_wrapping.cs" />
-    <Compile Include="Private_message_with_two_unrelated_interface_without_wrapping.cs" />
-    <Compile Include="Message_with_concrete_implementation_and_interface.cs" />
-    <Compile Include="Message_without_concrete_implementation_and_interface.cs" />
+    <Compile Include="Without_typeInfo.cs" />
+    <Compile Include="Without_wrapping.cs" />
+    <Compile Include="With_interface_without_wrapping.cs" />
+    <Compile Include="Private_with_two_unrelated_interface_without_wrapping.cs" />
+    <Compile Include="With_concrete_implementation_and_interface.cs" />
+    <Compile Include="Without_concrete_implementation_and_interface.cs" />
     <Compile Include="JsonMessageSerializerTest.cs">
       <SubType>Code</SubType>
     </Compile>

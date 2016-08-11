@@ -4,25 +4,23 @@ using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
 
 [TestFixture]
-public class Message_without_concrete_implementation_and_interface
+public class Without_wrapping
 {
 
     [Test]
     public void Serialize()
     {
         var messageMapper = new MessageMapper();
-        messageMapper.Initialize(new[] { typeof(IWithoutConcrete) });
         var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-
+        var message = new SimpleMessage();
         using (var stream = new MemoryStream())
         {
-            serializer.Serialize(messageMapper.CreateInstance<IWithoutConcrete>(), stream);
+            serializer.Serialize(message, stream);
 
             stream.Position = 0;
             var result = new StreamReader(stream).ReadToEnd();
 
-            Assert.That(!result.Contains("$type"), result);
-            Assert.That(result.Contains("SomeProperty"), result);
+            Assert.That(!result.StartsWith("["), result);
         }
     }
 
@@ -30,26 +28,26 @@ public class Message_without_concrete_implementation_and_interface
     public void Deserialize()
     {
         var messageMapper = new MessageMapper();
-        messageMapper.Initialize(new[] { typeof(IWithoutConcrete) });
         var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-
         using (var stream = new MemoryStream())
         {
-            var msg = messageMapper.CreateInstance<IWithoutConcrete>();
-            msg.SomeProperty = "test";
-
-            serializer.Serialize(msg, stream);
+            serializer.Serialize(new SimpleMessage
+            {
+                SomeProperty = "test"
+            }, stream);
 
             stream.Position = 0;
-
-            var result = (IWithoutConcrete)serializer.Deserialize(stream, new[] { typeof(IWithoutConcrete) })[0];
+            var result = (SimpleMessage) serializer.Deserialize(stream, new[]
+            {
+                typeof(SimpleMessage)
+            })[0];
 
             Assert.AreEqual("test", result.SomeProperty);
         }
-    }
 
-    public interface IWithoutConcrete
+    }
+    public class SimpleMessage
     {
-        string SomeProperty { get; set; }
+        public string SomeProperty { get; set; }
     }
 }
