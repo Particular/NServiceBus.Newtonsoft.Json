@@ -68,10 +68,6 @@ namespace NServiceBus.Newtonsoft.Json
 
         public void Serialize(object message, Stream stream)
         {
-            Guard.AgainstNull(stream, nameof(stream));
-            Guard.AgainstNull(message, nameof(message));
-
-            message = CastToCorrectType(message);
             using (var writer = writerCreator(stream))
             {
                 writer.CloseOutput = false;
@@ -80,26 +76,8 @@ namespace NServiceBus.Newtonsoft.Json
             }
         }
 
-        object CastToCorrectType(object message)
-        {
-            var inputMessageType = message.GetType();
-            //TODO: push back into core to pass the interface and not the impl so we can avoid the cast
-            if (!inputMessageType.IsInterface)
-            {
-                var mappedType = messageMapper.GetMappedTypeFor(inputMessageType);
-                if (mappedType != null)
-                {
-                    message = message.Cast(mappedType);
-                }
-            }
-            return message;
-        }
-
         public object[] Deserialize(Stream stream, IList<Type> messageTypes)
         {
-            Guard.AgainstNull(stream, nameof(stream));
-            Guard.AgainstNull(messageTypes, nameof(messageTypes));
-
             if (IsArrayStream(stream))
             {
                 throw new Exception("Multiple messages in the same stream are not supported.");

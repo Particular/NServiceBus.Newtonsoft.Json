@@ -54,7 +54,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Caster.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="JsonMessageSerializer.cs" />
