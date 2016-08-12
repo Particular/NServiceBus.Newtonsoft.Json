@@ -9,7 +9,7 @@
     using Features;
     using NServiceBus.Config.ConfigurationSource;
 
-    public partial class DefaultServer : IEndpointSetupTemplate
+    public class DefaultServer : IEndpointSetupTemplate
     {
         public DefaultServer()
         {
