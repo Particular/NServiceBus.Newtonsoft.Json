@@ -12,7 +12,7 @@
     using NServiceBus.Config.ConfigurationSource;
     using NServiceBus.Configuration.AdvanceExtensibility;
 
-    public partial class DefaultServer : IEndpointSetupTemplate
+    public class DefaultServer : IEndpointSetupTemplate
     {
         readonly List<Type> typesToInclude;
 
