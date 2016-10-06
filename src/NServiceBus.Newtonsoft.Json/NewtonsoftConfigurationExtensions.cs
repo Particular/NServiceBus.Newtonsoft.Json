@@ -77,7 +77,7 @@ namespace NServiceBus
         public static void ContentTypeKey(this SerializationExtensions<NewtonsoftSerializer> config, string contentTypeKey)
         {
             Guard.AgainstNull(config, nameof(config));
-            Guard.AgainstNullOrEnpty(contentTypeKey, nameof(contentTypeKey));
+            Guard.AgainstNullOrEmpty(contentTypeKey, nameof(contentTypeKey));
             config.GetSettings().Set("NServiceBus.Newtonsoft.Json.ContentTypeKey", contentTypeKey);
         }
 

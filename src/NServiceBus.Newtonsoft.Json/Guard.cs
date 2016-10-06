@@ -13,7 +13,7 @@ namespace NServiceBus.Newtonsoft.Json
                 throw new ArgumentNullException(argumentName);
             }
         }
-        public static void AgainstNullOrEnpty(string value, string argumentName)
+        public static void AgainstNullOrEmpty(string value, string argumentName)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
