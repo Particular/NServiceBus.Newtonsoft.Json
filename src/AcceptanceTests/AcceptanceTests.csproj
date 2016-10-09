@@ -172,7 +172,6 @@
     <Compile Include="App_Packages\NSB.AcceptanceTests.6.0.0\Mutators\When_incoming_mutator_changes_message_type.cs" />
     <Compile Include="App_Packages\NSB.AcceptanceTests.6.0.0\Mutators\When_mutating.cs" />
     <Compile Include="App_Packages\NSB.AcceptanceTests.6.0.0\Mutators\When_outgoing_mutator_replaces_instance.cs" />
-    <Compile Include="App_Packages\NSB.AcceptanceTests.6.0.0\Mutators\When_using_outgoing_tm_mutator.cs" />
     <Compile Include="App_Packages\NSB.AcceptanceTests.6.0.0\NonTx\When_sending_inside_ambient_tx.cs" />
     <Compile Include="App_Packages\NSB.AcceptanceTests.6.0.0\NServiceBusAcceptanceTest.cs" />
     <Compile Include="App_Packages\NSB.AcceptanceTests.6.0.0\PerfMon\CriticalTime\When_CriticalTime_enabled.cs" />

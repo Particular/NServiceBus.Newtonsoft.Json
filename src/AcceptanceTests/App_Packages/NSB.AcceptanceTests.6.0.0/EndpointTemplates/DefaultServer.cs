@@ -47,11 +47,7 @@
             configuration.DefineBuilder(settings);
             configuration.RegisterComponentsAndInheritanceHierarchy(runDescriptor);
 
-            Type serializerType;
-            if (settings.TryGet("Serializer", out serializerType))
-            {
-                configuration.UseSerialization((SerializationDefinition)Activator.CreateInstance(serializerType));
-            }
+            configuration.UseSerialization<NewtonsoftSerializer>();
             await configuration.DefinePersistence(settings, endpointConfiguration.EndpointName).ConfigureAwait(false);
 
             configuration.GetSettings().SetDefault("ScaleOut.UseSingleBrokerQueue", true);
