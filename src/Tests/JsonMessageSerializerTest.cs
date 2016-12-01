@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using NServiceBus;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
@@ -171,6 +172,49 @@ public class JsonMessageSerializerTest
         Assert.AreEqual("COO", ((C) a.B.C).Cstr);
     }
 
+    [Test]
+    public void Should_preserve_timezones()
+    {
+        var expectedDateTime = new DateTime(2010, 10, 13, 12, 32, 42, DateTimeKind.Unspecified);
+        var expectedDateTimeLocal = new DateTime(2010, 10, 13, 12, 32, 42, DateTimeKind.Local);
+        var expectedDateTimeUtc = new DateTime(2010, 10, 13, 12, 32, 42, DateTimeKind.Utc);
+        var expectedDateTimeOffset = new DateTimeOffset(2012, 12, 12, 12, 12, 12, TimeSpan.FromHours(6));
+        var expectedDateTimeOffsetLocal = DateTimeOffset.Now;
+        var expectedDateTimeOffsetUtc = DateTimeOffset.UtcNow;
+
+        using (var stream = new MemoryStream())
+        {
+            serializer.Serialize(new DateTimeMessage
+            {
+                DateTime = expectedDateTime,
+                DateTimeLocal = expectedDateTimeLocal,
+                DateTimeUtc = expectedDateTimeUtc,
+                DateTimeOffset = expectedDateTimeOffset,
+                DateTimeOffsetLocal = expectedDateTimeOffsetLocal,
+                DateTimeOffsetUtc = expectedDateTimeOffsetUtc
+            }, stream);
+            stream.Position = 0;
+
+            var result = serializer.Deserialize(stream, new List<Type>
+                {
+                    typeof(DateTimeMessage)
+                }).Cast<DateTimeMessage>().Single();
+
+            Assert.AreEqual(expectedDateTime.Kind, result.DateTime.Kind);
+            Assert.AreEqual(expectedDateTime, result.DateTime);
+            Assert.AreEqual(expectedDateTimeLocal.Kind, result.DateTimeLocal.Kind);
+            Assert.AreEqual(expectedDateTimeLocal, result.DateTimeLocal);
+            Assert.AreEqual(expectedDateTimeUtc.Kind, result.DateTimeUtc.Kind);
+            Assert.AreEqual(expectedDateTimeUtc, result.DateTimeUtc);
+
+            Assert.AreEqual(expectedDateTimeOffset, result.DateTimeOffset);
+            Assert.AreEqual(expectedDateTimeOffset.Offset, result.DateTimeOffset.Offset);
+            Assert.AreEqual(expectedDateTimeOffsetLocal, result.DateTimeOffsetLocal);
+            Assert.AreEqual(expectedDateTimeOffsetLocal.Offset, result.DateTimeOffsetLocal.Offset);
+            Assert.AreEqual(expectedDateTimeOffsetUtc, result.DateTimeOffsetUtc);
+            Assert.AreEqual(expectedDateTimeOffsetUtc.Offset, result.DateTimeOffsetUtc.Offset);
+        }
+    }
 }
 
 
@@ -222,4 +266,14 @@ public class BB : B
 public class C
 {
     public string Cstr { get; set; }
+}
+
+class DateTimeMessage
+{
+    public DateTime DateTime { get; set; }
+    public DateTime DateTimeLocal { get; set; }
+    public DateTime DateTimeUtc { get; set; }
+    public DateTimeOffset DateTimeOffset { get; set; }
+    public DateTimeOffset DateTimeOffsetLocal { get; set; }
+    public DateTimeOffset DateTimeOffsetUtc { get; set; }
 }
