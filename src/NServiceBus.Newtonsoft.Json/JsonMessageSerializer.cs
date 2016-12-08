@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using NServiceBus.MessageInterfaces;
 using NServiceBus.Serialization;
 using NewtonSerializer = Newtonsoft.Json.JsonSerializer;
@@ -30,14 +28,7 @@ namespace NServiceBus.Newtonsoft.Json
 
             settings = settings ?? new JsonSerializerSettings
             {
-                TypeNameHandling = TypeNameHandling.Auto,
-                Converters =
-                {
-                    new IsoDateTimeConverter
-                    {
-                        DateTimeStyles = DateTimeStyles.RoundtripKind
-                    }
-                }
+                TypeNameHandling = TypeNameHandling.Auto
             };
 
             this.writerCreator = writerCreator ?? (stream =>
