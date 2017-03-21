@@ -84,8 +84,7 @@
   <ItemGroup>
     <Compile Include="APIApprovals.cs" />
     <Compile Include="ApprovalTestConfig.cs" />
-    <Compile Include="App_Packages\ApiApprover.3.0.1\PublicApiApprover.cs" />
-    <Compile Include="App_Packages\ApiApprover.3.0.1\PublicApiGenerator.cs" />
+    <Compile Include="App_Packages\PublicApiGenerator.6.0.0\ApiGenerator.cs" />
     <Compile Include="CreatePersonMessage.cs" />
     <Compile Include="ArrayTests.cs" />
     <Compile Include="Without_typeInfo.cs" />
