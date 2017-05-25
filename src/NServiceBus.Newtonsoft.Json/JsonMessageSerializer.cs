@@ -76,7 +76,7 @@ namespace NServiceBus.Newtonsoft.Json
 
             if (messageTypes.Any())
             {
-                return DeserializeMultipleMesageTypes(stream, messageTypes);
+                return DeserializeMultipleMessageTypes(stream, messageTypes);
             }
 
             using (var reader = readerCreator(stream))
@@ -91,7 +91,7 @@ namespace NServiceBus.Newtonsoft.Json
 
         public string ContentType { get; }
 
-        object[] DeserializeMultipleMesageTypes(Stream stream, IList<Type> messageTypes)
+        object[] DeserializeMultipleMessageTypes(Stream stream, IList<Type> messageTypes)
         {
             var rootTypes = FindRootTypes(messageTypes).ToList();
             var messages = new object[rootTypes.Count];
