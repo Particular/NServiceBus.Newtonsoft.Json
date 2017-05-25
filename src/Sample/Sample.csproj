@@ -9,6 +9,7 @@
     <DebugSymbols>True</DebugSymbols>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <OutputType>exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
