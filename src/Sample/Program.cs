@@ -9,7 +9,7 @@ class Program
         var endpointConfiguration = new EndpointConfiguration("NewtonsoftSerializerSample");
         endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
         endpointConfiguration.EnableInstallers();
-        endpointConfiguration.SendFailedMessagesTo("error");
+        endpointConfiguration.UseTransport<LearningTransport>();
         endpointConfiguration.UsePersistence<InMemoryPersistence>();
         Run(endpointConfiguration).GetAwaiter().GetResult();
     }
