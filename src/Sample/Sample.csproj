@@ -1,24 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
-    <RuntimeIdentifiers>win</RuntimeIdentifiers>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
-    <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <OutputType>exe</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="NServiceBus" Version="6.3.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
     <ProjectReference Include="..\NServiceBus.Newtonsoft.Json\NServiceBus.Newtonsoft.Json.csproj" />
   </ItemGroup>
 </Project>

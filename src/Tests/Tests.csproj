@@ -1,20 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
-    <RuntimeIdentifiers>win</RuntimeIdentifiers>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
-    <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\NServiceBus.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="NServiceBus.Newtonsoft.Json.approved.cs" />
     <PackageReference Include="NServiceBus" Version="6.3.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="ApiApprover" Version="6.1.0-beta2" />
     <PackageReference Include="PublicApiGenerator" Version="6.1.0-beta2" />
     <PackageReference Include="NUnit" Version="3.6.1" />
     <PackageReference Include="ApprovalTests" Version="3.0.13" />
