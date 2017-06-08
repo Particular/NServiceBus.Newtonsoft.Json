@@ -8,21 +8,17 @@
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>$(ProjectDir)bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <OutputPath>..\..\binaries\</OutputPath>
     <UpdateAssemblyInfo>true</UpdateAssemblyInfo>
     <NoWarn>0419</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\..\GitVersion.yml" Link="GitVersion.yml"/>
+    <None Include="..\..\packaging\nuget\NServiceBus.Newtonsoft.Json.nuspec" Link="NServiceBus.Newtonsoft.Json.nuspec" />
     <PackageReference Include="GitVersionTask" Version="4.0.0-beta0011" />
     <PackageReference Include="NuGetPackager" Version="0.6.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
     <PackageReference Include="NServiceBus" Version="6.3.1" />
   </ItemGroup>
-  <Target Name="BeforeBuildPackages" BeforeTargets="BuildPackages">
-    <MakeDir Directories="$(SolutionDir)..\binaries" />
-    <ItemGroup>
-      <Files Include="$(TargetDir)$(TargetName).*" />
-    </ItemGroup>
-    <Copy SourceFiles="@(Files)" DestinationFolder="$(SolutionDir)..\binaries" />
-  </Target>
 </Project>
