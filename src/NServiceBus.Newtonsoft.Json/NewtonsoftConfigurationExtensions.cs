@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json;
-using NServiceBus.Configuration.AdvanceExtensibility;
+using NServiceBus.Configuration.AdvancedExtensibility;
 using NServiceBus.Serialization;
 using NServiceBus.Newtonsoft.Json;
 
