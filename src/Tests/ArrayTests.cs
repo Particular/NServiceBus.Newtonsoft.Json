@@ -28,10 +28,7 @@ public class ArrayTests
 
         using (var stream = new MemoryStream())
         {
-            var streamWriter = new StreamWriter(stream);
-            streamWriter.Write(text);
-            streamWriter.Flush();
-            stream.Position = 0;
+            WriteToStream(stream, text);
 
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
@@ -39,6 +36,7 @@ public class ArrayTests
             Approvals.Verify(exception.Message);
         }
     }
+
     [Test]
     public void Should_throw_for_multiple_passed_type()
     {
@@ -52,14 +50,14 @@ public class ArrayTests
 
         using (var stream = new MemoryStream())
         {
-            var streamWriter = new StreamWriter(stream);
-            streamWriter.Write(text);
-            streamWriter.Flush();
-            stream.Position = 0;
+            WriteToStream(stream, text);
 
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-            var messageTypes = new List<Type> { typeof(ArrayMessage) };
+            var messageTypes = new List<Type>
+            {
+                typeof(ArrayMessage)
+            };
             var exception = Assert.Throws<Exception>(() =>
             {
                 serializer.Deserialize(stream, messageTypes);
@@ -79,10 +77,7 @@ public class ArrayTests
 
         using (var stream = new MemoryStream())
         {
-            var streamWriter = new StreamWriter(stream);
-            streamWriter.Write(text);
-            streamWriter.Flush();
-            stream.Position = 0;
+            WriteToStream(stream, text);
 
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
@@ -90,6 +85,7 @@ public class ArrayTests
             ObjectApprover.VerifyWithJson(deserialize.Single());
         }
     }
+
 
     [Test]
     public void Should_not_throw_for_single_passed_type()
@@ -101,17 +97,25 @@ public class ArrayTests
 
         using (var stream = new MemoryStream())
         {
-            var streamWriter = new StreamWriter(stream);
-            streamWriter.Write(text);
-            streamWriter.Flush();
-            stream.Position = 0;
+            WriteToStream(stream, text);
 
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-            var messageTypes = new List<Type> { typeof(ArrayMessage) };
+            var messageTypes = new List<Type>
+            {
+                typeof(ArrayMessage)
+            };
             var deserialize = serializer.Deserialize(stream, messageTypes);
             ObjectApprover.VerifyWithJson(deserialize.Single());
         }
+    }
+
+    static void WriteToStream(MemoryStream stream, string text)
+    {
+        var streamWriter = new StreamWriter(stream);
+        streamWriter.Write(text);
+        streamWriter.Flush();
+        stream.Position = 0;
     }
 
     public class ArrayMessage

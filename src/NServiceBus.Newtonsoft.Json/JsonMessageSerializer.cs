@@ -94,7 +94,7 @@ namespace NServiceBus.Newtonsoft.Json
                     {
                         throw new Exception("Multiple messages in the same stream are not supported.");
                     }
-                    return objects.Single();
+                    return objects[0];
                 }
 
                 return jsonSerializer.Deserialize(reader, type);
