@@ -1,38 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ApprovalTests;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
+using ObjectApproval;
 
 [TestFixture]
 public class ArrayTests
 {
+    string typeName = $"{typeof(ArrayMessage).FullName}, {typeof(ArrayMessage).Assembly.GetName().Name}";
 
     [Test]
-    public void Should_throw_for_array()
+    public void Should_throw_for_multiple_dollar()
     {
-        var xml = @"[{
-$type: ""IA, NServiceBus.Core.Tests"",
-Data: ""rhNAGU4dr/Qjz6ocAsOs3wk3ZmxHMOg="",
-S: ""kalle"",
-I: 42,
-B: {
-}
-}, {
-$type: ""IA, NServiceBus.Core.Tests"",
-Data: ""AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="",
-S: ""kalle"",
-I: 42,
-B: {
-}
-}]";
+        var text = $@"
+[{{
+    $type: '{typeName}',
+    SomeProperty: 'Value1'
+}},
+{{
+    $type: '{typeName}',
+    SomeProperty: 'Value2'
+}}]";
 
         using (var stream = new MemoryStream())
         {
             var streamWriter = new StreamWriter(stream);
-            streamWriter.Write(xml);
+            streamWriter.Write(text);
             streamWriter.Flush();
             stream.Position = 0;
 
@@ -41,8 +38,84 @@ B: {
             var exception = Assert.Throws<Exception>(() => serializer.Deserialize(stream, new List<Type>()));
             Approvals.Verify(exception.Message);
         }
+    }
+    [Test]
+    public void Should_throw_for_multiple_passed_type()
+    {
+        var text = @"
+[{
+    SomeProperty: 'Value1'
+},
+{
+    SomeProperty: 'Value2'
+}]";
 
+        using (var stream = new MemoryStream())
+        {
+            var streamWriter = new StreamWriter(stream);
+            streamWriter.Write(text);
+            streamWriter.Flush();
+            stream.Position = 0;
+
+            var messageMapper = new MessageMapper();
+            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+            var messageTypes = new List<Type> { typeof(ArrayMessage) };
+            var exception = Assert.Throws<Exception>(() =>
+            {
+                serializer.Deserialize(stream, messageTypes);
+            });
+            Approvals.Verify(exception.Message);
+        }
     }
 
+    [Test]
+    public void Should_not_throw_for_single_dollar()
+    {
+        var text = $@"
+[{{
+    $type: '{typeName}',
+    SomeProperty: 'Value1'
+}}]";
 
+        using (var stream = new MemoryStream())
+        {
+            var streamWriter = new StreamWriter(stream);
+            streamWriter.Write(text);
+            streamWriter.Flush();
+            stream.Position = 0;
+
+            var messageMapper = new MessageMapper();
+            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+            var deserialize = serializer.Deserialize(stream, new List<Type>());
+            ObjectApprover.VerifyWithJson(deserialize.Single());
+        }
+    }
+
+    [Test]
+    public void Should_not_throw_for_single_passed_type()
+    {
+        var text = @"
+[{
+    SomeProperty: 'Value1'
+}]";
+
+        using (var stream = new MemoryStream())
+        {
+            var streamWriter = new StreamWriter(stream);
+            streamWriter.Write(text);
+            streamWriter.Flush();
+            stream.Position = 0;
+
+            var messageMapper = new MessageMapper();
+            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+            var messageTypes = new List<Type> { typeof(ArrayMessage) };
+            var deserialize = serializer.Deserialize(stream, messageTypes);
+            ObjectApprover.VerifyWithJson(deserialize.Single());
+        }
+    }
+
+    public class ArrayMessage
+    {
+        public string SomeProperty { get; set; }
+    }
 }

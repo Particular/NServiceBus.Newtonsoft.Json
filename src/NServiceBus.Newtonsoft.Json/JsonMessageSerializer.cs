@@ -69,29 +69,41 @@ namespace NServiceBus.Newtonsoft.Json
 
         public object[] Deserialize(Stream stream, IList<Type> messageTypes)
         {
-            if (IsArrayStream(stream))
-            {
-                throw new Exception("Multiple messages in the same stream are not supported.");
-            }
+            var isArrayStream = IsArrayStream(stream);
 
             if (messageTypes.Any())
             {
-                return DeserializeMultipleMessageTypes(stream, messageTypes);
+                return DeserializeMultipleMessageTypes(stream, messageTypes, isArrayStream);
             }
 
+            return new[]
+            {
+                ReadObject(stream, isArrayStream, typeof(object))
+            };
+        }
+
+        object ReadObject(Stream stream, bool isArrayStream, Type type)
+        {
             using (var reader = readerCreator(stream))
             {
                 reader.CloseInput = false;
-                return new[]
+                if (isArrayStream)
                 {
-                    jsonSerializer.Deserialize<object>(reader)
-                };
+                    var objects = (object[])jsonSerializer.Deserialize(reader, type.MakeArrayType());
+                    if (objects.Length > 1)
+                    {
+                        throw new Exception("Multiple messages in the same stream are not supported.");
+                    }
+                    return objects.Single();
+                }
+
+                return jsonSerializer.Deserialize(reader, type);
             }
         }
 
         public string ContentType { get; }
 
-        object[] DeserializeMultipleMessageTypes(Stream stream, IList<Type> messageTypes)
+        object[] DeserializeMultipleMessageTypes(Stream stream, IList<Type> messageTypes, bool isArrayStream)
         {
             var rootTypes = FindRootTypes(messageTypes).ToList();
             var messages = new object[rootTypes.Count];
@@ -99,13 +111,8 @@ namespace NServiceBus.Newtonsoft.Json
             {
                 var messageType = rootTypes[index];
                 stream.Seek(0, SeekOrigin.Begin);
-
                 messageType = GetMappedType(messageType);
-                using (var reader = readerCreator(stream))
-                {
-                    reader.CloseInput = false;
-                    messages[index] = jsonSerializer.Deserialize(reader, messageType);
-                }
+                messages[index] = ReadObject(stream, isArrayStream, messageType);
             }
             return messages;
         }
