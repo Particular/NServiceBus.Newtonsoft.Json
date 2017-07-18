@@ -20,5 +20,6 @@
   </metadata>
   <files>
     <file src="..\..\binaries\net452\NServiceBus.Newtonsoft.Json.???" target="lib\net452" />
+    <file src="..\..\binaries\net452\NServiceBus.Newtonsoft.Json.???" target="lib\netcoreapp2.0" />
   </files>
 </package>
