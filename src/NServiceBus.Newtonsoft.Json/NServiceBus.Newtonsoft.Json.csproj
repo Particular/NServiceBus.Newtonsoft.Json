@@ -2,23 +2,35 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SolutionDir)NServiceBus.snk</AssemblyOriginatorKeyFile>
-    <DebugType>full</DebugType>
-    <DebugSymbols>True</DebugSymbols>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <OutputPath>..\..\binaries\</OutputPath>
-    <UpdateAssemblyInfo>true</UpdateAssemblyInfo>
     <NoWarn>0419</NoWarn>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Description>Newtonsoft.Json integration for NServiceBus.</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+  <PropertyGroup>
+    <Authors>NServiceBus Ltd</Authors>
+    <Company>NServiceBus Ltd</Company>
+    <PackageLicenseUrl>http://particular.net/LicenseAgreement</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Copyright>Copyright 2010-$([System.DateTime]::UtcNow.ToString(yyyy)) NServiceBus. All rights reserved</Copyright>
+    <PackageTags>NServiceBus, Newtonsoft, Json</PackageTags>
+    <PackageIconUrl>http://s3.amazonaws.com/nuget.images/NServiceBus_32.png</PackageIconUrl>
+    <PackageProjectUrl>https://docs.particular.net/nuget/$(PackageId)</PackageProjectUrl>
+    <PackageOutputPath>..\..\nugets</PackageOutputPath>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludePDBsInPackage</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+
+  <Target Name="IncludePDBsInPackage" Condition="'$(IncludeBuildOutput)' != 'false'">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(OutputPath)\$(AssemblyName).pdb" PackagePath="lib/$(TargetFramework)" />
+    </ItemGroup>
+  </Target>
   <ItemGroup>
     <None Include="..\..\GitVersion.yml" Link="GitVersion.yml" />
-    <None Include="..\..\packaging\nuget\NServiceBus.Newtonsoft.Json.nuspec" Link="NServiceBus.Newtonsoft.Json.nuspec" />
-    <PackageReference Include="GitVersionTask" Version="4.0.0-beta0012" />
-    <PackageReference Include="NuGetPackager" Version="0.6.5" />
+    <PackageReference Include="GitVersionTask" Version="4.0.0-*" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="[10.0.3, 11.0.0)" />
     <PackageReference Include="NServiceBus" Version="[7.0.0-*, 8.0.0)" />
   </ItemGroup>
