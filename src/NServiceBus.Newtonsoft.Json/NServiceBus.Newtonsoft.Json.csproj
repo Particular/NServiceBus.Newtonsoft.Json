@@ -12,11 +12,10 @@
     <OutputPath>..\..\binaries\</OutputPath>
     <UpdateAssemblyInfo>true</UpdateAssemblyInfo>
     <NoWarn>0419</NoWarn>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\GitVersion.yml" Link="GitVersion.yml" />
-    <None Include="..\..\packaging\nuget\NServiceBus.Newtonsoft.Json.nuspec" Link="NServiceBus.Newtonsoft.Json.nuspec" />
     <PackageReference Include="NuGetPackager" Version="0.6.5" />
     <PackageReference Include="Newtonsoft.Json" Version="[10.0.3, 11.0.0)" />
     <PackageReference Include="NServiceBus" Version="[7.0.0-*, 8.0.0)" />
