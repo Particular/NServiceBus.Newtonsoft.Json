@@ -15,7 +15,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\GitVersion.yml" Link="GitVersion.yml" />
-    <PackageReference Include="NuGetPackager" Version="0.6.5" />
     <PackageReference Include="Newtonsoft.Json" Version="[10.0.3, 11.0.0)" />
     <PackageReference Include="NServiceBus" Version="[7.0.0-*, 8.0.0)" />
   </ItemGroup>
