@@ -10,13 +10,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="NServiceBus.Newtonsoft.Json.approved.cs" />
-    <PackageReference Include="ApiApprover" Version="6.1.0-beta2" />
     <PackageReference Include="ObjectApproval" Version="1.6.0" />
     <PackageReference Include="PublicApiGenerator" Version="6.1.0-beta2" />
     <PackageReference Include="NUnit" Version="3.7.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-alpha1" />
     <PackageReference Include="ApprovalTests" Version="3.0.13" />
     <PackageReference Include="ApprovalUtilities" Version="3.0.13" />
     <PackageReference Include="Mono.Cecil" Version="0.10.0-beta6" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
     <ProjectReference Include="..\NServiceBus.Newtonsoft.Json\NServiceBus.Newtonsoft.Json.csproj" />
   </ItemGroup>
 </Project>
