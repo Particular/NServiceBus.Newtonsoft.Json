@@ -5,11 +5,13 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using ApprovalTests;
 using NUnit.Framework;
+#if NET452
 using PublicApiGenerator;
 
 [TestFixture]
 public class APIApprovals
 {
+
     [Test]
     [MethodImpl(MethodImplOptions.NoInlining)]
     public void Approve()
@@ -31,3 +33,4 @@ public class APIApprovals
         );
     }
 }
+#endif
