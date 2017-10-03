@@ -7,11 +7,11 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ObjectApproval" Version="1.*" />
+    <PackageReference Include="ObjectApproval" Version="1.*" NoWarn="NU1701"/>
     <PackageReference Include="NUnit" Version="3.7.1" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-alpha1" />
-    <PackageReference Include="ApprovalTests" Version="3.*" />
-    <PackageReference Include="ApprovalUtilities" Version="3.*" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-alpha1" NoWarn="NU1701"/>
+    <PackageReference Include="ApprovalTests" Version="3.*" NoWarn="NU1701" />
+    <PackageReference Include="ApprovalUtilities" Version="3.*" NoWarn="NU1701" />
     <PackageReference Include="Mono.Cecil" Version="0.10.0-*" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.*" />
     <ProjectReference Include="..\NServiceBus.Newtonsoft.Json\NServiceBus.Newtonsoft.Json.csproj" />
