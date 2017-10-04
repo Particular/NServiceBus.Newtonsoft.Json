@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
-    <DebugType>full</DebugType>
-    <DebugSymbols>True</DebugSymbols>
+    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\NServiceBus.snk</AssemblyOriginatorKeyFile>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ObjectApproval" Version="1.*" />
-    <PackageReference Include="PublicApiGenerator" Version="6.1.0-*" />
     <PackageReference Include="NUnit" Version="3.7.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-alpha1" />
-    <PackageReference Include="ApprovalTests" Version="3.*" />
-    <PackageReference Include="ApprovalUtilities" Version="3.*" />
-    <PackageReference Include="Mono.Cecil" Version="0.10.0-*" />
+    <PackageReference Include="ApprovalTests" Version="3.*" NoWarn="NU1701" />
+    <PackageReference Include="ApprovalUtilities" Version="3.*" NoWarn="NU1701" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.*" />
     <ProjectReference Include="..\NServiceBus.Newtonsoft.Json\NServiceBus.Newtonsoft.Json.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
+    <PackageReference Include="PublicApiGenerator" Version="6.1.0-*" />
+    <PackageReference Include="Mono.Cecil" Version="0.10.0-*" />
   </ItemGroup>
 </Project>

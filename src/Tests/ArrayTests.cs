@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ApprovalTests;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
-using ObjectApproval;
 
 [TestFixture]
 public class ArrayTests
@@ -33,7 +31,7 @@ public class ArrayTests
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
             var exception = Assert.Throws<Exception>(() => serializer.Deserialize(stream, new List<Type>()));
-            Approvals.Verify(exception.Message);
+            TestApprover.Verify(exception.Message);
         }
     }
 
@@ -62,7 +60,7 @@ public class ArrayTests
             {
                 serializer.Deserialize(stream, messageTypes);
             });
-            Approvals.Verify(exception.Message);
+            TestApprover.Verify(exception.Message);
         }
     }
 

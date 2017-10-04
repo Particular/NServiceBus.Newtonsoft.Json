@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using ApprovalTests;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
@@ -7,7 +6,6 @@ using NUnit.Framework;
 [TestFixture]
 public class Without_wrapping
 {
-
     [Test]
     public void Serialize()
     {
@@ -20,7 +18,7 @@ public class Without_wrapping
 
             stream.Position = 0;
             var result = new StreamReader(stream).ReadToEnd();
-            Approvals.Verify(result);
+            TestApprover.Verify(result);
         }
     }
 
