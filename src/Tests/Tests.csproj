@@ -12,7 +12,6 @@
     <PackageReference Include="ApprovalTests" Version="3.*" NoWarn="NU1701" />
     <PackageReference Include="ApprovalUtilities" Version="3.*" NoWarn="NU1701" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.*" />
-    <PackageReference Include="Newtonsoft.Json" Version="[10.0.3, 11.0.0)" />
     <ProjectReference Include="..\NServiceBus.Newtonsoft.Json\NServiceBus.Newtonsoft.Json.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
