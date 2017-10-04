@@ -6,7 +6,6 @@ using NServiceBus.Core.Tests;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
-using ObjectApproval;
 
 [TestFixture]
 public class ArrayTests
