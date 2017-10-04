@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using ApprovalTests;
+using NServiceBus.Core.Tests;
 using NUnit.Framework;
 #if NET452
 using PublicApiGenerator;
@@ -19,7 +19,7 @@ public class APIApprovals
         var combine = Path.Combine(TestContext.CurrentContext.TestDirectory, "NServiceBus.Newtonsoft.Json.dll");
         var assembly = Assembly.LoadFile(combine);
         var publicApi = Filter(ApiGenerator.GeneratePublicApi(assembly));
-        Approvals.Verify(publicApi);
+        TestApprover.Verify(publicApi);
     }
 
     string Filter(string text)

@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using ApprovalTests;
+using NServiceBus.Core.Tests;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
@@ -7,7 +7,6 @@ using NUnit.Framework;
 [TestFixture]
 public class Without_concrete_implementation_and_interface
 {
-
     [Test]
     public void Serialize()
     {
@@ -26,7 +25,7 @@ public class Without_concrete_implementation_and_interface
 
             stream.Position = 0;
             var result = new StreamReader(stream).ReadToEnd();
-            Approvals.Verify(result);
+            TestApprover.Verify(result);
         }
     }
 
