@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using NServiceBus.Core.Tests;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;

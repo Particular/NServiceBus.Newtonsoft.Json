@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NServiceBus.Core.Tests;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
@@ -11,7 +10,7 @@ using NUnit.Framework;
 public class ArrayTests
 {
     string typeName = $"{typeof(ArrayMessage).FullName}, {typeof(ArrayMessage).Assembly.GetName().Name}";
-    
+
     [Test]
     public void Should_throw_for_multiple_dollar()
     {

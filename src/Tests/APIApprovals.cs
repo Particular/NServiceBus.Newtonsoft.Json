@@ -1,17 +1,15 @@
-﻿using System;
+﻿#if NET452
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using NServiceBus.Core.Tests;
 using NUnit.Framework;
-#if NET452
 using PublicApiGenerator;
 
 [TestFixture]
 public class APIApprovals
 {
-
     [Test]
     [MethodImpl(MethodImplOptions.NoInlining)]
     public void Approve()
