@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
     <SignAssembly>true</SignAssembly>
@@ -15,7 +14,6 @@
     <ProjectReference Include="..\NServiceBus.Newtonsoft.Json\NServiceBus.Newtonsoft.Json.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-    <PackageReference Include="PublicApiGenerator" Version="6.1.0-beta2" />
-    <PackageReference Include="Mono.Cecil" Version="0.10.0-beta6" />
+    <PackageReference Include="PublicApiGenerator" Version="6.4.0" />
   </ItemGroup>
 </Project>
