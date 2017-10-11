@@ -6,7 +6,6 @@
     <NoWarn>0419</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\GitVersion.yml" Link="GitVersion.yml" />
     <PackageReference Include="Newtonsoft.Json" Version="[10.0.3, 11.0.0)" />
     <PackageReference Include="NServiceBus" Version="[7.0.0-beta0008, 8.0.0)" />
     <PackageReference Include="Particular.Packaging" Version="0.1.0" PrivateAssets="All" />
