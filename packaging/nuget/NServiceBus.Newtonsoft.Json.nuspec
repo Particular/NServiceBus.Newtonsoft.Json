@@ -13,10 +13,10 @@
     <language>en-AU</language>
     <copyright>$copyright$</copyright>
     <tags>NServiceBus, Newtonsoft, Json</tags>
-	  <dependencies>
+    <dependencies>
       <dependency id="NServiceBus" version="[6.0.0, 7.0.0)" />
-      <dependency id="Newtonsoft.Json" version="[10.0.1, 11.0.0)" />
-	  </dependencies>
+      <dependency id="Newtonsoft.Json" version="[11.0.1, 12.0.0)" />
+    </dependencies>
   </metadata>
   <files>
     <file src="..\..\binaries\NServiceBus.Newtonsoft.Json.???" target="lib\net452" />
