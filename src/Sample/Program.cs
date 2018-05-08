@@ -9,18 +9,21 @@ class Program
         var endpointConfiguration = new EndpointConfiguration("NewtonsoftSerializerSample");
         endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
         endpointConfiguration.EnableInstallers();
-        endpointConfiguration.SendFailedMessagesTo("error");
+        endpointConfiguration.UseTransport<LearningTransport>();
         endpointConfiguration.UsePersistence<InMemoryPersistence>();
         Run(endpointConfiguration).GetAwaiter().GetResult();
     }
 
     static async Task Run(EndpointConfiguration endpointConfiguration)
     {
-        var endpoint = await Endpoint.Start(endpointConfiguration);
-        await endpoint.SendLocal(new MyMessage
+        var endpoint = await Endpoint.Start(endpointConfiguration)
+            .ConfigureAwait(false);
+        var myMessage = new MyMessage
         {
             DateSend = DateTime.Now,
-        });
+        };
+        await endpoint.SendLocal(myMessage)
+            .ConfigureAwait(false);
         Console.WriteLine("\r\nPress any key to stop program\r\n");
         Console.Read();
     }
