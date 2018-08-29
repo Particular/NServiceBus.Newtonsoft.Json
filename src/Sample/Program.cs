@@ -25,6 +25,6 @@ class Program
         await endpoint.SendLocal(myMessage)
             .ConfigureAwait(false);
         Console.WriteLine("\r\nPress any key to stop program\r\n");
-        Console.Read();
+        Console.ReadKey();
     }
 }
