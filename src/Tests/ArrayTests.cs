@@ -5,6 +5,7 @@ using System.Linq;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
+using Particular.Approvals;
 
 [TestFixture]
 public class ArrayTests
@@ -31,7 +32,7 @@ public class ArrayTests
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
             var exception = Assert.Throws<Exception>(() => serializer.Deserialize(stream, new List<Type>()));
-            TestApprover.Verify(exception.Message);
+            Approver.Verify(exception.Message);
         }
     }
 
@@ -60,7 +61,7 @@ public class ArrayTests
             {
                 serializer.Deserialize(stream, messageTypes);
             });
-            TestApprover.Verify(exception.Message);
+            Approver.Verify(exception.Message);
         }
     }
 
@@ -80,7 +81,7 @@ public class ArrayTests
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
             var deserialize = serializer.Deserialize(stream, new List<Type>());
-            ObjectApprover.VerifyWithJson(deserialize.Single());
+            Approver.Verify(deserialize.Single());
         }
     }
 
@@ -104,7 +105,7 @@ public class ArrayTests
                 typeof(ArrayMessage)
             };
             var deserialize = serializer.Deserialize(stream, messageTypes);
-            ObjectApprover.VerifyWithJson(deserialize.Single());
+            Approver.Verify(deserialize.Single());
         }
     }
 
