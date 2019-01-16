@@ -1,8 +1,8 @@
 ﻿using System.IO;
-using ApprovalTests;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
+using Particular.Approvals;
 
 [TestFixture]
 public class Without_wrapping
@@ -20,7 +20,7 @@ public class Without_wrapping
 
             stream.Position = 0;
             var result = new StreamReader(stream).ReadToEnd();
-            Approvals.Verify(result);
+            Approver.Verify(result);
         }
     }
 
