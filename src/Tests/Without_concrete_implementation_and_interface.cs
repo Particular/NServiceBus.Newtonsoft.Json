@@ -2,6 +2,7 @@
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
+using Particular.Approvals;
 
 [TestFixture]
 public class Without_concrete_implementation_and_interface
@@ -24,7 +25,7 @@ public class Without_concrete_implementation_and_interface
 
             stream.Position = 0;
             var result = new StreamReader(stream).ReadToEnd();
-            TestApprover.Verify(result);
+            Approver.Verify(result);
         }
     }
 
