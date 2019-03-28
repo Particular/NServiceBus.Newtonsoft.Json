@@ -33,7 +33,7 @@ namespace NServiceBus.Newtonsoft.Json
 
             this.writerCreator = writerCreator ?? (stream =>
             {
-                var streamWriter = new StreamWriter(stream, Encoding.UTF8);
+                var streamWriter = new StreamWriter(stream, new UTF8Encoding(false));
                 return new JsonTextWriter(streamWriter)
                 {
                     Formatting = Formatting.None
