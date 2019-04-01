@@ -16,7 +16,7 @@ namespace NServiceBus.Newtonsoft.Json
         Func<Stream, JsonReader> readerCreator;
         Func<Stream, JsonWriter> writerCreator;
         NewtonSerializer jsonSerializer;
-        static readonly Encoding utf8NoBOM = new UTF8Encoding(false);
+        static readonly Encoding utf8NoBOM = new UTF8Encoding(false, false);
 
         public JsonMessageSerializer(
             IMessageMapper messageMapper,
