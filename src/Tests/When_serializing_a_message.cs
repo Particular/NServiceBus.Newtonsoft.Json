@@ -5,24 +5,28 @@ using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
 
 [TestFixture]
-public class With_UTF8_BOM
+public class When_serializing_a_message
 {
 
     [Test]
-    public void Run()
+    public void Should_not_emit_UTF8_BOM()
     {
         var messageMapper = new MessageMapper();
         var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-
-        var serialized = new UTF8Encoding(true).GetBytes($"{{\"{nameof(SimpleMessage.SomeProperty)}\":\"John\"}}");
-
-        using (var stream = new MemoryStream(serialized))
+        var message = new SimpleMessage();
+        using (var stream = new MemoryStream())
         {
+            serializer.Serialize(message, stream);
+
             stream.Position = 0;
 
-            var result = (SimpleMessage)serializer.Deserialize(stream, new[] { typeof(SimpleMessage) })[0];
+            var result = stream.ToArray();
+            var utf8bom = new UTF8Encoding(true).GetPreamble();
 
-            Assert.AreEqual("John", result.SomeProperty);
+            for (var i = 0; i < utf8bom.Length; i++)
+            {
+                Assert.AreNotEqual(utf8bom[i], result[i]);
+            }
         }
     }
     public class SimpleMessage
