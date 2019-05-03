@@ -75,6 +75,8 @@
     <Compile Include="App_Packages\PublicApiGenerator.8.1.0\ApiGenerator.cs" />
     <Compile Include="CreatePersonMessage.cs" />
     <Compile Include="ArrayTests.cs" />
+    <Compile Include="When_deserializing_a_message.cs" />
+    <Compile Include="When_serializing_a_message.cs" />
     <Compile Include="Without_typeInfo.cs" />
     <Compile Include="Without_wrapping.cs" />
     <Compile Include="With_interface_without_wrapping.cs" />
