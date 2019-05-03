@@ -16,6 +16,7 @@ namespace NServiceBus.Newtonsoft.Json
         Func<Stream, JsonReader> readerCreator;
         Func<Stream, JsonWriter> writerCreator;
         NewtonSerializer jsonSerializer;
+        static readonly Encoding utf8NoBOM = new UTF8Encoding(false, false);
 
         public JsonMessageSerializer(
             IMessageMapper messageMapper,
@@ -33,7 +34,7 @@ namespace NServiceBus.Newtonsoft.Json
 
             this.writerCreator = writerCreator ?? (stream =>
             {
-                var streamWriter = new StreamWriter(stream, Encoding.UTF8);
+                var streamWriter = new StreamWriter(stream, utf8NoBOM);
                 return new JsonTextWriter(streamWriter)
                 {
                     Formatting = Formatting.None
