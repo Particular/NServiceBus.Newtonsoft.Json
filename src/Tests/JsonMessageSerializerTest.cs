@@ -16,7 +16,7 @@ public class JsonMessageSerializerTest
         messageMapper = new MessageMapper();
         messageMapper.Initialize(new[]
                                     {
-                                        typeof (IA), typeof (A)
+                                        typeof(IA), typeof(A)
                                     });
     }
 
@@ -77,7 +77,7 @@ public class JsonMessageSerializerTest
         messageMapper = new MessageMapper();
         messageMapper.Initialize(new[]
                                     {
-                                        typeof (IA), typeof (A)
+                                        typeof(IA), typeof(A)
                                     });
         serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
@@ -87,12 +87,12 @@ public class JsonMessageSerializerTest
 
         var result = serializer.Deserialize(output, new[]
                                                     {
-                                                        typeof (A)
+                                                        typeof(A)
                                                     });
 
         Assert.DoesNotThrow(() => output.Position = 0, "Stream should still be open");
 
-        Assert.That(result[0], Is.TypeOf(typeof (A)));
+        Assert.That(result[0], Is.TypeOf(typeof(A)));
         var a = (A) result[0];
 
         Assert.AreEqual(obj.Data, a.Data);
@@ -137,7 +137,7 @@ public class JsonMessageSerializerTest
         messageMapper = new MessageMapper();
         messageMapper.Initialize(new[]
                                     {
-                                        typeof (IA), typeof (IAImpl)
+                                        typeof(IA), typeof(IAImpl)
                                     });
         serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
@@ -153,7 +153,7 @@ public class JsonMessageSerializerTest
 
         var result = serializer.Deserialize(output, new[]
                                                     {
-                                                        typeof (IAImpl)
+                                                        typeof(IAImpl)
                                                     });
 
         Assert.DoesNotThrow(() => output.Position = 0, "Stream should still be open");
@@ -161,7 +161,7 @@ public class JsonMessageSerializerTest
         Assert.IsNotEmpty(result);
         Assert.That(result, Has.Length.EqualTo(1));
 
-        Assert.That(result[0], Is.AssignableTo(typeof (IA)));
+        Assert.That(result[0], Is.AssignableTo(typeof(IA)));
         var a = (IA) result[0];
 
         Assert.AreEqual(a.Data, obj.Data);
