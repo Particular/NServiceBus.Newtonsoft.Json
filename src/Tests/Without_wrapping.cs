@@ -41,7 +41,7 @@ public class Without_wrapping
             serializer.Serialize(message, stream);
 
             stream.Position = 0;
-            var result = (SimpleMessage) serializer.Deserialize(stream, messageTypes)[0];
+            var result = (SimpleMessage)serializer.Deserialize(stream, messageTypes)[0];
 
             Assert.AreEqual("test", result.SomeProperty);
         }
