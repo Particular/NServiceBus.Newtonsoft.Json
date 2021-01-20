@@ -38,16 +38,16 @@ public class JsonMessageSerializerTest
         var expectedGuid = Guid.NewGuid();
 
         var obj = new A
-                    {
-                        AGuid = expectedGuid,
-                        Data = new byte[32],
-                        I = 23,
-                        S = "Foo",
-                        Ints = new List<int>
+        {
+            AGuid = expectedGuid,
+            Data = new byte[32],
+            I = 23,
+            S = "Foo",
+            Ints = new List<int>
                                 {
                                     12, 42
                                 },
-                        Bs = new List<B>
+            Bs = new List<B>
                             {
                                 new B
                                 {
@@ -65,10 +65,10 @@ public class JsonMessageSerializerTest
                                     BBString = "BBStr"
                                 }
                             },
-                        DateTime = expectedDate,
-                        DateTimeLocal = expectedDateLocal,
-                        DateTimeUtc = expectedDateUtc
-                    };
+            DateTime = expectedDate,
+            DateTimeLocal = expectedDateLocal,
+            DateTimeUtc = expectedDateUtc
+        };
 
         new Random().NextBytes(obj.Data);
 
@@ -93,7 +93,7 @@ public class JsonMessageSerializerTest
         Assert.DoesNotThrow(() => output.Position = 0, "Stream should still be open");
 
         Assert.That(result[0], Is.TypeOf(typeof(A)));
-        var a = (A) result[0];
+        var a = (A)result[0];
 
         Assert.AreEqual(obj.Data, a.Data);
         Assert.AreEqual(23, a.I);
@@ -104,7 +104,7 @@ public class JsonMessageSerializerTest
         Assert.AreEqual(expectedDateLocal, a.DateTimeLocal);
         Assert.AreEqual(expectedDateUtc.Kind, a.DateTimeUtc.Kind);
         Assert.AreEqual(expectedDateUtc, a.DateTimeUtc);
-        Assert.AreEqual("ccc", ((C) a.Bs[0].C).Cstr);
+        Assert.AreEqual("ccc", ((C)a.Bs[0].C).Cstr);
         Assert.AreEqual(expectedGuid, a.AGuid);
 
         Assert.IsInstanceOf<B>(a.Bs[0]);
@@ -123,12 +123,13 @@ public class JsonMessageSerializerTest
                 x.I = 42;
                 x.Data = new byte[23];
                 x.B = new B
-                        {
-                            BString = "BOO", C = new C
-                                                {
-                                                    Cstr = "COO"
-                                                }
-                        };
+                {
+                    BString = "BOO",
+                    C = new C
+                    {
+                        Cstr = "COO"
+                    }
+                };
             }
             );
 
@@ -162,14 +163,14 @@ public class JsonMessageSerializerTest
         Assert.That(result, Has.Length.EqualTo(1));
 
         Assert.That(result[0], Is.AssignableTo(typeof(IA)));
-        var a = (IA) result[0];
+        var a = (IA)result[0];
 
         Assert.AreEqual(a.Data, obj.Data);
         Assert.AreEqual(42, a.I);
         Assert.AreEqual("kalle", a.S);
         Assert.IsNotNull(a.B);
         Assert.AreEqual("BOO", a.B.BString);
-        Assert.AreEqual("COO", ((C) a.B.C).Cstr);
+        Assert.AreEqual("COO", ((C)a.B.C).Cstr);
     }
 
     [Test]
