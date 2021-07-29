@@ -45,7 +45,7 @@ jobs:
           path: nugets/
           retention-days: 7
       - name: Run tests
-        uses: Particular/run-tests-action@main
+        uses: Particular/run-tests-action@v0.1.0
         with:
           reset-script: |
             echo "The reset-script parameter is optional"
