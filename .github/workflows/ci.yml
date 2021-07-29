@@ -46,3 +46,7 @@ jobs:
           retention-days: 7
       - name: Run tests
         uses: Particular/run-tests-action@main
+        with:
+          reset-script: |
+            echo "The reset-script parameter is optional"
+            echo "That is how you would reset RabbitMQ between test runs"
