@@ -45,8 +45,4 @@ jobs:
           path: nugets/
           retention-days: 7
       - name: Run tests
-        uses: Particular/run-tests-action@v0.1.0
-        with:
-          reset-script: |
-            echo "The reset-script parameter is optional"
-            echo "That is how you would reset RabbitMQ between test runs"
+        uses: Particular/run-tests-action@v1.0.0
