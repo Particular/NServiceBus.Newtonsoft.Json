@@ -27,7 +27,7 @@ public class With_base_type_but_without_sub_type_in_message_types
             serializer.Serialize(message, stream);
 
             stream.Position = 0;
-            var result = (ISomeBaseMessage)serializer.Deserialize(stream, messageTypes)[0];
+            var result = (ISomeBaseMessage)serializer.Deserialize(stream.ToArray(), messageTypes)[0];
 
             Assert.AreEqual("test", result.SomeProperty);
         }

@@ -85,7 +85,7 @@ public class JsonMessageSerializerTest
 
         output.Position = 0;
 
-        var result = serializer.Deserialize(output, new[]
+        var result = serializer.Deserialize(output.ToArray(), new[]
                                                     {
                                                         typeof(A)
                                                     });
@@ -152,7 +152,7 @@ public class JsonMessageSerializerTest
 
         output.Position = 0;
 
-        var result = serializer.Deserialize(output, new[]
+        var result = serializer.Deserialize(output.ToArray(), new[]
                                                     {
                                                         typeof(AImplementation)
                                                     });
@@ -198,7 +198,7 @@ public class JsonMessageSerializerTest
             }, stream);
             stream.Position = 0;
 
-            var result = serializer.Deserialize(stream, new List<Type>
+            var result = serializer.Deserialize(stream.ToArray(), new List<Type>
                 {
                     typeof(DateTimeMessage)
                 }).Cast<DateTimeMessage>().Single();

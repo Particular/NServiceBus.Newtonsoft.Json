@@ -18,7 +18,7 @@ public class With_interface_without_wrapping
 
             stream.Position = 0;
 
-            var result = (SuperMessage)serializer.Deserialize(stream, new[] { typeof(SuperMessage), typeof(IMyEvent) })[0];
+            var result = (SuperMessage)serializer.Deserialize(stream.ToArray(), new[] { typeof(SuperMessage), typeof(IMyEvent) })[0];
 
             Assert.AreEqual("John", result.SomeProperty);
         }
