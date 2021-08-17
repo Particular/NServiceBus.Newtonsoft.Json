@@ -138,7 +138,7 @@ public class JsonMessageSerializerTest
         messageMapper = new MessageMapper();
         messageMapper.Initialize(new[]
                                     {
-                                        typeof(IA), typeof(IAImpl)
+                                        typeof(IA), typeof(AImplementation)
                                     });
         serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
@@ -154,7 +154,7 @@ public class JsonMessageSerializerTest
 
         var result = serializer.Deserialize(output, new[]
                                                     {
-                                                        typeof(IAImpl)
+                                                        typeof(AImplementation)
                                                     });
 
         Assert.DoesNotThrow(() => output.Position = 0, "Stream should still be open");
@@ -180,7 +180,9 @@ public class JsonMessageSerializerTest
         var expectedDateTimeLocal = new DateTime(2010, 10, 13, 12, 32, 42, DateTimeKind.Local);
         var expectedDateTimeUtc = new DateTime(2010, 10, 13, 12, 32, 42, DateTimeKind.Utc);
         var expectedDateTimeOffset = new DateTimeOffset(2012, 12, 12, 12, 12, 12, TimeSpan.FromHours(6));
+#pragma warning disable PS0023 // DateTime.UtcNow or DateTimeOffset.UtcNow should be used instead of DateTime.Now and DateTimeOffset.Now, unless the value is being used for displaying the current date-time in a user's local time zone
         var expectedDateTimeOffsetLocal = DateTimeOffset.Now;
+#pragma warning restore PS0023 // DateTime.UtcNow or DateTimeOffset.UtcNow should be used instead of DateTime.Now and DateTimeOffset.Now, unless the value is being used for displaying the current date-time in a user's local time zone
         var expectedDateTimeOffsetUtc = DateTimeOffset.UtcNow;
 
         using (var stream = new MemoryStream())
@@ -245,7 +247,7 @@ public interface IA : IMessage
     int I { get; set; }
     B B { get; set; }
 }
-public class IAImpl : IA
+public class AImplementation : IA
 {
     public byte[] Data { get; set; }
     public string S { get; set; }

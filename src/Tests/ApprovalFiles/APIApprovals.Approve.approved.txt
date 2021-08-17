@@ -11,6 +11,6 @@ namespace NServiceBus
     public class NewtonsoftSerializer : NServiceBus.Serialization.SerializationDefinition
     {
         public NewtonsoftSerializer() { }
-        public override System.Func<NServiceBus.MessageInterfaces.IMessageMapper, NServiceBus.Serialization.IMessageSerializer> Configure(NServiceBus.Settings.ReadOnlySettings settings) { }
+        public override System.Func<NServiceBus.MessageInterfaces.IMessageMapper, NServiceBus.Serialization.IMessageSerializer> Configure(NServiceBus.Settings.IReadOnlySettings settings) { }
     }
 }

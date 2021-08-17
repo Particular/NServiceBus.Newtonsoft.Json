@@ -13,14 +13,14 @@ public class With_concrete_implementation_and_interface
     {
         var map = new[]
         {
-            typeof(SuperMessageWithConcreteImpl),
-            typeof(ISuperMessageWithConcreteImpl)
+            typeof(SuperMessageWithConcreteImplementation),
+            typeof(ISuperMessageWithConcreteImplementation)
         };
         var messageMapper = new MessageMapper();
         messageMapper.Initialize(map);
         var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
-        var message = new SuperMessageWithConcreteImpl
+        var message = new SuperMessageWithConcreteImplementation
         {
             SomeProperty = "test"
         };
@@ -31,14 +31,14 @@ public class With_concrete_implementation_and_interface
 
             stream.Position = 0;
 
-            var result = (ISuperMessageWithConcreteImpl)serializer.Deserialize(stream, map)[0];
+            var result = (ISuperMessageWithConcreteImplementation)serializer.Deserialize(stream, map)[0];
 
-            Assert.IsInstanceOf<SuperMessageWithConcreteImpl>(result);
+            Assert.IsInstanceOf<SuperMessageWithConcreteImplementation>(result);
             Assert.AreEqual("test", result.SomeProperty);
         }
     }
 
-    public interface ISuperMessageWithConcreteImpl : IMyEvent
+    public interface ISuperMessageWithConcreteImplementation : IMyEvent
     {
         string SomeProperty { get; set; }
     }
@@ -47,7 +47,7 @@ public class With_concrete_implementation_and_interface
     {
     }
 
-    public class SuperMessageWithConcreteImpl : ISuperMessageWithConcreteImpl
+    public class SuperMessageWithConcreteImplementation : ISuperMessageWithConcreteImplementation
     {
         public string SomeProperty { get; set; }
     }
