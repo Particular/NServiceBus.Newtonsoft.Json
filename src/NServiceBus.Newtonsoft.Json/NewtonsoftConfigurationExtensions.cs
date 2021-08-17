@@ -25,7 +25,7 @@
             config.GetSettings().Set("NServiceBus.Newtonsoft.Json.ReaderCreator", readerCreator);
         }
 
-        internal static Func<Stream, JsonReader> GetReaderCreator(this ReadOnlySettings settings)
+        internal static Func<Stream, JsonReader> GetReaderCreator(this IReadOnlySettings settings)
         {
             return settings.GetOrDefault<Func<Stream, JsonReader>>("NServiceBus.Newtonsoft.Json.ReaderCreator");
         }
@@ -42,7 +42,7 @@
             config.GetSettings().Set("NServiceBus.Newtonsoft.Json.WriterCreator", writerCreator);
         }
 
-        internal static Func<Stream, JsonWriter> GetWriterCreator(this ReadOnlySettings settings)
+        internal static Func<Stream, JsonWriter> GetWriterCreator(this IReadOnlySettings settings)
         {
             return settings.GetOrDefault<Func<Stream, JsonWriter>>("NServiceBus.Newtonsoft.Json.WriterCreator");
         }
@@ -59,7 +59,7 @@
             config.GetSettings().Set("NServiceBus.Newtonsoft.Json.Settings", settings);
         }
 
-        internal static JsonSerializerSettings GetSettings(this ReadOnlySettings settings)
+        internal static JsonSerializerSettings GetSettings(this IReadOnlySettings settings)
         {
             return settings.GetOrDefault<JsonSerializerSettings>("NServiceBus.Newtonsoft.Json.Settings");
         }
@@ -80,7 +80,7 @@
             config.GetSettings().Set("NServiceBus.Newtonsoft.Json.ContentTypeKey", contentTypeKey);
         }
 
-        internal static string GetContentTypeKey(this ReadOnlySettings settings)
+        internal static string GetContentTypeKey(this IReadOnlySettings settings)
         {
             return settings.GetOrDefault<string>("NServiceBus.Newtonsoft.Json.ContentTypeKey");
         }
