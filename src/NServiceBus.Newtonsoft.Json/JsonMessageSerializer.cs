@@ -69,7 +69,7 @@
 
         public object[] Deserialize(ReadOnlyMemory<byte> body, IList<Type> messageTypes)
         {
-            var stream = new ReadonlyStream(body);
+            var stream = new ReadOnlyStream(body);
 
             var isArrayStream = IsArrayStream(stream);
 
