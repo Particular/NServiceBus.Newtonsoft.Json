@@ -31,7 +31,7 @@ public class ArrayTests
 
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-            var exception = Assert.Throws<Exception>(() => serializer.Deserialize(stream, new List<Type>()));
+            var exception = Assert.Throws<Exception>(() => serializer.Deserialize(stream.ToArray(), new List<Type>()));
             Approver.Verify(exception.Message);
         }
     }
@@ -59,7 +59,7 @@ public class ArrayTests
             };
             var exception = Assert.Throws<Exception>(() =>
             {
-                serializer.Deserialize(stream, messageTypes);
+                serializer.Deserialize(stream.ToArray(), messageTypes);
             });
             Approver.Verify(exception.Message);
         }
@@ -80,7 +80,7 @@ public class ArrayTests
 
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-            var deserialize = serializer.Deserialize(stream, new List<Type>());
+            var deserialize = serializer.Deserialize(stream.ToArray(), new List<Type>());
             Approver.Verify(deserialize.Single());
         }
     }
@@ -104,7 +104,7 @@ public class ArrayTests
             {
                 typeof(ArrayMessage)
             };
-            var deserialize = serializer.Deserialize(stream, messageTypes);
+            var deserialize = serializer.Deserialize(stream.ToArray(), messageTypes);
             Approver.Verify(deserialize.Single());
         }
     }

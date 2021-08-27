@@ -25,7 +25,7 @@ public class When_deserializing_a_message
         {
             stream.Position = 0;
 
-            var result = (SimpleMessage)serializer.Deserialize(stream, new[] { typeof(SimpleMessage) })[0];
+            var result = (SimpleMessage)serializer.Deserialize(stream.ToArray(), new[] { typeof(SimpleMessage) })[0];
 
             Assert.AreEqual("John", result.SomeProperty);
         }
@@ -47,7 +47,7 @@ public class When_deserializing_a_message
         {
             stream.Position = 0;
 
-            var result = (SimpleMessage)serializer.Deserialize(stream, new[] { typeof(SimpleMessage) })[0];
+            var result = (SimpleMessage)serializer.Deserialize(stream.ToArray(), new[] { typeof(SimpleMessage) })[0];
 
             Assert.AreEqual("John", result.SomeProperty);
         }
