@@ -26,7 +26,7 @@
         {
             this.messageMapper = messageMapper;
 
-            settings = settings ?? new JsonSerializerSettings
+            settings ??= new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Auto
             };
