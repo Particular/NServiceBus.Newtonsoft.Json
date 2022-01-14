@@ -30,7 +30,7 @@
             if (settings == null)
             {
                 settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
-                log.Warn($"The default {nameof(JsonSerializerSettings)} for NServiceBus.Newtonsoft.Json use TypeNameHandling.Auto for backwards compatibility. This is a potential security vulnerability and it is recommended to use TypeNameHandling.None if possible. To disable this warning, provide a custom {nameof(JsonSerializerSettings)} instance to 'endpointConfiguration.UseSerialization<NewtonsoftSerializer>().Settings'.");
+                log.Warn($"The default {nameof(JsonSerializerSettings)} for NServiceBus.Newtonsoft.Json use TypeNameHandling.Auto for backwards compatibility. This is a potential security vulnerability and it is recommended to use TypeNameHandling.None if possible. To disable this warning, provide a custom {nameof(JsonSerializerSettings)} instance to 'endpointConfiguration.UseSerialization<NewtonsoftSerializer>().Settings'. Refer to the Json.NET serializer documentation at https://docs.particular.net/ for further details.");
             }
 
             this.writerCreator = writerCreator ?? (stream =>
