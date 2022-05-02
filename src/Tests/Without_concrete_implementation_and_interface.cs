@@ -48,7 +48,7 @@ public class Without_concrete_implementation_and_interface
 
             stream.Position = 0;
 
-            var result = (IWithoutConcrete) serializer.Deserialize(stream, messageTypes)[0];
+            var result = (IWithoutConcrete)serializer.Deserialize(stream, messageTypes)[0];
 
             Assert.AreEqual("test", result.SomeProperty);
         }

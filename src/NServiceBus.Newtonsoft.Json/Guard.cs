@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NServiceBus.Newtonsoft.Json
+﻿namespace NServiceBus.Newtonsoft.Json
 {
+    using System;
+
     static class Guard
     {
 

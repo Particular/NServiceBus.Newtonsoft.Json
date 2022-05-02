@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
-using NServiceBus.MessageInterfaces;
-using NServiceBus.Serialization;
-using NewtonSerializer = Newtonsoft.Json.JsonSerializer;
-
-namespace NServiceBus.Newtonsoft.Json
+﻿namespace NServiceBus.Newtonsoft.Json
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using global::Newtonsoft.Json;
+    using NServiceBus.MessageInterfaces;
+    using NServiceBus.Serialization;
+    using NewtonSerializer = global::Newtonsoft.Json.JsonSerializer;
+
     class JsonMessageSerializer : IMessageSerializer
     {
         IMessageMapper messageMapper;
