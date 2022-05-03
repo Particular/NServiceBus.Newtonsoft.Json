@@ -30,7 +30,7 @@ public class When_serializing_a_message
             }
         }
     }
-    
+
     [Test]
     public void Should_not_emit_UTF8_BOM_if_configured_not_to()
     {
@@ -46,7 +46,7 @@ public class When_serializing_a_message
         };
 
         var serializer = new JsonMessageSerializer(messageMapper, null, writerCreator, null, null);
-        
+
         var message = new SimpleMessage();
         using (var stream = new MemoryStream())
         {

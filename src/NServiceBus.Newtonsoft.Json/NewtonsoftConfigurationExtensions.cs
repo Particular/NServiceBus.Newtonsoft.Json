@@ -1,13 +1,12 @@
-﻿using System;
-using System.IO;
-using Newtonsoft.Json;
-using NServiceBus.Configuration.AdvancedExtensibility;
-using NServiceBus.Serialization;
-using NServiceBus.Newtonsoft.Json;
-
-namespace NServiceBus
+﻿namespace NServiceBus
 {
-    using Settings;
+    using System;
+    using System.IO;
+    using global::Newtonsoft.Json;
+    using NServiceBus.Configuration.AdvancedExtensibility;
+    using NServiceBus.Serialization;
+    using NServiceBus.Newtonsoft.Json;
+    using NServiceBus.Settings;
 
     /// <summary>
     /// Extensions for <see cref="SerializationExtensions{T}"/> to manipulate how messages are serialized via Json.net.

@@ -31,7 +31,7 @@ public class With_concrete_implementation_and_interface
 
             stream.Position = 0;
 
-            var result = (ISuperMessageWithConcreteImpl) serializer.Deserialize(stream, map)[0];
+            var result = (ISuperMessageWithConcreteImpl)serializer.Deserialize(stream, map)[0];
 
             Assert.IsInstanceOf<SuperMessageWithConcreteImpl>(result);
             Assert.AreEqual("test", result.SomeProperty);

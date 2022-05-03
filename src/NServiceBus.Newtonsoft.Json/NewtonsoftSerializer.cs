@@ -1,11 +1,11 @@
-﻿using System;
-using NServiceBus.MessageInterfaces;
-using NServiceBus.Newtonsoft.Json;
-using NServiceBus.Serialization;
-using NServiceBus.Settings;
-
-namespace NServiceBus
+﻿namespace NServiceBus
 {
+    using System;
+    using NServiceBus.MessageInterfaces;
+    using NServiceBus.Newtonsoft.Json;
+    using NServiceBus.Serialization;
+    using NServiceBus.Settings;
+
     /// <summary>
     /// Enables Newtonsoft Json serialization.
     /// </summary>
