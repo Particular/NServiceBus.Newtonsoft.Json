@@ -79,7 +79,6 @@ public class JsonMessageSerializerTest
                                     {
                                         typeof(IA), typeof(A)
                                     });
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
         serializer.Serialize(obj, output);
 
@@ -104,11 +103,12 @@ public class JsonMessageSerializerTest
         Assert.AreEqual(expectedDateLocal, a.DateTimeLocal);
         Assert.AreEqual(expectedDateUtc.Kind, a.DateTimeUtc.Kind);
         Assert.AreEqual(expectedDateUtc, a.DateTimeUtc);
-        Assert.AreEqual("ccc", ((C)a.Bs[0].C).Cstr);
+        Assert.That(a.Bs[0].C, Is.TypeOf(typeof(Newtonsoft.Json.Linq.JObject)));
+        Assert.AreEqual("ccc", Newtonsoft.Json.Linq.JObject.Parse(a.Bs[0].C.ToString()).GetValue("Cstr").ToString());
         Assert.AreEqual(expectedGuid, a.AGuid);
 
         Assert.IsInstanceOf<B>(a.Bs[0]);
-        Assert.IsInstanceOf<BB>(a.Bs[1]);
+        Assert.IsNotInstanceOf<BB>(a.Bs[1]);
     }
 
     [Test]
@@ -140,7 +140,6 @@ public class JsonMessageSerializerTest
                                     {
                                         typeof(IA), typeof(AImplementation)
                                     });
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
 
         serializer.Serialize(obj, output);
 
@@ -170,7 +169,8 @@ public class JsonMessageSerializerTest
         Assert.AreEqual("kalle", a.S);
         Assert.IsNotNull(a.B);
         Assert.AreEqual("BOO", a.B.BString);
-        Assert.AreEqual("COO", ((C)a.B.C).Cstr);
+        Assert.That(a.B.C, Is.TypeOf(typeof(Newtonsoft.Json.Linq.JObject)));
+        Assert.AreEqual("COO", Newtonsoft.Json.Linq.JObject.Parse(a.B.C.ToString()).GetValue("Cstr").ToString());
     }
 
     [Test]
