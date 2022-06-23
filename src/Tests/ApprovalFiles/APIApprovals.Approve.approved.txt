@@ -4,12 +4,20 @@ namespace NServiceBus
     public static class NewtonsoftConfigurationExtensions
     {
         public static void ContentTypeKey(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftJsonSerializer> config, string contentTypeKey) { }
+        [System.Obsolete("Use the equivalent method on NewtonsoftJsonSerializer instead. The member current" +
+            "ly throws a NotImplementedException. Will be removed in version 4.0.0.", true)]
         public static void ContentTypeKey(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, string contentTypeKey) { }
         public static void ReaderCreator(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftJsonSerializer> config, System.Func<System.IO.Stream, Newtonsoft.Json.JsonReader> readerCreator) { }
+        [System.Obsolete("Use the equivalent method on NewtonsoftJsonSerializer instead. The member current" +
+            "ly throws a NotImplementedException. Will be removed in version 4.0.0.", true)]
         public static void ReaderCreator(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, System.Func<System.IO.Stream, Newtonsoft.Json.JsonReader> readerCreator) { }
         public static void Settings(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftJsonSerializer> config, Newtonsoft.Json.JsonSerializerSettings settings) { }
+        [System.Obsolete("Use the equivalent method on NewtonsoftJsonSerializer instead. The member current" +
+            "ly throws a NotImplementedException. Will be removed in version 4.0.0.", true)]
         public static void Settings(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, Newtonsoft.Json.JsonSerializerSettings settings) { }
         public static void WriterCreator(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftJsonSerializer> config, System.Func<System.IO.Stream, Newtonsoft.Json.JsonWriter> writerCreator) { }
+        [System.Obsolete("Use the equivalent method on NewtonsoftJsonSerializer instead. The member current" +
+            "ly throws a NotImplementedException. Will be removed in version 4.0.0.", true)]
         public static void WriterCreator(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, System.Func<System.IO.Stream, Newtonsoft.Json.JsonWriter> writerCreator) { }
     }
     public class NewtonsoftJsonSerializer : NServiceBus.Serialization.SerializationDefinition
