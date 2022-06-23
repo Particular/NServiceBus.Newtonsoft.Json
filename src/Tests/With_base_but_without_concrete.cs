@@ -9,10 +9,12 @@ using NUnit.Framework;
 public class With_base_type_but_without_sub_type_in_message_types
 {
     [Test]
-    public void Deserialize()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Deserialize(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var messageMapper = new MessageMapper();
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
         var messageTypes = new[]
         {
             typeof(ISomeBaseMessage)

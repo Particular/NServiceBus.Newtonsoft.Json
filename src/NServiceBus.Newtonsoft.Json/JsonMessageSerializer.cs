@@ -8,6 +8,7 @@
     using global::Newtonsoft.Json;
     using NServiceBus.MessageInterfaces;
     using NServiceBus.Serialization;
+    using Logging;
     using NewtonSerializer = global::Newtonsoft.Json.JsonSerializer;
 
     class JsonMessageSerializer : IMessageSerializer
@@ -22,14 +23,24 @@
             Func<Stream, JsonReader> readerCreator,
             Func<Stream, JsonWriter> writerCreator,
             JsonSerializerSettings settings,
-            string contentType)
+            string contentType,
+            TypeNameHandling typeNameHandling = TypeNameHandling.None)
         {
             this.messageMapper = messageMapper;
 
-            settings = settings ?? new JsonSerializerSettings
+            if (settings == null)
             {
-                TypeNameHandling = TypeNameHandling.Auto
-            };
+                settings = new JsonSerializerSettings { TypeNameHandling = typeNameHandling };
+                if (typeNameHandling == TypeNameHandling.Auto)
+                {
+                    log.Warn($"The default {nameof(JsonSerializerSettings)} for NServiceBus.Newtonsoft.Json use TypeNameHandling.Auto for backwards compatibility. This is a potential security vulnerability and it is recommended to use TypeNameHandling.None if possible. To disable this warning, provide a custom {nameof(JsonSerializerSettings)} instance to 'endpointConfiguration.UseSerialization<NewtonsoftSerializer>().Settings'. Refer to the Json.NET serializer documentation at https://docs.particular.net/ for further details.");
+                }
+            }
+
+            if (settings.TypeNameHandling == TypeNameHandling.Auto && typeNameHandling != TypeNameHandling.Auto)
+            {
+                log.Warn($"Use of TypeNameHandling.Auto is a potential security vulnerability and it is recommended to use TypeNameHandling.None if possible");
+            }
 
             this.writerCreator = writerCreator ?? (stream =>
             {
@@ -159,6 +170,8 @@
                 }
             }
         }
+
+        static ILog log = LogManager.GetLogger<JsonMessageSerializer>();
     }
 
 }

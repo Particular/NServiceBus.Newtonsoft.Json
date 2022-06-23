@@ -8,10 +8,12 @@ public class Without_typeInfo
 {
 
     [Test]
-    public void Run()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Run(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var messageMapper = new MessageMapper();
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
         var message = new SimpleMessage();
         using (var stream = new MemoryStream())
         {

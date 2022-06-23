@@ -13,7 +13,9 @@ public class ArrayTests
     string typeName = $"{typeof(ArrayMessage).FullName}, {typeof(ArrayMessage).Assembly.GetName().Name}";
 
     [Test]
-    public void Should_throw_for_multiple_dollar()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Should_throw_for_multiple_dollar(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var text = $@"
 [{{
@@ -30,14 +32,16 @@ public class ArrayTests
             WriteToStream(stream, text);
 
             var messageMapper = new MessageMapper();
-            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
             var exception = Assert.Throws<Exception>(() => serializer.Deserialize(stream, new List<Type>()));
             Approver.Verify(exception.Message);
         }
     }
 
     [Test]
-    public void Should_throw_for_multiple_passed_type()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Should_throw_for_multiple_passed_type(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var text = @"
 [{
@@ -52,7 +56,7 @@ public class ArrayTests
             WriteToStream(stream, text);
 
             var messageMapper = new MessageMapper();
-            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
             var messageTypes = new List<Type>
             {
                 typeof(ArrayMessage)
@@ -66,7 +70,9 @@ public class ArrayTests
     }
 
     [Test]
-    public void Should_not_throw_for_single_dollar()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Should_not_throw_for_single_dollar(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var text = $@"
 [{{
@@ -79,7 +85,7 @@ public class ArrayTests
             WriteToStream(stream, text);
 
             var messageMapper = new MessageMapper();
-            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
             var deserialize = serializer.Deserialize(stream, new List<Type>());
             Approver.Verify(deserialize.Single());
         }
@@ -87,7 +93,9 @@ public class ArrayTests
 
 
     [Test]
-    public void Should_not_throw_for_single_passed_type()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Should_not_throw_for_single_passed_type(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var text = @"
 [{
@@ -99,7 +107,7 @@ public class ArrayTests
             WriteToStream(stream, text);
 
             var messageMapper = new MessageMapper();
-            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
             var messageTypes = new List<Type>
             {
                 typeof(ArrayMessage)
