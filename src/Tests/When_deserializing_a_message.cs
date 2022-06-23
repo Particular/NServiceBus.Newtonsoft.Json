@@ -10,10 +10,12 @@ public class When_deserializing_a_message
 {
 
     [Test]
-    public void Should_handle_message_with_UTF8_BOM()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Should_handle_message_with_UTF8_BOM(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var messageMapper = new MessageMapper();
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
 
         var utf8WithBomEncoding = new UTF8Encoding(true);
         var serialized = utf8WithBomEncoding
@@ -32,10 +34,12 @@ public class When_deserializing_a_message
     }
 
     [Test]
-    public void Should_handle_message_without_UTF8_BOM()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Should_handle_message_without_UTF8_BOM(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var messageMapper = new MessageMapper();
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
 
         var utf8WithoutBomEncoding = new UTF8Encoding(false);
         var serialized = utf8WithoutBomEncoding

@@ -9,7 +9,9 @@ public class With_concrete_implementation_and_interface
 {
 
     [Test]
-    public void Run()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Run(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var map = new[]
         {
@@ -18,7 +20,7 @@ public class With_concrete_implementation_and_interface
         };
         var messageMapper = new MessageMapper();
         messageMapper.Initialize(map);
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
 
         var message = new SuperMessageWithConcreteImpl
         {

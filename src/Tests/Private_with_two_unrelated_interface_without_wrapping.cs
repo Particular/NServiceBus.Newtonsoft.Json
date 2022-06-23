@@ -8,7 +8,9 @@ public class Private_with_two_unrelated_interface_without_wrapping
 {
 
     [Test]
-    public void Run()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Run(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var messageMapper = new MessageMapper();
         var messageTypes = new[]
@@ -17,7 +19,7 @@ public class Private_with_two_unrelated_interface_without_wrapping
             typeof(IMyEventB)
         };
         messageMapper.Initialize(messageTypes);
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
 
         var message = new CompositeMessage
         {

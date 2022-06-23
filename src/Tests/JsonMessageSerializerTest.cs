@@ -23,14 +23,12 @@ public class JsonMessageSerializerTest
     JsonMessageSerializer serializer;
     MessageMapper messageMapper;
 
-    [SetUp]
-    public void Setup()
-    {
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-    }
 
     [Test]
-    public void Test()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+
+    public void Test(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var expectedDate = new DateTime(2010, 10, 13, 12, 32, 42, DateTimeKind.Unspecified);
         var expectedDateLocal = new DateTime(2010, 10, 13, 12, 32, 42, DateTimeKind.Local);
@@ -74,13 +72,7 @@ public class JsonMessageSerializerTest
 
         var output = new MemoryStream();
 
-        messageMapper = new MessageMapper();
-        messageMapper.Initialize(new[]
-                                    {
-                                        typeof (IA), typeof (A)
-                                    });
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
         serializer.Serialize(obj, output);
 
         output.Position = 0;
@@ -104,15 +96,26 @@ public class JsonMessageSerializerTest
         Assert.AreEqual(expectedDateLocal, a.DateTimeLocal);
         Assert.AreEqual(expectedDateUtc.Kind, a.DateTimeUtc.Kind);
         Assert.AreEqual(expectedDateUtc, a.DateTimeUtc);
-        Assert.AreEqual("ccc", ((C)a.Bs[0].C).Cstr);
         Assert.AreEqual(expectedGuid, a.AGuid);
 
+        if (typeNameHandling == Newtonsoft.Json.TypeNameHandling.Auto)
+        {
+            Assert.AreEqual("ccc", ((C)a.Bs[0].C).Cstr);
+            Assert.IsInstanceOf<BB>(a.Bs[1]);
+        }
+        else
+        {
+            Assert.AreEqual("ccc", Newtonsoft.Json.Linq.JObject.Parse(a.Bs[0].C.ToString()).GetValue("Cstr").ToString());
+            Assert.IsNotInstanceOf<BB>(a.Bs[1]);
+        }
+
         Assert.IsInstanceOf<B>(a.Bs[0]);
-        Assert.IsInstanceOf<BB>(a.Bs[1]);
     }
 
     [Test]
-    public void TestInterfaces()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void TestInterfaces(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var output = new MemoryStream();
 
@@ -135,13 +138,7 @@ public class JsonMessageSerializerTest
 
         new Random().NextBytes(obj.Data);
 
-        messageMapper = new MessageMapper();
-        messageMapper.Initialize(new[]
-                                    {
-                                        typeof (IA), typeof (IAImpl)
-                                    });
-        serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-
+        serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
         serializer.Serialize(obj, output);
 
         output.Position = 0;
@@ -170,11 +167,21 @@ public class JsonMessageSerializerTest
         Assert.AreEqual("kalle", a.S);
         Assert.IsNotNull(a.B);
         Assert.AreEqual("BOO", a.B.BString);
-        Assert.AreEqual("COO", ((C)a.B.C).Cstr);
+
+        if (typeNameHandling == Newtonsoft.Json.TypeNameHandling.Auto)
+        {
+            Assert.AreEqual("COO", ((C)a.B.C).Cstr);
+        }
+        else
+        {
+            Assert.AreEqual("COO", Newtonsoft.Json.Linq.JObject.Parse(a.B.C.ToString()).GetValue("Cstr").ToString());
+        }
     }
 
     [Test]
-    public void Should_preserve_timezones()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Should_preserve_timezones(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var expectedDateTime = new DateTime(2010, 10, 13, 12, 32, 42, DateTimeKind.Unspecified);
         var expectedDateTimeLocal = new DateTime(2010, 10, 13, 12, 32, 42, DateTimeKind.Local);
@@ -185,6 +192,7 @@ public class JsonMessageSerializerTest
 
         using (var stream = new MemoryStream())
         {
+            serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
             serializer.Serialize(new DateTimeMessage
             {
                 DateTime = expectedDateTime,
