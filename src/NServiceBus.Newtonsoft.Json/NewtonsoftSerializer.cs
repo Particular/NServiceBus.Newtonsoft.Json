@@ -9,16 +9,16 @@
     /// <summary>
     /// Enables Newtonsoft Json serialization.
     /// </summary>
+    [ObsoleteEx(
+    TreatAsErrorFromVersion = "3.0",
+    RemoveInVersion = "4.0",
+    ReplacementTypeOrMember = nameof(NewtonsoftJsonSerializer))]
     public class NewtonsoftSerializer : SerializationDefinition
     {
 
         /// <summary>
         /// Provides a factory method for building a message serializer.
-        /// </summary>
-        [ObsoleteEx(
-        TreatAsErrorFromVersion = "3.0",
-        RemoveInVersion = "4.0",
-        ReplacementTypeOrMember = nameof(NewtonsoftJsonSerializer))]
+        /// </summary>        
         public override Func<IMessageMapper, IMessageSerializer> Configure(ReadOnlySettings settings)
         {
             return mapper =>

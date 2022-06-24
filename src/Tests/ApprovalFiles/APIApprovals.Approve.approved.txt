@@ -3,20 +3,20 @@ namespace NServiceBus
 {
     public class static NewtonsoftConfigurationExtensions
     {
-        [System.ObsoleteAttribute("Use `NewtonsoftJsonSerializer` instead. Will be treated as an error from version " +
-            "3.0.0. Will be removed in version 4.0.0.", false)]
+        [System.ObsoleteAttribute("Use the equivalent method on NewtonsoftJsonSerializer instead. Will be treated as" +
+            " an error from version 3.0.0. Will be removed in version 4.0.0.", false)]
         public static void ContentTypeKey(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, string contentTypeKey) { }
         public static void ContentTypeKey(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftJsonSerializer> config, string contentTypeKey) { }
-        [System.ObsoleteAttribute("Use `NewtonsoftJsonSerializer` instead. Will be treated as an error from version " +
-            "3.0.0. Will be removed in version 4.0.0.", false)]
+        [System.ObsoleteAttribute("Use the equivalent method on NewtonsoftJsonSerializer instead. Will be treated as" +
+            " an error from version 3.0.0. Will be removed in version 4.0.0.", false)]
         public static void ReaderCreator(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, System.Func<System.IO.Stream, Newtonsoft.Json.JsonReader> readerCreator) { }
         public static void ReaderCreator(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftJsonSerializer> config, System.Func<System.IO.Stream, Newtonsoft.Json.JsonReader> readerCreator) { }
-        [System.ObsoleteAttribute("Use `NewtonsoftJsonSerializer` instead. Will be treated as an error from version " +
-            "3.0.0. Will be removed in version 4.0.0.", false)]
+        [System.ObsoleteAttribute("Use the equivalent method on NewtonsoftJsonSerializer instead. Will be treated as" +
+            " an error from version 3.0.0. Will be removed in version 4.0.0.", false)]
         public static void Settings(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, Newtonsoft.Json.JsonSerializerSettings settings) { }
         public static void Settings(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftJsonSerializer> config, Newtonsoft.Json.JsonSerializerSettings settings) { }
-        [System.ObsoleteAttribute("Use `NewtonsoftJsonSerializer` instead. Will be treated as an error from version " +
-            "3.0.0. Will be removed in version 4.0.0.", false)]
+        [System.ObsoleteAttribute("Use the equivalent method on NewtonsoftJsonSerializer instead. Will be treated as" +
+            " an error from version 3.0.0. Will be removed in version 4.0.0.", false)]
         public static void WriterCreator(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftSerializer> config, System.Func<System.IO.Stream, Newtonsoft.Json.JsonWriter> writerCreator) { }
         public static void WriterCreator(this NServiceBus.Serialization.SerializationExtensions<NServiceBus.NewtonsoftJsonSerializer> config, System.Func<System.IO.Stream, Newtonsoft.Json.JsonWriter> writerCreator) { }
     }
@@ -25,11 +25,11 @@ namespace NServiceBus
         public NewtonsoftJsonSerializer() { }
         public override System.Func<NServiceBus.MessageInterfaces.IMessageMapper, NServiceBus.Serialization.IMessageSerializer> Configure(NServiceBus.Settings.ReadOnlySettings settings) { }
     }
+    [System.ObsoleteAttribute("Use `NewtonsoftJsonSerializer` instead. Will be treated as an error from version " +
+        "3.0.0. Will be removed in version 4.0.0.", false)]
     public class NewtonsoftSerializer : NServiceBus.Serialization.SerializationDefinition
     {
         public NewtonsoftSerializer() { }
-        [System.ObsoleteAttribute("Use `NewtonsoftJsonSerializer` instead. Will be treated as an error from version " +
-            "3.0.0. Will be removed in version 4.0.0.", false)]
         public override System.Func<NServiceBus.MessageInterfaces.IMessageMapper, NServiceBus.Serialization.IMessageSerializer> Configure(NServiceBus.Settings.ReadOnlySettings settings) { }
     }
 }
