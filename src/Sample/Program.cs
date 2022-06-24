@@ -7,7 +7,7 @@ class Program
     static void Main()
     {
         var endpointConfiguration = new EndpointConfiguration("NewtonsoftSerializerSample");
-        endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
+        endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
         endpointConfiguration.EnableInstallers();
         endpointConfiguration.UseTransport<LearningTransport>();
         endpointConfiguration.UsePersistence<InMemoryPersistence>();

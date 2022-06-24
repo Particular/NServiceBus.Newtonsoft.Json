@@ -19,9 +19,9 @@
         /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="readerCreator">A delegate that creates a <see cref="JsonReader"/> for a <see cref="Stream"/>.</param>
         [ObsoleteEx(
+        Message = "Use the equivalent method on NewtonsoftJsonSerializer instead.",
         TreatAsErrorFromVersion = "3.0",
-        RemoveInVersion = "4.0",
-        ReplacementTypeOrMember = nameof(NewtonsoftJsonSerializer))]
+        RemoveInVersion = "4.0")]
         public static void ReaderCreator(this SerializationExtensions<NewtonsoftSerializer> config, Func<Stream, JsonReader> readerCreator)
         {
             Guard.AgainstNull(config, nameof(config));
@@ -52,9 +52,9 @@
         /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="writerCreator">A delegate that creates a <see cref="JsonWriter"/> for a <see cref="Stream"/>.</param>
         [ObsoleteEx(
+        Message = "Use the equivalent method on NewtonsoftJsonSerializer instead.",
         TreatAsErrorFromVersion = "3.0",
-        RemoveInVersion = "4.0",
-        ReplacementTypeOrMember = nameof(NewtonsoftJsonSerializer))]
+        RemoveInVersion = "4.0")]
         public static void WriterCreator(this SerializationExtensions<NewtonsoftSerializer> config, Func<Stream, JsonWriter> writerCreator)
         {
             Guard.AgainstNull(config, nameof(config));
@@ -85,9 +85,9 @@
         /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="settings">The <see cref="JsonSerializerSettings"/> to use.</param>
         [ObsoleteEx(
+        Message = "Use the equivalent method on NewtonsoftJsonSerializer instead.",
         TreatAsErrorFromVersion = "3.0",
-        RemoveInVersion = "4.0",
-        ReplacementTypeOrMember = nameof(NewtonsoftJsonSerializer))]
+        RemoveInVersion = "4.0")]
         public static void Settings(this SerializationExtensions<NewtonsoftSerializer> config, JsonSerializerSettings settings)
         {
             Guard.AgainstNull(config, nameof(config));
@@ -122,9 +122,9 @@
         /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="contentTypeKey">The content type key to use.</param>
         [ObsoleteEx(
+        Message = "Use the equivalent method on NewtonsoftJsonSerializer instead.",
         TreatAsErrorFromVersion = "3.0",
-        RemoveInVersion = "4.0",
-        ReplacementTypeOrMember = nameof(NewtonsoftJsonSerializer))]
+        RemoveInVersion = "4.0")]
         public static void ContentTypeKey(this SerializationExtensions<NewtonsoftSerializer> config, string contentTypeKey)
         {
             Guard.AgainstNull(config, nameof(config));
