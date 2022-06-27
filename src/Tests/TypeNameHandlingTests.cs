@@ -45,7 +45,8 @@ public class TypeNameHandlingTests
             WriteToStream(stream, text);
 
             var messageMapper = new MessageMapper();
-            var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, Newtonsoft.Json.TypeNameHandling.Auto);
+            var settings = new Newtonsoft.Json.JsonSerializerSettings() { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto };
+            var serializer = new JsonMessageSerializer(messageMapper, null, null, settings, null);
             var result = serializer.Deserialize(stream.ToArray(), new List<Type>());
             Assert.That(result[0], Is.TypeOf(typeof(TestMessage)));
             Assert.IsInstanceOf<TestMessage>(result[0]);

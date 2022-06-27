@@ -22,7 +22,7 @@
                 var writerCreator = settings.GetWriterCreator();
                 var serializerSettings = settings.GetSettings();
                 var contentTypeKey = settings.GetContentTypeKey();
-                return new JsonMessageSerializer(mapper, readerCreator, writerCreator, serializerSettings, contentTypeKey, global::Newtonsoft.Json.TypeNameHandling.None);
+                return new JsonMessageSerializer(mapper, readerCreator, writerCreator, serializerSettings, contentTypeKey);
             };
         }
 
