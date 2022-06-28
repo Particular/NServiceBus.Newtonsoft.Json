@@ -18,7 +18,7 @@
 
         /// <summary>
         /// Provides a factory method for building a message serializer.
-        /// </summary>        
+        /// </summary>
         public override Func<IMessageMapper, IMessageSerializer> Configure(ReadOnlySettings settings)
         {
             return mapper =>
