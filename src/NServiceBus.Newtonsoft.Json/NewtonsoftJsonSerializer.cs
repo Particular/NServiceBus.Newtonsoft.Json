@@ -9,7 +9,7 @@
     /// <summary>
     /// Enables Newtonsoft Json serialization.
     /// </summary>
-    public class NewtonsoftSerializer : SerializationDefinition
+    public class NewtonsoftJsonSerializer : SerializationDefinition
     {
         /// <summary>
         /// Provides a factory method for building a message serializer.

@@ -1,0 +1,1 @@
+﻿{"Data":"27F3Do4eCEIK3XEJrjRYcyoJYzi5qw0=","S":"kalle","I":42,"B":{"BString":"BOO","C":{"Cstr":"COO"}}}

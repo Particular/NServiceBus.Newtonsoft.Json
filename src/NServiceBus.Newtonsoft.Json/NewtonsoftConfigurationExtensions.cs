@@ -11,14 +11,14 @@
     /// <summary>
     /// Extensions for <see cref="SerializationExtensions{T}"/> to manipulate how messages are serialized via Json.net.
     /// </summary>
-    public static class NewtonsoftConfigurationExtensions
+    public static partial class NewtonsoftConfigurationExtensions
     {
         /// <summary>
         /// Configures the <see cref="JsonReader"/> creator of JSON stream.
         /// </summary>
         /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="readerCreator">A delegate that creates a <see cref="JsonReader"/> for a <see cref="Stream"/>.</param>
-        public static void ReaderCreator(this SerializationExtensions<NewtonsoftSerializer> config, Func<Stream, JsonReader> readerCreator)
+        public static void ReaderCreator(this SerializationExtensions<NewtonsoftJsonSerializer> config, Func<Stream, JsonReader> readerCreator)
         {
             Guard.AgainstNull(config, nameof(config));
             Guard.AgainstNull(readerCreator, nameof(readerCreator));
@@ -30,12 +30,13 @@
             return settings.GetOrDefault<Func<Stream, JsonReader>>("NServiceBus.Newtonsoft.Json.ReaderCreator");
         }
 
+
         /// <summary>
         /// Configures the <see cref="JsonWriter"/> creator of JSON stream.
         /// </summary>
         /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="writerCreator">A delegate that creates a <see cref="JsonWriter"/> for a <see cref="Stream"/>.</param>
-        public static void WriterCreator(this SerializationExtensions<NewtonsoftSerializer> config, Func<Stream, JsonWriter> writerCreator)
+        public static void WriterCreator(this SerializationExtensions<NewtonsoftJsonSerializer> config, Func<Stream, JsonWriter> writerCreator)
         {
             Guard.AgainstNull(config, nameof(config));
             Guard.AgainstNull(writerCreator, nameof(writerCreator));
@@ -52,7 +53,7 @@
         /// </summary>
         /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="settings">The <see cref="JsonSerializerSettings"/> to use.</param>
-        public static void Settings(this SerializationExtensions<NewtonsoftSerializer> config, JsonSerializerSettings settings)
+        public static void Settings(this SerializationExtensions<NewtonsoftJsonSerializer> config, JsonSerializerSettings settings)
         {
             Guard.AgainstNull(config, nameof(config));
             Guard.AgainstNull(settings, nameof(settings));
@@ -73,7 +74,7 @@
         /// </remarks>
         /// <param name="config">The <see cref="SerializationExtensions{T}"/> instance.</param>
         /// <param name="contentTypeKey">The content type key to use.</param>
-        public static void ContentTypeKey(this SerializationExtensions<NewtonsoftSerializer> config, string contentTypeKey)
+        public static void ContentTypeKey(this SerializationExtensions<NewtonsoftJsonSerializer> config, string contentTypeKey)
         {
             Guard.AgainstNull(config, nameof(config));
             Guard.AgainstNullOrEmpty(contentTypeKey, nameof(contentTypeKey));
