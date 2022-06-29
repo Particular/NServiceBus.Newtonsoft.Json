@@ -10,10 +10,12 @@ using NUnit.Framework;
 public class When_serializing_a_message
 {
     [Test]
-    public void Should_emit_UTF8_BOM_by_default()
+    [TestCase(TypeNameHandling.Auto)]
+    [TestCase(TypeNameHandling.None)]
+    public void Should_emit_UTF8_BOM_by_default(TypeNameHandling typeNameHandling)
     {
         var messageMapper = new MessageMapper();
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
         var message = new SimpleMessage();
         using (var stream = new MemoryStream())
         {
@@ -32,7 +34,9 @@ public class When_serializing_a_message
     }
 
     [Test]
-    public void Should_not_emit_UTF8_BOM_if_configured_not_to()
+    [TestCase(TypeNameHandling.Auto)]
+    [TestCase(TypeNameHandling.None)]
+    public void Should_not_emit_UTF8_BOM_if_configured_not_to(TypeNameHandling typeNameHandling)
     {
         var messageMapper = new MessageMapper();
 
@@ -45,7 +49,7 @@ public class When_serializing_a_message
             };
         };
 
-        var serializer = new JsonMessageSerializer(messageMapper, null, writerCreator, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, writerCreator, null, null, typeNameHandling);
 
         var message = new SimpleMessage();
         using (var stream = new MemoryStream())

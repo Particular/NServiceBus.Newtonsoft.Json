@@ -8,7 +8,9 @@ using Particular.Approvals;
 public class Without_concrete_implementation_and_interface
 {
     [Test]
-    public void Serialize()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Serialize(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var messageMapper = new MessageMapper();
         var types = new[]
@@ -16,7 +18,7 @@ public class Without_concrete_implementation_and_interface
             typeof(IWithoutConcrete)
         };
         messageMapper.Initialize(types);
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
 
         var message = messageMapper.CreateInstance<IWithoutConcrete>();
         using (var stream = new MemoryStream())
@@ -30,7 +32,9 @@ public class Without_concrete_implementation_and_interface
     }
 
     [Test]
-    public void Deserialize()
+    [TestCase(Newtonsoft.Json.TypeNameHandling.Auto)]
+    [TestCase(Newtonsoft.Json.TypeNameHandling.None)]
+    public void Deserialize(Newtonsoft.Json.TypeNameHandling typeNameHandling)
     {
         var messageMapper = new MessageMapper();
         var messageTypes = new[]
@@ -38,7 +42,7 @@ public class Without_concrete_implementation_and_interface
             typeof(IWithoutConcrete)
         };
         messageMapper.Initialize(messageTypes);
-        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
+        var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null, typeNameHandling);
 
         var message = messageMapper.CreateInstance<IWithoutConcrete>();
         message.SomeProperty = "test";

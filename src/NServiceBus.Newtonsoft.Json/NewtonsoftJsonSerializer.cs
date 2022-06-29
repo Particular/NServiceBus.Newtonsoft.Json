@@ -9,13 +9,8 @@
     /// <summary>
     /// Enables Newtonsoft Json serialization.
     /// </summary>
-    [ObsoleteEx(
-    TreatAsErrorFromVersion = "3.0",
-    RemoveInVersion = "4.0",
-    ReplacementTypeOrMember = nameof(NewtonsoftJsonSerializer))]
-    public class NewtonsoftSerializer : SerializationDefinition
+    public class NewtonsoftJsonSerializer : SerializationDefinition
     {
-
         /// <summary>
         /// Provides a factory method for building a message serializer.
         /// </summary>
@@ -27,7 +22,7 @@
                 var writerCreator = settings.GetWriterCreator();
                 var serializerSettings = settings.GetSettings();
                 var contentTypeKey = settings.GetContentTypeKey();
-                return new JsonMessageSerializer(mapper, readerCreator, writerCreator, serializerSettings, contentTypeKey, global::Newtonsoft.Json.TypeNameHandling.Auto);
+                return new JsonMessageSerializer(mapper, readerCreator, writerCreator, serializerSettings, contentTypeKey, global::Newtonsoft.Json.TypeNameHandling.None);
             };
         }
 
