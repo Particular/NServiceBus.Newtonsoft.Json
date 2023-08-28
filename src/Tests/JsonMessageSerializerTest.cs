@@ -146,8 +146,8 @@ public class JsonMessageSerializerTest
         output.Position = 0;
 
         var filename = $"{GetType().Name}.{MethodBase.GetCurrentMethod().Name}.txt";
-
-        File.WriteAllBytes(filename, output.ToArray());
+        var filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, filename);
+        File.WriteAllBytes(filePath, output.ToArray());
 
         output.Position = 0;
 
