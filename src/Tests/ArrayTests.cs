@@ -81,7 +81,11 @@ public class ArrayTests
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
             var deserialize = serializer.Deserialize(stream.ToArray(), new List<Type>());
-            Approver.Verify(deserialize.Single());
+
+            var jObject = deserialize.Single() as Newtonsoft.Json.Linq.JObject;
+            var arrayMessage = jObject.ToObject<ArrayMessage>();
+
+            Approver.Verify(arrayMessage);
         }
     }
 
