@@ -43,28 +43,21 @@ public class JsonMessageSerializerTest
             Data = new byte[32],
             I = 23,
             S = "Foo",
-            Ints = new List<int>
-                                {
-                                    12, 42
-                                },
-            Bs = new List<B>
-                            {
-                                new B
-                                {
-                                    BString = "aaa", C = new C
-                                                        {
-                                                            Cstr = "ccc"
-                                                        }
-                                },
-                                new BB
-                                {
-                                    BString = "bbbb", C = new C
-                                                            {
-                                                                Cstr = "dddd"
-                                                            },
-                                    BBString = "BBStr"
-                                }
-                            },
+            Ints = [12, 42],
+            Bs =
+            [
+                new B
+                {
+                    BString = "aaa",
+                    C = new C { Cstr = "ccc" }
+                },
+                new BB
+                {
+                    BString = "bbbb",
+                    C = new C { Cstr = "dddd" },
+                    BBString = "BBStr"
+                }
+            ],
             DateTime = expectedDate,
             DateTimeLocal = expectedDateLocal,
             DateTimeUtc = expectedDateUtc
