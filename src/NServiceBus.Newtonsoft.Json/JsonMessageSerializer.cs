@@ -32,6 +32,8 @@
                 TypeNameHandling = TypeNameHandling.None
             };
 
+            settings.Converters.Add(new DataBusPropertyConverter());
+
             if (settings.TypeNameHandling == TypeNameHandling.Auto)
             {
                 log.Warn($"Use of TypeNameHandling.Auto is a potential security vulnerability and it is recommended to use TypeNameHandling.None if possible.");
