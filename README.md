@@ -1,7 +1,7 @@
 # NServiceBus.Newtonsoft.Json
 
-The official [NServiceBus](https://github.com/Particular/NServiceBus) serializer implementation for [Json.NET](http://www.newtonsoft.com/json)
+This is the official [NServiceBus](https://github.com/Particular/NServiceBus) serializer implementation for [Json.NET](http://www.newtonsoft.com/json).
 
-Learn more about NServiceBus.Newtonsoft.Json through our [documentation.](http://docs.particular.net/nservicebus/serialization/newtonsoft)
+It is part of the [Particular Service Platform](https://particular.net/service-platform), which includes [NServiceBus](https://particular.net/nservicebus) and tools to build, monitor, and debug distributed systems.
 
-If you are interested in contributing, please follow the instructions [here.](https://github.com/Particular/NServiceBus/blob/develop/CONTRIBUTING.md)
+See the [Json.NET Serializer documentation](http://docs.particular.net/nservicebus/serialization/newtonsoft) for details on how to use it.
