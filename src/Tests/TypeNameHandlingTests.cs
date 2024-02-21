@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
@@ -25,7 +23,7 @@ public class TypeNameHandlingTests
 
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-            var result = serializer.Deserialize(stream.ToArray(), new List<Type>());
+            var result = serializer.Deserialize(stream.ToArray(), []);
             Assert.IsNotInstanceOf<TestMessage>(result[0]);
         }
     }
@@ -47,7 +45,7 @@ public class TypeNameHandlingTests
             var messageMapper = new MessageMapper();
             var settings = new Newtonsoft.Json.JsonSerializerSettings() { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto };
             var serializer = new JsonMessageSerializer(messageMapper, null, null, settings, null);
-            var result = serializer.Deserialize(stream.ToArray(), new List<Type>());
+            var result = serializer.Deserialize(stream.ToArray(), []);
             Assert.That(result[0], Is.TypeOf(typeof(TestMessage)));
             Assert.IsInstanceOf<TestMessage>(result[0]);
         }

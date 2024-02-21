@@ -31,7 +31,7 @@ public class ArrayTests
 
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-            var exception = Assert.Throws<Exception>(() => serializer.Deserialize(stream.ToArray(), new List<Type>()));
+            var exception = Assert.Throws<Exception>(() => serializer.Deserialize(stream.ToArray(), []));
             Approver.Verify(exception.Message);
         }
     }
@@ -80,7 +80,7 @@ public class ArrayTests
 
             var messageMapper = new MessageMapper();
             var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-            var deserialize = serializer.Deserialize(stream.ToArray(), new List<Type>());
+            var deserialize = serializer.Deserialize(stream.ToArray(), []);
 
             var jObject = deserialize.Single() as Newtonsoft.Json.Linq.JObject;
             var arrayMessage = jObject.ToObject<ArrayMessage>();

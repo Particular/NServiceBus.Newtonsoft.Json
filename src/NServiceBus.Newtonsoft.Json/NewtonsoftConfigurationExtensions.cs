@@ -5,7 +5,6 @@
     using global::Newtonsoft.Json;
     using NServiceBus.Configuration.AdvancedExtensibility;
     using NServiceBus.Serialization;
-    using NServiceBus.Newtonsoft.Json;
     using NServiceBus.Settings;
 
     /// <summary>
@@ -20,8 +19,9 @@
         /// <param name="readerCreator">A delegate that creates a <see cref="JsonReader"/> for a <see cref="Stream"/>.</param>
         public static void ReaderCreator(this SerializationExtensions<NewtonsoftJsonSerializer> config, Func<Stream, JsonReader> readerCreator)
         {
-            Guard.AgainstNull(config, nameof(config));
-            Guard.AgainstNull(readerCreator, nameof(readerCreator));
+            ArgumentNullException.ThrowIfNull(config);
+            ArgumentNullException.ThrowIfNull(readerCreator);
+
             config.GetSettings().Set("NServiceBus.Newtonsoft.Json.ReaderCreator", readerCreator);
         }
 
@@ -38,8 +38,9 @@
         /// <param name="writerCreator">A delegate that creates a <see cref="JsonWriter"/> for a <see cref="Stream"/>.</param>
         public static void WriterCreator(this SerializationExtensions<NewtonsoftJsonSerializer> config, Func<Stream, JsonWriter> writerCreator)
         {
-            Guard.AgainstNull(config, nameof(config));
-            Guard.AgainstNull(writerCreator, nameof(writerCreator));
+            ArgumentNullException.ThrowIfNull(config);
+            ArgumentNullException.ThrowIfNull(writerCreator);
+
             config.GetSettings().Set("NServiceBus.Newtonsoft.Json.WriterCreator", writerCreator);
         }
 
@@ -55,14 +56,10 @@
         /// <param name="settings">The <see cref="JsonSerializerSettings"/> to use.</param>
         public static void Settings(this SerializationExtensions<NewtonsoftJsonSerializer> config, JsonSerializerSettings settings)
         {
-            Guard.AgainstNull(config, nameof(config));
-            Guard.AgainstNull(settings, nameof(settings));
-            config.GetSettings().Set("NServiceBus.Newtonsoft.Json.Settings", settings);
-        }
+            ArgumentNullException.ThrowIfNull(config);
+            ArgumentNullException.ThrowIfNull(settings);
 
-        internal static JsonSerializerSettings GetSettings(this IReadOnlySettings settings)
-        {
-            return settings.GetOrDefault<JsonSerializerSettings>("NServiceBus.Newtonsoft.Json.Settings");
+            config.GetSettings().Set("NServiceBus.Newtonsoft.Json.Settings", settings);
         }
 
         /// <summary>
@@ -76,9 +73,14 @@
         /// <param name="contentTypeKey">The content type key to use.</param>
         public static void ContentTypeKey(this SerializationExtensions<NewtonsoftJsonSerializer> config, string contentTypeKey)
         {
-            Guard.AgainstNull(config, nameof(config));
-            Guard.AgainstNullOrEmpty(contentTypeKey, nameof(contentTypeKey));
+            ArgumentNullException.ThrowIfNull(config);
+            ArgumentException.ThrowIfNullOrWhiteSpace(contentTypeKey);
+
             config.GetSettings().Set("NServiceBus.Newtonsoft.Json.ContentTypeKey", contentTypeKey);
+        }
+        internal static JsonSerializerSettings GetSettings(this IReadOnlySettings settings)
+        {
+            return settings.GetOrDefault<JsonSerializerSettings>("NServiceBus.Newtonsoft.Json.Settings");
         }
 
         internal static string GetContentTypeKey(this IReadOnlySettings settings)
