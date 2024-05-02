@@ -70,7 +70,14 @@
             using (var writer = writerCreator(stream))
             {
                 writer.CloseOutput = false;
-                jsonSerializer.Serialize(writer, message);
+                if(TryGetJsonConverter(message.GetType(), out var converter))
+                {
+                    converter.WriteJson(writer, message, jsonSerializer);
+                }
+                else
+                {
+                    jsonSerializer.Serialize(writer, message);
+                }
                 writer.Flush();
             }
         }
@@ -97,7 +104,12 @@
             using (var reader = readerCreator(stream))
             {
                 reader.CloseInput = false;
-                if (isArrayStream)
+
+                if (TryGetJsonConverter(type, out var converter))
+                {
+                    return converter.ReadJson(reader, type, null, jsonSerializer);
+                }
+                else if (isArrayStream)
                 {
                     var objects = (object[])jsonSerializer.Deserialize(reader, type.MakeArrayType());
                     if (objects.Length > 1)
@@ -113,6 +125,31 @@
 
         public string ContentType { get; }
 
+        bool TryGetJsonConverter(Type type, out JsonConverter converter)
+        {
+            converter = null!;
+
+            var attribute = type.GetCustomAttribute<JsonConverterAttribute>(false);
+
+            if(attribute != null)
+            {
+                converter = (JsonConverter)Activator.CreateInstance(attribute.ConverterType, attribute.ConverterParameters)!;
+            }
+            else
+            {
+                foreach(var _converter in NewtonSerializer.Converters)
+                {
+                    if (_converter.CanConvert(type))
+                    {
+                        converter = _converter;
+                        break;
+                    }
+                }
+            }
+
+            return converter != null;
+        }
+        
         object[] DeserializeMultipleMessageTypes(Stream stream, IList<Type> messageTypes, bool isArrayStream)
         {
             var rootTypes = FindRootTypes(messageTypes).ToList();
