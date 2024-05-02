@@ -70,7 +70,7 @@
             using (var writer = writerCreator(stream))
             {
                 writer.CloseOutput = false;
-                if(TryGetJsonConverter(message.GetType(), out var converter))
+                if(TryGetJsonConverter(message.GetType(), out var converter) && converter.CanWrite)
                 {
                     converter.WriteJson(writer, message, jsonSerializer);
                 }
@@ -105,7 +105,7 @@
             {
                 reader.CloseInput = false;
 
-                if (TryGetJsonConverter(type, out var converter))
+                if (TryGetJsonConverter(type, out var converter) && converter.CanRead)
                 {
                     return converter.ReadJson(reader, type, null, jsonSerializer);
                 }
