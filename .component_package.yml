@@ -1,3 +1,0 @@
-component_type: Serializer
-component_packages:
-  - name: NServiceBus.Newtonsoft.Json
