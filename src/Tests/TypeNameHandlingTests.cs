@@ -47,7 +47,7 @@ public class TypeNameHandlingTests
             var serializer = new JsonMessageSerializer(messageMapper, null, null, settings, null);
             var result = serializer.Deserialize(stream.ToArray(), []);
             Assert.That(result[0], Is.TypeOf(typeof(TestMessage)));
-            Assert.IsInstanceOf<TestMessage>(result[0]);
+            Assert.That(result[0], Is.InstanceOf<TestMessage>());
         }
     }
 

@@ -100,7 +100,7 @@ public class JsonMessageSerializerTest
         Assert.That(Newtonsoft.Json.Linq.JObject.Parse(a.Bs[0].C.ToString()).GetValue("Cstr").ToString(), Is.EqualTo("ccc"));
         Assert.That(a.AGuid, Is.EqualTo(expectedGuid));
 
-        Assert.IsInstanceOf<B>(a.Bs[0]);
+        Assert.That(a.Bs[0], Is.InstanceOf<B>());
         Assert.IsNotInstanceOf<BB>(a.Bs[1]);
     }
 
