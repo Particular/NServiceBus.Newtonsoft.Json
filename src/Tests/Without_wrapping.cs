@@ -43,7 +43,7 @@ public class Without_wrapping
             stream.Position = 0;
             var result = (SimpleMessage)serializer.Deserialize(stream.ToArray(), messageTypes)[0];
 
-            Assert.AreEqual("test", result.SomeProperty);
+            Assert.That(result.SomeProperty, Is.EqualTo("test"));
         }
 
     }

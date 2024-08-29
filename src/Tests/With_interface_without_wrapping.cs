@@ -20,7 +20,7 @@ public class With_interface_without_wrapping
 
             var result = (SuperMessage)serializer.Deserialize(stream.ToArray(), new[] { typeof(SuperMessage), typeof(IMyEvent) })[0];
 
-            Assert.AreEqual("John", result.SomeProperty);
+            Assert.That(result.SomeProperty, Is.EqualTo("John"));
         }
     }
 

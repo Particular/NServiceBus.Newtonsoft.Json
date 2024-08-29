@@ -34,7 +34,7 @@ public class With_concrete_implementation_and_interface
             var result = (ISuperMessageWithConcreteImplementation)serializer.Deserialize(stream.ToArray(), map)[0];
 
             Assert.IsInstanceOf<SuperMessageWithConcreteImplementation>(result);
-            Assert.AreEqual("test", result.SomeProperty);
+            Assert.That(result.SomeProperty, Is.EqualTo("test"));
         }
     }
 
