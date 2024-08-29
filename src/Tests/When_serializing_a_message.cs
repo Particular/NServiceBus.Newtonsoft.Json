@@ -26,7 +26,7 @@ public class When_serializing_a_message
 
             for (var i = 0; i < utf8bom.Length; i++)
             {
-                Assert.AreEqual(utf8bom[i], result[i]);
+                Assert.That(result[i], Is.EqualTo(utf8bom[i]));
             }
         }
     }
@@ -59,7 +59,7 @@ public class When_serializing_a_message
 
             for (var i = 0; i < utf8bom.Length; i++)
             {
-                Assert.AreNotEqual(utf8bom[i], result[i]);
+                Assert.That(result[i], Is.Not.EqualTo(utf8bom[i]));
             }
         }
     }

@@ -50,7 +50,7 @@ public class Without_concrete_implementation_and_interface
 
             var result = (IWithoutConcrete)serializer.Deserialize(stream.ToArray(), messageTypes)[0];
 
-            Assert.AreEqual("test", result.SomeProperty);
+            Assert.That(result.SomeProperty, Is.EqualTo("test"));
         }
     }
 

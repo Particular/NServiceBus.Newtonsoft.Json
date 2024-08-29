@@ -34,8 +34,11 @@ public class Private_with_two_unrelated_interface_without_wrapping
             var result = serializer.Deserialize(stream.ToArray(), messageTypes);
             var a = (IMyEventA)result[0];
             var b = (IMyEventB)result[1];
-            Assert.AreEqual(42, b.IntValue);
-            Assert.AreEqual("Answer", a.StringValue);
+            Assert.Multiple(() =>
+            {
+                Assert.That(b.IntValue, Is.EqualTo(42));
+                Assert.That(a.StringValue, Is.EqualTo("Answer"));
+            });
         }
     }
 

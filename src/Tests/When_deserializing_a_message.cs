@@ -27,7 +27,7 @@ public class When_deserializing_a_message
 
             var result = (SimpleMessage)serializer.Deserialize(stream.ToArray(), new[] { typeof(SimpleMessage) })[0];
 
-            Assert.AreEqual("John", result.SomeProperty);
+            Assert.That(result.SomeProperty, Is.EqualTo("John"));
         }
     }
 
@@ -49,7 +49,7 @@ public class When_deserializing_a_message
 
             var result = (SimpleMessage)serializer.Deserialize(stream.ToArray(), new[] { typeof(SimpleMessage) })[0];
 
-            Assert.AreEqual("John", result.SomeProperty);
+            Assert.That(result.SomeProperty, Is.EqualTo("John"));
         }
     }
 
