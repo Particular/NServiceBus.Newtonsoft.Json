@@ -20,7 +20,7 @@ public class Without_typeInfo
             stream.Position = 0;
             var result = new StreamReader(stream).ReadToEnd();
 
-            Assert.That(!result.Contains("$type"), result);
+            Assert.That(result, Does.Not.Contain("$type"), result);
         }
     }
     public class SimpleMessage
