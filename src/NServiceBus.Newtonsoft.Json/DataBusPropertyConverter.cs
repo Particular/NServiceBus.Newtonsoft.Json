@@ -3,9 +3,9 @@
     using System;
     using global::Newtonsoft.Json;
 
-    class DataBusPropertyConverter : JsonConverter<IDataBusProperty>
+    class DataBusPropertyConverter : JsonConverter<IClaimCheckProperty>
     {
-        public override void WriteJson(JsonWriter writer, IDataBusProperty value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, IClaimCheckProperty value, JsonSerializer serializer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName(nameof(value.Key));
@@ -15,7 +15,7 @@
             writer.WriteEndObject();
         }
 
-        public override IDataBusProperty ReadJson(JsonReader reader, Type objectType, IDataBusProperty existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+        public override IClaimCheckProperty ReadJson(JsonReader reader, Type objectType, IClaimCheckProperty existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
         public override bool CanRead => false;
     }

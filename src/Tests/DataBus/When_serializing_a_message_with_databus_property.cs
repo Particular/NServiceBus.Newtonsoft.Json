@@ -4,9 +4,7 @@ using NServiceBus.MessageInterfaces.MessageMapper.Reflection;
 using NServiceBus.Newtonsoft.Json;
 using NUnit.Framework;
 using Particular.Approvals;
-// Databus is obsolete and this test needs to be refactored to use the new data bus API or removed. For now
-// we are suppressing the obsoletion warning it to unblock the build.
-#pragma warning disable CS0618 // Type or member is obsolete
+
 [TestFixture]
 class When_serializing_a_message_with_databus_property
 {
@@ -15,7 +13,7 @@ class When_serializing_a_message_with_databus_property
     {
         var messageMapper = new MessageMapper();
         var serializer = new JsonMessageSerializer(messageMapper, null, null, null, null);
-        var message = new Message { Property = new DataBusProperty<byte[]>([1, 2, 3, 4]) { Key = "key" } };
+        var message = new Message { Property = new ClaimCheckProperty<byte[]>([1, 2, 3, 4]) { Key = "key" } };
 
         using var stream = new MemoryStream();
         serializer.Serialize(message, stream);
@@ -28,7 +26,6 @@ class When_serializing_a_message_with_databus_property
 
     class Message
     {
-        public DataBusProperty<byte[]> Property { get; set; }
+        public ClaimCheckProperty<byte[]> Property { get; set; }
     }
 }
-#pragma warning restore CS0618
