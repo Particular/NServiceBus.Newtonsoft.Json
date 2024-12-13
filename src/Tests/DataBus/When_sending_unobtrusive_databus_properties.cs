@@ -1,13 +1,11 @@
-﻿// Databus is obsolete and this test needs to be refactored to use the new data bus API or removed. For now
-// we are suppressing the obsoletion warning it to unblock the build.
-#pragma warning disable CS0618 // Type or member is obsolete
-namespace NServiceBus.AcceptanceTests.DataBus;
+﻿namespace NServiceBus.AcceptanceTests.DataBus;
 
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using AcceptanceTesting;
 using AcceptanceTesting.Customization;
+using ClaimCheck;
 using EndpointTemplates;
 using MessageMutator;
 using NUnit.Framework;
@@ -46,10 +44,10 @@ public class When_sending_unobtrusive_databus_properties : NServiceBusAcceptance
             {
                 builder.Conventions()
                     .DefiningCommandsAs(t => t.Namespace != null && t.FullName == typeof(MyMessageWithLargePayload).FullName)
-                    .DefiningDataBusPropertiesAs(t => t.Name.Contains("Payload"));
+                    .DefiningClaimCheckPropertiesAs(t => t.Name.Contains("Payload"));
 
                 var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "databus", "sender");
-                builder.UseDataBus<FileShareDataBus, SystemJsonDataBusSerializer>().BasePath(basePath);
+                builder.UseClaimCheck<FileShareClaimCheck, SystemJsonClaimCheckSerializer>().BasePath(basePath);
                 builder.UseSerialization<NewtonsoftJsonSerializer>();
                 builder.ConfigureRouting().RouteToEndpoint(typeof(MyMessageWithLargePayload), typeof(Receiver));
             }).ExcludeType<MyMessageWithLargePayload>(); // remove that type from assembly scanning to simulate what would happen with true unobtrusive mode
@@ -64,10 +62,10 @@ public class When_sending_unobtrusive_databus_properties : NServiceBusAcceptance
             {
                 builder.Conventions()
                     .DefiningCommandsAs(t => t.Namespace != null && t.FullName == typeof(MyMessageWithLargePayload).FullName)
-                    .DefiningDataBusPropertiesAs(t => t.Name.Contains("Payload"));
+                    .DefiningClaimCheckPropertiesAs(t => t.Name.Contains("Payload"));
 
                 var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "databus", "sender");
-                builder.UseDataBus<FileShareDataBus, SystemJsonDataBusSerializer>().BasePath(basePath);
+                builder.UseClaimCheck<FileShareClaimCheck, SystemJsonClaimCheckSerializer>().BasePath(basePath);
                 builder.UseSerialization<NewtonsoftJsonSerializer>();
                 builder.RegisterMessageMutator(new Mutator());
             });
@@ -108,4 +106,3 @@ public class When_sending_unobtrusive_databus_properties : NServiceBusAcceptance
         public byte[] Payload { get; set; }
     }
 }
-#pragma warning restore CS0618 // Type or member is obsolete

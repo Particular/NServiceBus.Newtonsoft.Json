@@ -1,7 +1,4 @@
-﻿// Databus is obsolete and this test needs to be refactored to use the new data bus API or removed. For now
-// we are suppressing the obsoletion warning it to unblock the build.
-#pragma warning disable CS0618 // Type or member is obsolete
-namespace NServiceBus.AcceptanceTests.DataBus;
+﻿namespace NServiceBus.AcceptanceTests.DataBus;
 
 using System;
 using System.IO;
@@ -22,7 +19,7 @@ public class When_sending_databus_properties : NServiceBusAcceptanceTest
         var context = await Scenario.Define<Context>()
             .WithEndpoint<Sender>(b => b.When(session => session.Send(new MyMessageWithLargePayload
             {
-                Payload = new DataBusProperty<byte[]>(payloadToSend)
+                Payload = new ClaimCheckProperty<byte[]>(payloadToSend)
             })))
             .WithEndpoint<Receiver>()
             .Done(c => c.ReceivedPayload != null)
@@ -45,7 +42,7 @@ public class When_sending_databus_properties : NServiceBusAcceptanceTest
             EndpointSetup<DefaultServer>(builder =>
             {
                 var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "databus", "sender");
-                builder.UseDataBus<FileShareDataBus, SystemJsonDataBusSerializer>().BasePath(basePath);
+                builder.UseClaimCheck<FileShareClaimCheck, SystemJsonClaimCheckSerializer>().BasePath(basePath);
                 builder.UseSerialization<NewtonsoftJsonSerializer>();
                 builder.ConfigureRouting().RouteToEndpoint(typeof(MyMessageWithLargePayload), typeof(Receiver));
             });
@@ -59,7 +56,7 @@ public class When_sending_databus_properties : NServiceBusAcceptanceTest
             EndpointSetup<DefaultServer>(builder =>
             {
                 var basePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "databus", "sender");
-                builder.UseDataBus<FileShareDataBus, SystemJsonDataBusSerializer>().BasePath(basePath);
+                builder.UseClaimCheck<FileShareClaimCheck, SystemJsonClaimCheckSerializer>().BasePath(basePath);
                 builder.UseSerialization<NewtonsoftJsonSerializer>();
                 builder.RegisterMessageMutator(new Mutator());
             });
@@ -97,7 +94,6 @@ public class When_sending_databus_properties : NServiceBusAcceptanceTest
 
     public class MyMessageWithLargePayload : ICommand
     {
-        public DataBusProperty<byte[]> Payload { get; set; }
+        public ClaimCheckProperty<byte[]> Payload { get; set; }
     }
 }
-#pragma warning restore CS0618 // Type or member is obsolete
