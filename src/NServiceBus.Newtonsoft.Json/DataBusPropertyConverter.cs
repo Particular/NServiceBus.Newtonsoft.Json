@@ -3,9 +3,11 @@
     using System;
     using global::Newtonsoft.Json;
 
-    class DataBusPropertyConverter : JsonConverter<IClaimCheckProperty>
+#pragma warning disable CS0618 // Type or member is obsolete
+    class DataBusPropertyConverter : JsonConverter<IDataBusProperty>
+
     {
-        public override void WriteJson(JsonWriter writer, IClaimCheckProperty value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, IDataBusProperty value, JsonSerializer serializer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName(nameof(value.Key));
@@ -15,8 +17,9 @@
             writer.WriteEndObject();
         }
 
-        public override IClaimCheckProperty ReadJson(JsonReader reader, Type objectType, IClaimCheckProperty existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+        public override IDataBusProperty ReadJson(JsonReader reader, Type objectType, IDataBusProperty existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
         public override bool CanRead => false;
     }
+#pragma warning restore CS0618 // Type or member is obsolete
 }
