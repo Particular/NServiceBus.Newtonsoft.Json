@@ -32,7 +32,6 @@
                 TypeNameHandling = TypeNameHandling.None
             };
 
-            settings.Converters.Add(new DataBusPropertyConverter());
             settings.Converters.Add(new ClaimCheckPropertyConverter());
 
             if (settings.TypeNameHandling == TypeNameHandling.Auto)
