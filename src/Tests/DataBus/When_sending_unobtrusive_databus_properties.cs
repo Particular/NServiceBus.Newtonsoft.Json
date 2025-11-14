@@ -38,8 +38,7 @@ public class When_sending_unobtrusive_databus_properties : NServiceBusAcceptance
 
     public class Sender : EndpointConfigurationBuilder
     {
-        public Sender()
-        {
+        public Sender() =>
             EndpointSetup<DefaultServer>(builder =>
             {
                 builder.Conventions()
@@ -50,14 +49,12 @@ public class When_sending_unobtrusive_databus_properties : NServiceBusAcceptance
                 builder.UseClaimCheck<FileShareClaimCheck, SystemJsonClaimCheckSerializer>().BasePath(basePath);
                 builder.UseSerialization<NewtonsoftJsonSerializer>();
                 builder.ConfigureRouting().RouteToEndpoint(typeof(MyMessageWithLargePayload), typeof(Receiver));
-            }).ExcludeType<MyMessageWithLargePayload>(); // remove that type from assembly scanning to simulate what would happen with true unobtrusive mode
-        }
+            });
     }
 
     public class Receiver : EndpointConfigurationBuilder
     {
-        public Receiver()
-        {
+        public Receiver() =>
             EndpointSetup<DefaultServer>(builder =>
             {
                 builder.Conventions()
@@ -69,23 +66,15 @@ public class When_sending_unobtrusive_databus_properties : NServiceBusAcceptance
                 builder.UseSerialization<NewtonsoftJsonSerializer>();
                 builder.RegisterMessageMutator(new Mutator());
             });
-        }
 
-        public class MyMessageHandler : IHandleMessages<MyMessageWithLargePayload>
+        public class MyMessageHandler(Context testContext) : IHandleMessages<MyMessageWithLargePayload>
         {
-            public MyMessageHandler(Context context)
-            {
-                testContext = context;
-            }
-
             public Task Handle(MyMessageWithLargePayload messageWithLargePayload, IMessageHandlerContext context)
             {
                 testContext.ReceivedPayload = messageWithLargePayload.Payload;
 
                 return Task.CompletedTask;
             }
-
-            Context testContext;
         }
 
         public class Mutator : IMutateIncomingTransportMessages
@@ -96,6 +85,7 @@ public class When_sending_unobtrusive_databus_properties : NServiceBusAcceptance
                 {
                     throw new Exception("The message body is too large, which means the DataBus was not used to transfer the payload.");
                 }
+
                 return Task.CompletedTask;
             }
         }
