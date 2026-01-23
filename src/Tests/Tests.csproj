@@ -19,18 +19,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NServiceBus.AcceptanceTests.Sources" Version="9.2.6" GeneratePathProperty="true" />
+    <PackageReference Include="NServiceBus.AcceptanceTests.Sources" Version="9.2.8" GeneratePathProperty="true" />
     <PackageReference Include="NServiceBus.ClaimCheck" Version="1.0.1" />
     <PackageReference Include="Particular.Approvals" Version="2.0.1" />
     <PackageReference Include="PublicApiGenerator" Version="11.4.5" />
   </ItemGroup>
 
+  <!-- The referenced source package does not currently include support for .NET 10 and newer sources. 
+    This change addresses that limitation to ensure compatibility with .NET 10 and newer. 
+    Once the package provides support for .NET 10 and newer, this change can be re-evaluated. -->
+  <PropertyGroup>
+    <ResolvedTargetFramework>$(TargetFramework)</ResolvedTargetFramework>
+    <ResolvedTargetFramework Condition="'$(TargetFramework)' == 'net10.0'">net8.0</ResolvedTargetFramework>
+  </PropertyGroup>
+
   <ItemGroup Condition="'$(PkgNServiceBus_AcceptanceTests_Sources)' != ''">
     <Compile Remove="$(PkgNServiceBus_AcceptanceTests_Sources)\**\*.cs" />
-    <Compile Include="$(PkgNServiceBus_AcceptanceTests_Sources)\contentFiles\cs\$(TargetFramework)\**\EndpointTemplates\*.cs" />
-    <Compile Include="$(PkgNServiceBus_AcceptanceTests_Sources)\contentFiles\cs\$(TargetFramework)\**\NServiceBusAcceptanceTest.cs" />
-    <Compile Include="$(PkgNServiceBus_AcceptanceTests_Sources)\contentFiles\cs\$(TargetFramework)\**\ConfigureEndpointAcceptanceTestingPersistence.cs" />
-    <Compile Include="$(PkgNServiceBus_AcceptanceTests_Sources)\contentFiles\cs\$(TargetFramework)\**\ConfigureEndpointAcceptanceTestingTransport.cs" />
+    <Compile Include="$(PkgNServiceBus_AcceptanceTests_Sources)\contentFiles\cs\$(ResolvedTargetFramework)\**\EndpointTemplates\*.cs" />
+    <Compile Include="$(PkgNServiceBus_AcceptanceTests_Sources)\contentFiles\cs\$(ResolvedTargetFramework)\**\NServiceBusAcceptanceTest.cs" />
+    <Compile Include="$(PkgNServiceBus_AcceptanceTests_Sources)\contentFiles\cs\$(ResolvedTargetFramework)\**\ConfigureEndpointAcceptanceTestingPersistence.cs" />
+    <Compile Include="$(PkgNServiceBus_AcceptanceTests_Sources)\contentFiles\cs\$(ResolvedTargetFramework)\**\ConfigureEndpointAcceptanceTestingTransport.cs" />
   </ItemGroup>
 
 </Project>
