@@ -29,8 +29,9 @@ public class TypeNameHandlingTests
     }
 
 
-    [Test]
-    public void Should_recognise_type_with_auto()
+    [TestCase(true)]
+    [TestCase(false)]
+    public void Should_recognise_type_with_auto(bool useNullMessageTypes)
     {
         var text = $@"
 {{
@@ -45,9 +46,10 @@ public class TypeNameHandlingTests
             var messageMapper = new MessageMapper();
             var settings = new Newtonsoft.Json.JsonSerializerSettings() { TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto };
             var serializer = new JsonMessageSerializer(messageMapper, null, null, settings, null);
-            var result = serializer.Deserialize(stream.ToArray(), []);
+            var result = serializer.Deserialize(stream.ToArray(), useNullMessageTypes ? null : []);
+            Assert.That(result, Has.Length.EqualTo(1));
             Assert.That(result[0], Is.TypeOf(typeof(TestMessage)));
-            Assert.That(result[0], Is.InstanceOf<TestMessage>());
+            Assert.That(((TestMessage)result[0]).SomeProperty, Is.EqualTo("Value1"));
         }
     }
 

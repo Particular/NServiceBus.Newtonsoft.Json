@@ -81,7 +81,7 @@
 
             var isArrayStream = IsArrayStream(stream);
 
-            if (messageTypes.Any())
+            if (messageTypes?.Any() == true)
             {
                 return DeserializeMultipleMessageTypes(stream, messageTypes, isArrayStream);
             }
